@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>The EDGE Version 3 -about</title>
+	<link rel="stylesheet" type="text/css" href="about.css">
+</head>
+<body>
+<section class="header">
+	<div class="top-nav">
+      <input id="menu-toggle" type="checkbox" />
+    	<label class='menu-button-container' for="menu-toggle">
+    		<div class='menu-button'></div>
+    	</label>
+    	<div class="logoBox">
+      		<a href="../index.html"><img src="../assets/shared/logo.png"><div>The EDGE</div></a>
+    	</div>
+      
+    
+      <ul class="menu">
+        <li><a href="../index.html">HOME</a></li>
+        <li class="active"><a href="index.html">ABOUT</a></li>
+        <li><a href="../service/index.html">SERVICE</a></li>
+        <li><a href="../contact/index.html">CONTACT</a></li>
+      </ul>
+
+    </div>
+</section>
+
+<section id="about" class="about-box">
+
+    <div class="about-text0">
+      <h1>關於我們</h1>
+      <h4>The EDGE - Empowering Digital Growth for Enterprises - 為數位成長而生</h4>
+      <p>Andy Warhol 曾預言“每個人都有成名(world-famous)的15分鐘”。 如今在互聯網和各種社交媒體時代，每個人都更有可能實現Andy所說。</p><p>The EDGE 旨在幫助微小企業利用各種接近無償的互聯網和社交媒體工具以創造持久的影響力。</p> 
+      <p>
+      <span style="color: red;"><span class="hover-text">我</span></span>
+      <span style="color: orange;"><span class="hover-text">們</span></span>
+      <span style="color: yellow;"><span class="hover-text">相</span></span>
+      <span style="color: green;"><span class="hover-text">信</span></span>
+      <span style="color: blue;"><span class="hover-text">數</span></span>
+      <span style="color: indigo;"><span class="hover-text">位</span></span>
+      <span style="color: violet;"><span class="hover-text2">平權</span></span>
+，相信每個人都應該有機會好好利用數位工具 以助成長。 這就是我們創建 The EDGE 的原因。</p>
+    </div>
+    <div class="about-text1">
+        <h3>我們的任務</h3>
+        <p> 在 The EDGE 我們的使命是幫助暫時無足夠資本的企業家掌握最先進數位工具, 以幾近無償地實現他們的增長。 我們努力為客戶提供無與倫比的支持和服務，也分享客戶成長的喜悅。</p>
+    </div>
+    
+    <div class="about-text2">
+        <h3>我們的服務</h3>
+        <p> 數位戰略諮詢：說明數位工具的可能性, 制定戰略，以實現目標。</p>
+        <p>網站設計與開發：建立具有視覺吸引力和用戶友好的網站，以給人留下持久的印象。</p>
+        <p>社交媒體管理：創建引人入勝的內容並實施有效的策略，以提高品牌知名度、客戶參與度和轉化率。</p>
+        <p>整合平台: 創建一個連接社交媒體和網站的統一平台，整合產品推廣資源。</p>
+    </div>
+</section>
+<section class="footer"></section>
+<script>
+  const menuItems = document.querySelectorAll('.menu ul li');
+
+menuItems.forEach(item => {
+  item.addEventListener('click', () => {
+    menuItems.forEach(otherItem => {
+      otherItem.classList.remove('active');
+    });
+    item.classList.add('active');
+  });
+});
+
+</script>
+</body>
+</html>

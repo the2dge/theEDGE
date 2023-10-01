@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>The EDGE Version 3 -Service</title>
+	<link rel="stylesheet" type="text/css" href="service.css">
+ 
+</head>
+<body>
+<section class="header">
+	<div class="top-nav">
+      <input id="menu-toggle" type="checkbox" />
+    	<label class='menu-button-container' for="menu-toggle">
+    		<div class='menu-button'></div>
+    	</label>
+    	<div class="logoBox">
+      		<a href="../index.html"><img src="../assets/shared/logo.png"><div>The EDGE</div></a>
+    	</div>
+       
+    
+      <ul class="menu">
+        <li><a href="../index.html">HOME</a></li>
+        <li><a href="../about/index.html">ABOUT</a></li>
+        <li class="active"><a href="index.html">SERVICE</a></li>
+        <li><a href="../contact/index.html">CONTACT</a></li>
+      </ul>
+
+    </div>
+</section>
+
+<!-- Service Content -->
+<div class="serviceMainpage">
+  
+     <div class="overlay"></div>
+     <div class="stepsFrame">
+        <div class="pageIntro">
+       網站/APP&nbsp設計服務</div>
+        <div class="sliderButtonBoard">
+          <div class="sliderButton">
+            <div class="leftArrow" onclick="plusSlides(-1)"><img src="../assets/service/arrow.png" style="width: 5vmin; height: 5vmin"></div>      &nbsp&nbsp
+               <span class="dot" onclick="currentSlide(1)">1</span>
+               <span class="dot" onclick="currentSlide(2)">2</span>
+               <span class="dot" onclick="currentSlide(3)">3</span>
+               <span class="dot" onclick="currentSlide(4)">4</span>
+               &nbsp&nbsp
+               <div class="rightArrow" onclick="plusSlides(1)"><img src="../assets/service/arrow.png" style="width: 5vmin; height: 5vmin"></div>
+          </div>
+        </div>
+        <div class="slideShowContainer">
+          
+          <div class="introTextDeck">
+             <h4 class="stepOrder">FIRST STEP &nbsp首先</h4><br><br>
+              <h3 class="stepName">DEFINE 明確目標</h3>
+              <p> 這是第一步也是最重要的一步，因為它涉及定義網站/APP 的目的和目標。 定義越清晰，設計和建立滿足這些目標就越容易。</p><br><br>
+          </div>
+          <div class="introTextDeck">
+             <h4 class="stepOrder">SECOND STEP &nbsp接著</h4><br><br>
+              <h3 class="stepName">DESIGN &nbsp設計</h3>
+              <p> 設計步驟是網站成型的階段。 設計師將創建線框、模型和原型來視覺化網站的外觀和感覺。</p><br><br>
+          </div>
+          <div class="introTextDeck">
+              <h4 class="stepOrder">THIRD STEP &nbsp再來</h4><br><br>
+              <h3 class="stepName">BUILD &nbsp建置</h3>
+              <p>建置步驟是實際建立網站的步驟。 開發人員將使用所選的程式語言和框架將設計變為現實。</p><br><br>
+          </div>
+          <div class="introTextDeck">
+            <h4 class="stepOrder">LAST STEP &nbsp最後</h4><br><br>
+              <h3 class="stepName">LAUNCH &nbsp發表</h3>
+              <p> Launch步驟是指網站/APP 對外開放。 這是關鍵的一步，因為這是用戶第一次與網站/APP互動。</p><span class="launchGuide">Launch Guide: 1. press UNLOCK button 2. Press LAUNCH</span>
+          </div>
+          
+             <div class="animSlides fade" ><img src="../assets/service/focus.png" align="right" style="width: 40vmin; height: 40vmin"></div>
+             <div class="animSlides fade"><div class="phase2"><img src="../assets/service/sketching.png" style="width: 40vmin; height: 40vmin;"></div></div>
+             
+             <div class="animSlides fade coder" style="width: 70vmin; height: 40vmin; margin-right: -5vmin;"><iframe src="./coder.html" style="width: 100%; height: 100%; align: top ;"></iframe></div>
+             <div class="animSlides fade rocket">
+               <div class="launchButton">
+                  <div class="cube clickable" id="unlock"><div>UNLOCK</div></div>
+                  <div class="cube clickable" id="launch"><div>LAUNCH</div></div>
+               </div>
+               <div class="tmpBox" align="right" style="width:40vmin; height:40vmin;"></div>
+               <iframe src="./rocket.html" align="right" style="width: 40vmin; height: 40vmin; transform: translateY(0vmin); "></iframe></div>
+         </div>
+               
+     </div>
+</div>
+<section class="footer"></section>
+<script>
+  let slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("animSlides");
+  let dots = document.getElementsByClassName("dot");
+  let crewText =document.getElementsByClassName("introTextDeck");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  if (n < 1) {textIndex = crewText.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < crewText.length; i++) { crewText[i].style.display = "none"};
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+  crewText[slideIndex-1].style.display ="block";
+}
+</script>
+<script>
+ 
+  const menuItems = document.querySelectorAll('.menu ul li');
+
+menuItems.forEach(item => {
+  item.addEventListener('click', () => {
+    menuItems.forEach(otherItem => {
+      otherItem.classList.remove('active');
+    });
+    item.classList.add('active');
+  });
+});
+
+</script>
+
+<script>
+   // Add these variables to keep track of the unlock and launch states
+let unlockClicked = false;
+let launchClicked = false;
+document.querySelectorAll(".clickable").forEach((cube) => {
+  cube.addEventListener("click", function () {
+    cube.classList.add("active");
+  });
+});
+
+
+document.getElementById("unlock").addEventListener("click", function () {
+  unlockClicked = true;
+  checkVisibility();
+  document.querySelector(".cube.active").classList.add("green-text");
+});
+
+document.getElementById("launch").addEventListener("click", function () {
+  launchClicked = true;
+  checkVisibility();
+  document.querySelector(".cube.active").classList.add("green-text");
+});
+
+function checkVisibility() {
+  // Only show the iframe if both unlock and launch are clicked
+  if (unlockClicked && launchClicked) {
+    document.querySelector(".rocket iframe").style.display = "block";
+    document.querySelector(".rocket .tmpBox").style.display = "none";
+  }
+}
+
+</script> 
+</body>
+</html>

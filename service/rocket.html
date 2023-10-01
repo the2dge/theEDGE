@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>rocket launch</title>
+	<link rel="stylesheet" type="text/css" href="rocket.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body>
+<div id="frame">
+  <div class="rocket">
+    <div class="rocket__body">
+      <div class="rocket__body__window">
+        <div class="shadow"></div>
+      </div>
+      <div class="rocket__body__inner">
+        <div class="shadow"></div>
+      </div>
+    </div>
+    <div class="rocket__wing rocket__wing--left"></div>
+    <div class="rocket__wing rocket__wing--right">
+      <div class="shadow shadow--full"></div>
+    </div>
+    <div class="rocket__label">
+      <p class="labels">3</p>
+      <p class="labels">2</p>
+      <p class="labels">1</p>
+    </div>
+    <div class="rocket__smoke rocket__smoke--left">
+      <div class="rocket__smoke__inner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div class="rocket__smoke rocket__smoke--left">
+      <div class="rocket__smoke__inner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div class="rocket__smoke rocket__smoke--left">
+      <div class="rocket__smoke__inner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div class="rocket__smoke rocket__smoke--left">
+      <div class="rocket__smoke__inner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div class="rocket__smoke rocket__smoke--left">
+      <div class="rocket__smoke__inner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div class="rocket__smoke rocket__smoke--right">
+      <div class="rocket__smoke__inner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div class="rocket__smoke rocket__smoke--right">
+      <div class="rocket__smoke__inner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div class="rocket__smoke rocket__smoke--right">
+      <div class="rocket__smoke__inner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div class="rocket__smoke rocket__smoke--right">
+      <div class="rocket__smoke__inner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div class="rocket__smoke rocket__smoke--right">
+      <div class="rocket__smoke__inner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div class="rocket__fire"></div>
+  </div>
+</div>
+<script>
+	(function() {
+  "use strict";
+    
+  let tl = gsap.timeline({repeat: -1, repeatDelay: 1}),
+     labels = document.getElementsByClassName("labels"),
+     rocket = document.querySelectorAll(".rocket__body, .rocket__wing, .rocket__fire"),
+     smokeL = document.querySelectorAll(".rocket__smoke--left"),
+     smokeR = document.querySelectorAll(".rocket__smoke--right"),
+     fire = document.getElementsByClassName("rocket__fire");
+  
+  // Durations!
+  let cdStart = 1.25, cdLeave = cdStart / 2,
+      esDuration = 0.10, esRepeat = 15,
+      smDuration = 1.5;
+  
+  // Animations!
+  tl.addLabel("countdown")
+      .from(labels, {
+        duration: cdStart,
+        scale: 0,
+        x: "50px", y: "50px",
+        stagger: cdStart / labels.length,
+      }, "countdown")
+      .to(labels, {
+        duration: cdLeave,
+        scale: 0,
+        x: "20px", y: "20px",
+        opacity: 0,
+        stagger: cdStart / labels.length,
+      }, "countdown+=" + cdStart / labels.length) 
+    .addLabel("engine-start")
+      .from(rocket, {
+        duration: esDuration,
+        x: "+=3px",
+        repeat: esRepeat,
+      }, "engine-start-=.5")
+      .from(rocket, {
+        duration: esDuration * 20,
+        y: "+=5px",
+      }, "engine-start-=1")
+      .from(smokeL, {
+        duration: smDuration,
+        scale: 0,
+        opacity: 2,
+        stagger: smDuration / smokeL.length,
+        x: "+=45px", y: "+=30px",
+      }, "engine-start-=.5")
+      .from(smokeR, {
+        duration: smDuration,
+        scale: 0,
+        opacity: 2,
+        stagger: smDuration / smokeR.length,
+        x: "-=45px", y: "+=30px",
+      }, "engine-start-=.5") 
+      .from(fire, {
+        duration: smDuration,
+        scale: 0,
+      }, "engine-start-=.5")
+    .addLabel("lift-off")
+      .to(rocket, {
+        duration: 2,
+        y: "-=100px",
+      }, "lift-off-=1")
+      .to(fire, {
+        duration: .25,
+        scale: 2,
+      }, "lift-off-=1")  
+    .addLabel("launch")
+      .to(rocket, {
+        duration: 3,
+        y: () => "-=" + (document.body.offsetHeight) + "px",
+        ease: "power4",
+      }, "launch-=1.5")
+      .to(fire, {
+        duration: .25,
+        scale: 1.75,
+        repeat: 10,
+      }, "launch-=1.8")  
+    ;
+
+})();
+</script>
+</body>
+</html>

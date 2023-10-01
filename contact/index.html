@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>The EDGE Version 3 -contact</title>
+	<link rel="stylesheet" type="text/css" href="contact.css">
+    <link rel="stylesheet" type="text/css" href="GoogleSheet.css">
+</head>
+<body>
+<section class="header">
+	<div class="top-nav">
+        <input id="menu-toggle" type="checkbox" />
+    	<label class='menu-button-container' for="menu-toggle">
+    		<div class='menu-button'></div>
+    	</label>
+    	<div class="logoBox">
+      		<a href="../index.html"><img src="../assets/shared/logo.png"><div>The EDGE</div></a>
+    	</div>
+       
+    
+      <ul class="menu">
+        <li><a href="../index.html">HOME</a></li>
+        <li><a href="../about/index.html">ABOUT</a></li>
+        <li><a href="../service/index.html">SERVICE</a></li>
+        <li class="active"><a href="index.html">CONTACT</a></li>
+      </ul>
+
+    </div>
+</section>
+
+<!-- Contact Information-->
+<div class="contactMainpage">
+   <div class="greeting">
+      <div class="greeting-box"><h1 class="textEnlarge">HELLO&nbsp <div>你好!</div></h1><p>如果您願意與我們討論您的專案，我們十分樂意聽取</p><br><br><br></div>
+   </div>
+   <div class="contactMethod-box">
+      <div class="contactMethod1">
+     
+        <h1> 01 &nbsp CONTACT US 聯繫我們</h1><p>讓我們在網上成為朋友</p>
+        <div class="contact-info">
+          <div class="media">
+              <img src="../assets/contact/instagram.png"> @xxxyyyzzz
+          </div><br>
+          <div class="media">
+              <img src="../assets/contact/line.png">@xxxyyyzzz
+          </div><br>
+          <div class="media">
+              <img src="../assets/contact/messenger.png">@xxxyyyzzz
+          </div>
+          <br><br>
+        </div>
+    
+      </div>
+      <div class="contactMethod2">
+        <h1>02 &nbspDROP US MESSAGE 留言</h1><p> 請讓我們更多地了解您的需求</p><br><br>
+         <div class="G-sheet-container">
+            <form method="post" action="https://script.google.com/macros/s/AKfycbxbhre4UB3w80xkWv6_6ZaWsauvnRNV9H7gUUINrtahypJfYSD5uSkBRYVp-I29F8vR7w/exec" name="contact-form">
+            <input type="text" name="honeypot" id="honeypot" value="" style="display:none;" />
+
+            <input type="text" name="your-name" placeholder="Name姓名(必填)" required="required">
+            <input type="tel" name="your-number" placeholder="Phone Number">
+
+            <input type="email" name="your-email" placeholder="Email(必填)" required="required">
+            <textarea name="message" rows="7" placeholder="Your Message(必填)" required="required" oninvalid="this.setCustomValidity('Please Please valid email')" required></textarea>
+            <input type="submit" value="Submit" id="submit">
+           </form>
+         </div>
+
+      </div>
+  </div>
+   
+</div>
+<section class="footer"></section>
+<script src="honeypot.js"></script>
+<script>
+   
+  const menuItems = document.querySelectorAll('.menu ul li');
+
+menuItems.forEach(item => {
+  item.addEventListener('click', () => {
+    menuItems.forEach(otherItem => {
+      otherItem.classList.remove('active');
+    });
+    item.classList.add('active');
+  });
+});
+
+</script>
+
+</body>
+</html>

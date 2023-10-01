@@ -1,0 +1,191 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+
+*{margin: 0; padding: 0}
+body, html {
+  font-family: sans-serif;
+  background-image: url('./assets/home/background-home-desktop.jpg'); 
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* This keeps the background fixed while scrolling */
+}
+
+.top-nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  color: #f0f0f0;
+  height: 50px;
+  padding: 0.5rem;
+}
+
+.logoBox img{
+  width: 60px;
+  height: 60px;
+}
+.logoBox{display: flex; align-items: center;}
+.logoBox a{
+   color: white;
+   text-decoration: none;
+   align-items: center;
+   display: flex; font-size: 1.2rem;}
+.top-nav ul li a{color: white; text-decoration: none;}
+
+.top-nav ul li a:hover{
+  color: darkorange; 
+  transition: 0.5s;
+}
+
+.top-nav ul li{
+  border-bottom: 2px solid #888;
+}
+ul.menu li.active{
+  border-bottom: 2px solid orange;
+}
+.menu {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.menu > li {
+  margin: 0 1rem;
+  overflow: hidden;
+}
+.menu-button-container {
+  display: none;
+  height: 100%;
+  width: 30px;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#menu-toggle {
+  display: none;
+}
+.menu-button, .menu-button::before, .menu-button::after {
+  display: block;
+  background-color: #fff;
+  position: absolute;
+  height: 4px;
+  width: 30px;
+  transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
+  border-radius: 2px;
+}
+.menu-button::before {
+  content: '';
+  margin-top: -8px;
+}
+.menu-button::after {
+  content: '';
+  margin-top: 8px;
+}
+#menu-toggle:checked + .menu-button-container .menu-button::before {
+  margin-top: 0px;
+  transform: rotate(45deg);
+}
+#menu-toggle:checked + .menu-button-container .menu-button {
+  background: rgba(255, 255, 255, 0);
+}
+#menu-toggle:checked + .menu-button-container .menu-button::after {
+  margin-top: 0px;
+  transform: rotate(-45deg);
+}
+@media (max-width: 700px) {
+  body, html {
+  background-image: url('./assets/home/background-home-mobile.jpg'); 
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* This keeps the background fixed while scrolling */
+}
+  .logoBox img{
+  width: 50px;
+  height: 50px;
+  }
+ 
+  .logoBox a{
+   color: white;
+   text-decoration: none;
+   align-items: center;
+   display: flex; font-size: 1.0rem;}
+
+  .menu-button-container {
+    display: flex;
+  }
+  .menu {
+    position: absolute;
+    top: 16px;
+    margin-top: 50px;
+    left: 25%;
+    flex-direction: column;
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+  }
+  #menu-toggle ~ .menu li {
+    height: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    transition: height 400ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  #menu-toggle:checked ~ .menu li {
+    border: 1px solid #333;
+    height: 2.5em;
+    padding: 0.5em;
+    transition: height 400ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .menu > li {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0.5em 0;
+    width: 100%;
+    color: #f0f0f0;
+    background-color: #101010;
+  }
+  .menu > li.active{background: #202020}
+  .menu > li:not(:last-child) {
+    border-bottom: 1px solid #444;
+  }
+}
+
+
+/* Main section */
+
+.introduction{
+  margin-top: 20vmin;
+  margin-left: 1.5rem;
+  width: 36%;
+  color: white;
+}
+.extraSize{
+  font-size: 7rem;
+}
+.exploreWhite{
+  display: inline-flex;
+  justify-content: center;
+  position: absolute;
+  align-items: center;
+  text-align: center;
+  right: 10vmin;
+  bottom: 10vmin;
+  width: 19vmin;
+  height: 19vmin;
+  background: white;
+  border-radius: 50%;
+}
+
+@media (max-width: 700px) {
+  
+  .main .introduction{width: 65vw}
+  .extraSize{font-size: 5rem}
+
+}

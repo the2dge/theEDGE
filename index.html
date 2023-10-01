@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>The EDGE Version 3</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<section class="header">
+	<div class="top-nav">
+      <input id="menu-toggle" type="checkbox" />
+    	<label class='menu-button-container' for="menu-toggle">
+    		<div class='menu-button'></div>
+    	</label>
+    	<div class="logoBox">
+      		<a href="index.html"><img src="./assets/shared/logo.png"><div>The EDGE</div></a>
+    	</div>
+      
+    
+      <ul class="menu">
+        <li class="active"><a href="index.html">HOME</a></li>
+        <li><a href="./about/index.html">ABOUT</a></li>
+        <li><a href="./service/index.html">SERVICE</a></li>
+        <li><a href="./contact/index.html">CONTACT</a></li>
+      </ul>
+
+    </div>
+</section>
+
+<section class="main">
+	<div class="introduction">
+      <h4> SO, 我知道你希望產品被 </h4>
+      <h1 class="extraSize">聽見</h1>
+      <p>現實情況是: 大多數產品只能耳語，我們需要去放大她的聲音, 以告訴世界她的美好。</p>
+      <p>Andy Warhol 曾預言“每個人都有成名(world-famous)的15分鐘”。 如今在互聯網和各種社交媒體時代，每個人每項產品都更有可能實現Andy所說 ...</p>
+    </div>
+    <div class="exploreWhite">
+      <div>EXPLORE</div>
+    </div>
+
+</section>
+<section class="footer"></section>
+<script>
+  const menuItems = document.querySelectorAll('.menu ul li');
+
+menuItems.forEach(item => {
+  item.addEventListener('click', () => {
+    menuItems.forEach(otherItem => {
+      otherItem.classList.remove('active');
+    });
+    item.classList.add('active');
+  });
+});
+
+</script>
+</body>
+</html>
