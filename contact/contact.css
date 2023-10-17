@@ -100,6 +100,14 @@ ul.menu li.active{
 }
 @media (max-width: 700px) {
   
+  body, html {
+  font-family: sans-serif;
+  background-image: url('../assets/contact/background-contact-mobile.jpg'); 
+  background-size: cover;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* This keeps the background fixed while scrolling */
+}
   .logoBox img{
   width: 50px;
   height: 50px;

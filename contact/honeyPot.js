@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log('Server response:', response);
         alert("Thank you! The form is submitted successfully.");
       })
-      //.then(() => { window.location.reload(); })
+      //  .then(() => { window.location.reload(); })
       .catch(error => console.error('Error!', error.message));
   });
 });
