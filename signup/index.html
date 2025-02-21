@@ -16,10 +16,9 @@ function submitForm() {
     return;
   }
 
-  const googleScriptURL = "https://script.google.com/macros/s/AKfycbzDQHnqmUYn2HWvGQWl2z8Dul6lr5meaMRnSYpBo1PN/dev";
-  const proxyURL = "https://cors-anywhere.herokuapp.com/"; // Use a free CORS proxy
+  const cloudFunctionURL = "https://line-oa-cors-redirect-782669854704.asia-east1.run.app";
 
-  fetch(proxyURL + googleScriptURL, {
+  fetch(cloudFunctionURL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
