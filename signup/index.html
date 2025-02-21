@@ -5,36 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LINE Member Registration</title>
   <script>
-    function submitForm() {
-      const userId = new URLSearchParams(window.location.search).get("userId");
-      const name = document.getElementById("name").value;
-      const mobile = document.getElementById("mobile").value;
-      const email = document.getElementById("email").value;
+function submitForm() {
+  const userId = new URLSearchParams(window.location.search).get("userId");
+  const name = document.getElementById("name").value;
+  const mobile = document.getElementById("mobile").value;
+  const email = document.getElementById("email").value;
 
-      if (!name || !mobile || !email) {
-        alert("All fields are required.");
-        return;
-      }
+  if (!name || !mobile || !email) {
+    alert("All fields are required.");
+    return;
+  }
 
-      fetch("https://script.google.com/macros/s/AKfycbwevFe06bnQSzQJcOTucesqIAStCblfuqf61z7IPE2YeXWc7fQu8EtZOEDoArrPJTbqbw/exec", {
-        method: "POST",
-        mode: "no-cors", // Required for Google Apps Script
-        headers: {
-           "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ userId, name, mobile, email })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === "success") {
-          alert("Registration successful! Check your LINE messages.");
-          window.location.href = "https://line.me/R/";
-        } else {
-          alert("Error: " + data.message);
-        }
-      })
-      .catch(error => console.error("Error:", error));
+  fetch("https://script.google.com/macros/s/AKfycbwevFe06bnQSzQJcOTucesqIAStCblfuqf61z7IPE2YeXWc7fQu8EtZOEDoArrPJTbqbw/exec", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ userId, name, mobile, email }),
+  })
+  .then(response => response.json())  // ✅ Can now read response properly
+  .then(data => {
+    if (data.status === "success") {
+      alert("✅ Registration successful! Check your LINE messages.");
+      window.location.href = "https://line.me/R/";
+    } else {
+      alert("❌ Error: " + data.message);
     }
+  })
+  .catch(error => console.error("Error:", error));
+}
   </script>
 </head>
 <body>
