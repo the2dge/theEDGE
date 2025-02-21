@@ -19,7 +19,9 @@
       fetch("https://script.google.com/macros/s/AKfycbwevFe06bnQSzQJcOTucesqIAStCblfuqf61z7IPE2YeXWc7fQu8EtZOEDoArrPJTbqbw/exec", {
         method: "POST",
         mode: "no-cors", // Required for Google Apps Script
-        headers: {"Content-Type": "text/plain"},
+        headers: {
+           "Content-Type": "application/json"
+        },
         body: JSON.stringify({ userId, name, mobile, email })
       })
       .then(response => response.json())
