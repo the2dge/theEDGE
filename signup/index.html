@@ -6,6 +6,7 @@
   <title>LINE Member Registration</title>
   <script>
   // Frontend Form Submission
+    /*
 async function submitForm() {
   const userId = new URLSearchParams(window.location.search).get("userId");
   const name = document.getElementById("name").value;
@@ -48,7 +49,7 @@ async function submitForm() {
     alert("❌ An error occurred while submitting the form. Please try again.");
   }
 }
-
+*/
     /*
 function submitForm() {
   const userId = new URLSearchParams(window.location.search).get("userId");
@@ -85,6 +86,7 @@ function submitForm() {
 </head>
 <body>
   <h2>註冊會員</h2>
+  <!--
   <form onsubmit="event.preventDefault(); submitForm();">
     <label for="name">Name:</label>
     <input type="text" id="name" required><br><br>
@@ -96,6 +98,54 @@ function submitForm() {
     <input type="email" id="email" required><br><br>
 
     <button type="submit">Submit</button>
-  </form>
+  </form>-->
+<form id="registerForm">
+    <input type="text" id="name" placeholder="Name">
+    <input type="text" id="lineUserId" readonly>
+    <input type="text" id="mobileNumber" placeholder="Mobile Number">
+    <button type="submit">Register</button>
+</form>
+
+<script>
+    document.getElementById("registerForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        
+        const name = document.getElementById("name").value;
+        const lineUserId = document.getElementById("lineUserId").value;
+        const mobileNumber = document.getElementById("mobileNumber").value;
+
+        fetch("https://script.google.com/macros/s/AKfycbzDQHnqmUYn2HWvGQWl2z8Dul6lr5meaMRnSYpBo1PN/dev", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userId: lineUserId, name: name, mobile: mobileNumber })
+        })
+        .then(response => response.json())
+        .then(data => alert("Registration successful!"))
+        .catch(error => console.error("Error:", error));
+    });
+</script>
+<script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+<script>
+    function loginWithLINE() {
+        liff.init({ liffId: "2006943877-ZEVv2oml" }) // Replace with your LIFF ID
+            .then(() => {
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                } else {
+                    getUserProfile();
+                }
+            })
+            .catch(err => console.error('LIFF Initialization failed', err));
+    }
+
+    function getUserProfile() {
+        liff.getProfile()
+            .then(profile => {
+                document.getElementById("name").value = profile.displayName;
+                document.getElementById("lineUserId").value = profile.userId;
+            })
+            .catch(err => console.error('Error getting profile:', err));
+    }
+</script>
 </body>
 </html>
