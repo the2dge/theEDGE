@@ -85,7 +85,7 @@ function submitForm() {
   </script>
 </head>
 <body>
-  <h2 style="color: green;">註冊會員</h2>
+  <h2 style="color: red;">註冊會員</h2>
   <!--
   <form onsubmit="event.preventDefault(); submitForm();">
     <label for="name">Name:</label>
@@ -118,7 +118,8 @@ function submitForm() {
           fetch("https://script.google.com/macros/s/AKfycbwevFe06bnQSzQJcOTucesqIAStCblfuqf61z7IPE2YeXWc7fQu8EtZOEDoArrPJTbqbw/exec",{
             method: "POST",
             mode: "no-cors",
-            headers: { "Content-Type": "application/json" },
+            headers: { "content-Type": "text/plain" },
+        //    headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ userId: lineUserId, name: name, mobile: mobileNumber })
         })
         .then(response => response.json())
