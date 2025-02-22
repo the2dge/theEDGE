@@ -152,7 +152,7 @@ function submitForm() {
         liff.getProfile()
             .then(profile => {
                 document.getElementById("name").value = profile.displayName;
-                document.getElementById("lineUserId").value = profile.userId;
+                document.getElementById("userId").value = profile.userId;
                 console.log("User ID:", profile.userId); // Debugging
             })
             .catch(err => console.error('Error getting profile:', err));
