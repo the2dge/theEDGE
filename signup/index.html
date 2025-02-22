@@ -114,7 +114,8 @@ function submitForm() {
         const lineUserId = document.getElementById("lineUserId").value;
         const mobileNumber = document.getElementById("mobileNumber").value;
 
-        fetch("https://script.google.com/macros/s/AKfycbzDQHnqmUYn2HWvGQWl2z8Dul6lr5meaMRnSYpBo1PN/dev", {
+     //   fetch("https://script.google.com/macros/s/AKfycbzDQHnqmUYn2HWvGQWl2z8Dul6lr5meaMRnSYpBo1PN/dev", {
+          fetch("https://script.google.com/macros/s/AKfycbwevFe06bnQSzQJcOTucesqIAStCblfuqf61z7IPE2YeXWc7fQu8EtZOEDoArrPJTbqbw/exec",{
             method: "POST",
             mode: "no-cors",
             headers: { "Content-Type": "application/json" },
