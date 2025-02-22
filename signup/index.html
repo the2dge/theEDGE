@@ -85,7 +85,7 @@ function submitForm() {
   </script>
 </head>
 <body>
-  <h2 style="color: red;">註冊會員</h2>
+  <h2 style="color: blue;">註冊會員</h2>
   <!--
   <form onsubmit="event.preventDefault(); submitForm();">
     <label for="name">Name:</label>
@@ -115,17 +115,24 @@ function submitForm() {
         const mobileNumber = document.getElementById("mobileNumber").value;
 
      //   fetch("https://script.google.com/macros/s/AKfycbzDQHnqmUYn2HWvGQWl2z8Dul6lr5meaMRnSYpBo1PN/dev", {
-          fetch("https://script.google.com/macros/s/AKfycbwevFe06bnQSzQJcOTucesqIAStCblfuqf61z7IPE2YeXWc7fQu8EtZOEDoArrPJTbqbw/exec",{
-            method: "POST",
-            mode: "no-cors",
-            headers: { "content-Type": "text/plain" },
-        //    headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ userId: lineUserId, name: name, mobile: mobileNumber })
-        })
-        .then(response => response.json())
-        .then(data => alert("Registration successful!"))
-        .catch(error => console.error("Error:", error));
-    });
+  fetch("https://script.google.com/macros/s/AKfycbwevFe06bnQSzQJcOTucesqIAStCblfuqf61z7IPE2YeXWc7fQu8EtZOEDoArrPJTbqbw/exec",{
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+        userId: document.getElementById("lineUserId").value,
+        name: document.getElementById("name").value,
+        mobile: document.getElementById("mobileNumber").value
+    })
+})
+.then(response => response.json())
+.then(data => {
+    console.log("Success:", data);
+    alert("Registration successful!");
+})
+.catch(error => {
+    console.error("Error:", error);
+    alert("Registration failed. Please check the network request.");
+});
 </script>
 <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
 <script>
