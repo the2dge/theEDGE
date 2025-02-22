@@ -22,6 +22,7 @@ async function submitForm() {
   try {
     const response = await fetch(cloudFunctionURL, {
       method: "POST",
+      mode: "no-cors",
       headers: {
         "Content-Type": "application/json",
         "Origin": "https://theislandedge.com"
