@@ -50,7 +50,7 @@ async function submitForm() {
   }
 }
 */
-    /*
+
 function submitForm() {
   const userId = new URLSearchParams(window.location.search).get("userId");
   const name = document.getElementById("name").value;
@@ -62,7 +62,7 @@ function submitForm() {
     return;
   }
 
-  const cloudFunctionURL = "https://line-oa-cors-redirect-782669854704.asia-east1.run.app";
+  const cloudFunctionURL = "https://script.google.com/macros/s/AKfycbwevFe06bnQSzQJcOTucesqIAStCblfuqf61z7IPE2YeXWc7fQu8EtZOEDoArrPJTbqbw/exec";
 
   fetch(cloudFunctionURL, {
     method: "POST",
@@ -81,11 +81,11 @@ function submitForm() {
     }
   })
   .catch(error => console.error("Error:", error));
-}*/
+}
   </script>
 </head>
 <body>
-  <h2 style="color: blue;">註冊會員</h2>
+  <h2 style="color: green;">註冊會員</h2>
   <!--
   <form onsubmit="event.preventDefault(); submitForm();">
     <label for="name">Name:</label>
@@ -106,7 +106,7 @@ function submitForm() {
     <button type="submit">Register</button>
 </form>
 
-<script>
+<script>/*
     document.getElementById("registerForm").addEventListener("submit", function(event) {
         event.preventDefault();
         
@@ -133,6 +133,7 @@ function submitForm() {
     console.error("Error:", error);
     alert("Registration failed. Please check the network request.");
 });
+*/
 </script>
 <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
 <script>
