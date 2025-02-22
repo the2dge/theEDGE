@@ -55,9 +55,8 @@ function submitForm() {
   const userId = new URLSearchParams(window.location.search).get("userId");
   const name = document.getElementById("name").value;
   const mobile = document.getElementById("mobile").value;
-  const email = document.getElementById("email").value;
 
-  if (!name || !mobile || !email) {
+  if (!name || !mobile) {
     alert("All fields are required.");
     return;
   }
@@ -69,7 +68,7 @@ function submitForm() {
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ userId, name, mobile, email }),
+    body: JSON.stringify({ userId, name, mobile }),
   })
   .then(response => response.json())
   .then(data => {
@@ -101,8 +100,8 @@ function submitForm() {
   </form>-->
 <form id="registerForm">
     <input type="text" id="name" placeholder="Name">
-    <input type="text" id="lineUserId" readonly>
-    <input type="text" id="mobileNumber" placeholder="Mobile Number">
+    <input type="text" id="userId" readonly>
+    <input type="text" id="mobile" placeholder="Mobile Number">
     <button type="submit">Register</button>
 </form>
 
