@@ -126,23 +126,24 @@ function submitForm() {
 </script>
 <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
 <script>
-    function loginWithLINE() {
+    document.addEventListener("DOMContentLoaded", function() {
         liff.init({ liffId: "2006943877-ZEVv2oml" }) // Replace with your LIFF ID
             .then(() => {
-                if (!liff.isLoggedIn()) {
-                    liff.login();
-                } else {
+                if (liff.isLoggedIn()) {
                     getUserProfile();
+                } else {
+                    liff.login(); // Auto-login if not logged in
                 }
             })
             .catch(err => console.error('LIFF Initialization failed', err));
-    }
+    });
 
     function getUserProfile() {
         liff.getProfile()
             .then(profile => {
                 document.getElementById("name").value = profile.displayName;
                 document.getElementById("lineUserId").value = profile.userId;
+                console.log("User ID:", profile.userId); // Debugging
             })
             .catch(err => console.error('Error getting profile:', err));
     }
