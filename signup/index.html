@@ -116,6 +116,7 @@ function submitForm() {
 
         fetch("https://script.google.com/macros/s/AKfycbzDQHnqmUYn2HWvGQWl2z8Dul6lr5meaMRnSYpBo1PN/dev", {
             method: "POST",
+            mode: "no-cors",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ userId: lineUserId, name: name, mobile: mobileNumber })
         })
