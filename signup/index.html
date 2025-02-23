@@ -17,11 +17,10 @@ function submitForm() {
         return;
     }
 
-    const cloudFunctionURL = "https://script.google.com/macros/s/AKfycbwevFe06bnQSzQJcOTucesqIAStCblfuqf61z7IPE2YeXWc7fQu8EtZOEDoArrPJTbqbw/exec";
+    const cloudFunctionURL = "https://save-to-sheet-545199463340.asia-east1.run.app";
 
     fetch(cloudFunctionURL, {
         method: "POST",
-        mode: "no-cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId, name, mobile}) // Include idToken
     })
