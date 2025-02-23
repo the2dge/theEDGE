@@ -26,7 +26,7 @@ function submitForm() {
     })
     .then(() => {
         // ✅ Show a confirmation message to the user
-        alert("✅ Registration successful! This page will close now.");
+        alert("✅ 註冊成功！現在您可以關閉此頁面並返回 LINE。");
 
         // ✅ Wait 0.5 seconds, then close the window and return to LINE
         setTimeout(() => {
@@ -75,7 +75,7 @@ function submitForm() {
   </script>
 </head>
 <body>
-  <h2 style="color: red;">註冊會員</h2>
+  <h2 style="color: green;">註冊會員</h2>
 
   <form onsubmit="event.preventDefault(); submitForm();">
     <label for="name">Name:</label>
