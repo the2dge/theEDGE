@@ -6,51 +6,40 @@
   <title>LINE Member Registration</title>
   <script>
   // Frontend Form Submission
-    /*
-async function submitForm() {
-  const userId = new URLSearchParams(window.location.search).get("userId");
-  const name = document.getElementById("name").value;
-  const mobile = document.getElementById("mobile").value;
-  const email = document.getElementById("email").value;
-  
-  if (!name || !mobile || !email) {
-    alert("All fields are required.");
-    return;
-  }
+function submitForm() {
+    const userId = document.getElementById("userId").value;
+    const name = document.getElementById("name").value;
+    const mobile = document.getElementById("mobile").value;
+  //  const idToken = document.getElementById("idToken").value; // Get the ID Token
 
-  const cloudFunctionURL = "https://script.google.com/macros/s/AKfycbzDQHnqmUYn2HWvGQWl2z8Dul6lr5meaMRnSYpBo1PN/dev";
-  
-  try {
-    const response = await fetch(cloudFunctionURL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/json",
-        "Origin": "https://theislandedge.com"
-      },
-      credentials: "include",
-      body: JSON.stringify({ userId, name, mobile, email }),
+    if (!name || !mobile) {
+        alert("❗All fields are required.");
+        return;
+    }
+
+    const cloudFunctionURL = "https://script.google.com/macros/s/AKfycbwevFe06bnQSzQJcOTucesqIAStCblfuqf61z7IPE2YeXWc7fQu8EtZOEDoArrPJTbqbw/exec";
+
+    fetch(cloudFunctionURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, name, mobile}) // Include idToken
+    })
+    .then(() => {
+        // ✅ Show a confirmation message to the user
+        alert("✅ Registration successful! This page will close now.");
+
+        // ✅ Wait 0.5 seconds, then close the window and return to LINE
+        setTimeout(() => {
+            liff.closeWindow(); // Close the LIFF window and return to LINE
+        }, 500);
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("❌ Registration failed. Please try again.");
     });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    
-    if (data.status === "success") {
-      alert("✅ Registration successful! Check your LINE messages.");
-      window.location.href = "https://line.me/R/";
-    } else {
-      alert("❌ Error: " + data.message);
-    }
-  } catch (error) {
-    console.error("Error:", error);
-    alert("❌ An error occurred while submitting the form. Please try again.");
-  }
 }
-*/
 
+/*
 function submitForm() {
   const userId = document.getElementById("userId").value;
   const name = document.getElementById("name").value;
@@ -82,6 +71,7 @@ function submitForm() {
   })
   .catch(error => console.error("Error:", error));
 }
+*/
   </script>
 </head>
 <body>
