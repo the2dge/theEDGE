@@ -883,50 +883,69 @@ The EDGE 旨在幫助微小企業利用各種接近無償的互聯網和社交�
             window.location.href = loginUrl;
         }
 
-        function getQueryParam(name) {
-            let urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(name);
+$(document).ready(function () {
+    let code = getQueryParam("code");
+    if (code) {
+        $("#formid").show();
+        // Get user profile
+        $.ajax({
+            url: CLOUD_FUNCTION_URL + "/getLineProfile",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ code: code }),
+            success: function (data) {
+                console.log("Profile data received:", data);
+                $("#lineUserId").val(data.userId);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error getting profile:", error);
+                console.error("Response:", xhr.responseText);
+                alert("Error getting LINE profile: " + error);
+            }
+        });
+    }
+
+    $("#formid").submit(function (event) {
+        event.preventDefault();
+        
+        const formData = {
+            name: $("#name").val(),
+            email: $("#email").val(),
+            subject: $("#subject").val(),
+            message: $("#message").val(),
+            userId: $("#lineUserId").val()
+        };
+
+        console.log("Sending form data:", formData);
+
+        if (!formData.userId) {
+            alert("LINE user ID not found. Please try logging in again.");
+            return;
         }
 
-        $(document).ready(function () {
-            let code = getQueryParam("code");
-            if (code) {
-                $("#formid").show();
-                // Get user profile
-                $.ajax({
-                    url: CLOUD_FUNCTION_URL + "/getLineProfile",
-                    type: "POST",
-                    data: { code: code },
-                    success: function (data) {
-                        $("#lineUserId").val(data.userId);
-                    }
-                });
+        $.ajax({
+            url: CLOUD_FUNCTION_URL + "/sendMessage",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(formData),
+            success: function (response) {
+                console.log("Message sent successfully:", response);
+                alert("訊息已成功發送至 LINE！");
+                $("#formid")[0].reset();
+            },
+            error: function(xhr, status, error) {
+                console.error("Error sending message:", error);
+                console.error("Response:", xhr.responseText);
+                alert("Error sending message: " + error);
             }
-
-            $("#formid").submit(function (event) {
-                event.preventDefault();
-                let name = $("#name").val();
-                let email = $("#email").val();
-                let subject = $("#subject").val();
-                let message = $("#message").val();
-                let lineUserId = $("#lineUserId").val();
-
-                $.ajax({
-                    url: CLOUD_FUNCTION_URL + "/sendMessage",
-                    type: "POST",
-                    data: {
-                        name: name,
-                        email: email,
-                        subject: subject,
-                        message: message,
-                        userId: lineUserId
-                    },
-                    success: function (response) {
-                        alert("訊息已成功發送至 LINE！");
-                    }
-                });
-            });
         });
+    });
+});
+
+function getQueryParam(name) {
+    let urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
     </script>
         <!-- START SCROLL TO TOP  -->
 
