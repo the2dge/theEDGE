@@ -718,10 +718,10 @@ input::-ms-input-placeholder {
 }
 .main_home p{
     color: #fff;
-    max-width: 60%;
+    max-width: 80%;
     margin: 0 auto;
     padding-bottom: 30px;
-    font-size:1.125rem;
+    font-size:1.8rem;
 
 }
 
