@@ -395,10 +395,10 @@ Button
     display: inline-block;
     min-width: 150px;
     text-align: center;
-    color: #fff;
+    color: green;
     letter-spacing: 1px;
     margin: 0;
-    font-size:0.8125rem;
+    font-size:1.2125rem;
     border-radius: 0px;
     margin-top: 20px;
     transition: .5s;
