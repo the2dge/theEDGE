@@ -1,67 +1,955 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>The EDGE COFFEE</title>
-	
-	<meta name="description" content="網站設計與開發, 數位工具設計 We design high performance and SEO website and web apps to help boost your business!">
-        <meta name="keywords" content="the edge coffee, The EDGE, web design, web apps">
-        <meta property="og:image" content="">
-        <meta property="og:title" content="The EDGE coffee">
-        <meta property="og:site_name" content="theislandedge">
-        <meta property="og:url" content="https://theislandedge.com">
-        <meta property="og:type" content="website">
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<link rel="icon" type="image/png" sizes="512x512" href="/assets/shared/logo.png">
-</head>
-<body>
-<section class="header">
-	<div class="top-nav">
-      <input id="menu-toggle" type="checkbox" />
-    	<label class='menu-button-container' for="menu-toggle">
-    		<div class='menu-button'></div>
-    	</label>
-    	<div class="logoBox">
-      		<a href="index.html"><img src="./assets/shared/logo.png"><div>The EDGE</div></a>
-    	</div>
-      
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>THE EDGE</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+        <!--Google Fonts link-->
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,600i,700,700i" rel="stylesheet">
+
+
+        <link rel="stylesheet" href="assets/css/iconfont.css">
+        <link rel="stylesheet" href="assets/css/slick/slick.css">
+        <link rel="stylesheet" href="assets/css/slick/slick-theme.css">
+        <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+        <link rel="stylesheet" href="assets/css/jquery.fancybox.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/css/magnific-popup.css">
+        <!--        <link rel="stylesheet" href="assets/css/bootstrap-theme.min.css">-->
+
+
+        <!--For Plugins external css-->
+        <link rel="stylesheet" href="assets/css/plugins.css" />
+
+        <!--Theme custom css -->
+        <link rel="stylesheet" href="assets/css/style.css">
+
+        <!--Theme Responsive css-->
+        <link rel="stylesheet" href="assets/css/responsive.css" />
+
+        <script src="assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    </head>
+    <body data-spy="scroll" data-target=".navbar-collapse">
+
+        <div class='preloader'><div class='loaded'>&nbsp;</div></div>
+        <div class="culmn">
+            <header id="main_menu" class="header navbar-fixed-top">            
+                <div class="main_menu_bg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="nave_menu">
+                                <nav class="navbar navbar-default">
+                                    <div class="container-fluid">
+                                        <!-- Brand and toggle get grouped for better mobile display -->
+                                        <div class="navbar-header">
+                                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                                <span class="sr-only">Toggle navigation</span>
+                                                <span class="icon-bar"></span>
+                                                <span class="icon-bar"></span>
+                                                <span class="icon-bar"></span>
+                                            </button>
+                                            <a class="navbar-brand" href="#home">
+                                                <img src="assets/images/logo.png"/>
+                                            </a>
+                                        </div>
+
+                                        <!-- Collect the nav links, forms, and other content for toggling -->
+
+
+
+                                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                                            <ul class="nav navbar-nav navbar-right">
+                                                <li><a href="#home">HOME</a></li>
+                                                <li><a href="#history">ABOUT US</a></li>
+                                                
+                                                <li><a href="#pricing">Service</a></li>
+                                                
+                                                <li><a href="#blog">BLOG</a></li>
+                                                <li><a href="#contact">CONTACT</a></li>
+                                            </ul>
+
+
+                                        </div>
+
+                                    </div>
+                                </nav>
+                            </div>	
+                        </div>
+
+                    </div>
+
+                </div>
+            </header> <!--End of header -->
+
+
+
+
+            <!--home Section -->
+            <section id="home" class="home">
+                <div class="overlay">
+                    <div class="home_skew_border">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-12 ">
+                                    <div class="main_home_slider text-center">
+                                        <div class="single_home_slider">
+                                            <div class="main_home wow fadeInUp" data-wow-duration="700ms">
+                                                <h3>客戶是我們的首要任務</h3>
+                                                <h1>歡迎來到 THE EDGE</h1>
+                                                <div class="separator"></div>
+                                                <p>你的產品值得被世界聽見。
+然而，現實是——許多品牌的聲音太微弱，在競爭激烈的市場中難以被注意。我們的使命，就是讓你的品牌不只是存在，而是被看見、被聽到、被記住。Andy Warhol 曾說：「每個人都有成名 (world-famous) 的 15 分鐘」，但在這個社群媒體時代，15 分鐘可以變成 15 小時，甚至 15 年——只要用對方法。我們透過策略性的網頁設計與社群行銷，放大你的品牌聲量，讓世界看見它的價值。</p>
+<!--
+                                                <div class="home_btn">
+
+                                                    <a href="https://bootstrapthemes.co" class="btn btn-default">LEARN MORE</a>
+                                                </div>-->
+<div class="home_btn">
+    <button class="btn btn-default learn-more-btn">LEARN MORE</button>
+</div>
+<div class="expanded-content">
+    <p>
+       安迪·沃荷（Andy Warhol）是20世紀普普藝術的代表人物，他以其獨特的藝術風格和對大眾文化的敏銳觀察而聞名於世。其中，他提出的「15分鐘成名」（15 minutes of fame）概念，更是對現代社會的深刻預言。
+
+沃荷在1968年的一次展覽中，首次提出了「在未來，每個人都有可能在15分鐘內成名」的觀點。這個概念並非空穴來風，而是源於他對當時社會現象的觀察。在電視媒體開始普及的年代，人們對名人、明星的追逐日益狂熱，媒體也樂於製造短暫的熱點，讓普通人也能在短時間內成為公眾關注的焦點。
+
+沃荷的「15分鐘成名」不僅是對媒體現象的描述，更是對現代社會價值觀的深刻反思。他敏銳地察覺到，在消費主義和媒體炒作的推動下，人們對名利的渴望日益膨脹，追求短暫的成名似乎成為一種普遍的社會心理。
+
+隨著互聯網和社交媒體的興起，沃荷的預言更是得到了驗證。在網絡時代，每個人都可以通過社交平台、短視頻等方式展示自己，一夜爆紅的案例層出不窮。然而，這種「15分鐘成名」往往來得快，去得也快，許多人迅速被遺忘，成為網絡泡沫中的一瞬。
+    </p>
+</div>
+                                            </div>
+                                        </div>
+                                        <div class="single_home_slider">
+                                            <div class="main_home wow fadeInUp" data-wow-duration="700ms">
+                                                <h3>我們傾聽您的需求</h3>
+                                                <h1>讓我們集思廣益</h1>
+                                                <div class="separator"></div>
+                                                <p>我們深知，每個品牌和產品都有獨特的故事，而成功的行銷不只是曝光，更是如何將這個故事傳達給對的人。我們不只是提供網站設計與社群媒體推廣，而是與您一同思考，探索最適合的策略。從品牌定位、視覺設計到內容行銷，我們將您的願景轉化為可行的計劃，讓創意與行銷策略並行，確保每一個細節都能最大化影響力。</p>
+                                                <div class="home_btn">
+    <button class="btn btn-default learn-more-btn">LEARN MORE</button>
+</div>
+<div class="expanded-content">
+
+    <h1>微熱山丘（Sunny Hills）成功故事</h1>
+
+    <p>微熱山丘（Sunny Hills）是台灣一個成功的品牌，其故事完美呼應了「每個品牌和產品都有獨特的故事，而成功的行銷不只是曝光，更是如何將這個故事傳達給對的人」這句話。</p>
+
+    <p>微熱山丘的成功，並非僅僅依靠產品的美味，更在於其對品牌故事的深刻挖掘和巧妙傳播。他們深知，台灣的鳳梨酥市場競爭激烈，若要脫穎而出，必須找到屬於自己的獨特價值。</p>
+
+    <h2>1. 挖掘品牌故事：</h2>
+
+    <ul>
+        <li><strong>真實的原料：</strong>
+            <p>微熱山丘堅持使用台灣在地土鳳梨，強調其酸甜的真實風味。這不僅是對台灣農業的支持，也是對傳統風味的尊重。</p>
+        </li>
+        <li><strong>樸實的理念：</strong>
+            <p>他們將品牌定位為「陽光下的美味」，傳達一種質樸、自然的品牌形象。這與現代人追求健康、簡單的生活方式不謀而合。</p>
+        </li>
+        <li><strong>人情味：</strong>
+            <p>他們不只賣鳳梨酥，更賣人情味。在南投的本店，他們提供免費的鳳梨酥和熱茶，讓顧客感受到家的溫暖。</p>
+        </li>
+    </ul>
+
+    <h2>2. 傳達品牌故事：</h2>
+
+    <ul>
+        <li><strong>體驗式行銷：</strong>
+            <p>微熱山丘的店鋪設計充滿巧思，讓顧客彷彿置身於鳳梨田間，親身體驗品牌的自然、真實。</p>
+        </li>
+        <li><strong>內容行銷：</strong>
+            <p>他們透過各種渠道，包括網站、社群媒體和實體刊物，分享品牌的故事，讓顧客了解產品背後的理念和價值。</p>
+        </li>
+        <li><strong>全球果實計劃：</strong>
+            <p>他們將其理念推向全球，在世界各地尋找好的水果，製成產品，也將台灣的品牌推廣至全世界。</p>
+        </li>
+        <li><strong>陽光計劃：</strong>
+            <p>強調企業的社會責任感，讓顧客感受到品牌的溫度。</p>
+        </li>
+    </ul>
+
+    <h2>3. 策略的成功：</h2>
+
+    <ul>
+        <li><strong>品牌定位：</strong>
+            <p>微熱山丘成功地將自己定位為一個具有獨特價值和故事的品牌，與其他競爭者區隔開來。</p>
+        </li>
+        <li><strong>視覺設計：</strong>
+            <p>他們的品牌形象設計簡約、自然，符合品牌的質樸理念。</p>
+        </li>
+        <li><strong>內容行銷：</strong>
+            <p>他們透過各種渠道，有效地傳達了品牌的故事，引起了顧客的共鳴。</p>
+        </li>
+    </ul>
+
+    <p>微熱山丘的成功，證明了在競爭激烈的市場中，擁有獨特的故事和有效的行銷策略，才能真正贏得顧客的心。</p>
+
+</div>
+
+                                            </div>
+                                        </div>
+                                        <div class="single_home_slider">
+                                            <div class="main_home wow fadeInUp" data-wow-duration="700ms">
+                                                <h3>聯絡我，如果你願意</h3>
+                                                <h1>讓你的產品被聽到</h1>
+                                                <div class="separator"></div>
+                                                <p>在這個資訊爆炸的時代，想要被看見不只是喊得夠大聲，而是要用對的方式，對的人說出對的故事。無論是透過網站、社群媒體、SEO 或數位廣告，我們可以幫助您的品牌突破雜訊，精準鎖定您的受眾。我們提供全方位的支援，讓您的品牌不僅能被聽見，更能與目標客群建立深厚的連結。如果您準備好讓您的品牌更進一步，請聯絡我們，一起讓世界聽見您的聲音。</p>
+                                                <div class="home_btn">
+    <button class="btn btn-default learn-more-btn">LEARN MORE</button>
+</div>
+<div class="expanded-content">
+        <h1>小品牌如何透過LINE官方帳號快速成長</h1>
+
+        <p>在這個數位時代，小品牌如何利用有限的資源快速成長？一個成功的案例是將LINE官方帳號作為核心溝通工具，整合其他社群媒體和網站，實現有效的客戶互動和品牌推廣。</p>
+
+        <h2>📢 LINE 官方帳號成功案例</h2>
+
+        <p>
+            Be Two 利用 <strong>LINE 官方帳號</strong> 的多元工具，與顧客保持長期互動。透過 <strong>LINE Ads Platform（LAP）</strong> 廣告和加好友抽獎活動，吸引新朋友加入。
+            <br><br>同時，設計心理測驗遊戲，推薦適合的禮品方案，提升顧客參與度。
+            <br><br>💡 <strong>成果：</strong> 單月新好友增長 4.9 倍，互動率提升 40%。<br>
+            🔗 <a href="https://tw.linebiz.com/case-study/LINE-OA2024/?utm_source=chatgpt.com" target="_blank">閱讀完整案例</a>
+        </p>
+
+        <h2>LINE官方帳號的整合策略</h2>
+
+        <ul>
+            <li><strong>核心溝通平台：</strong>
+                <p>將LINE官方帳號作為主要的溝通平台，透過即時訊息與客戶互動，提供訂單查詢、配送通知等服務。</p>
+            </li>
+            <li><strong>整合社群媒體：</strong>
+                <p>在LINE官方帳號的選單中，他們加入了Facebook、Instagram的連結，方便客戶追蹤最新的農產品資訊和活動。同時，他們在其他社群媒體上宣傳LINE官方帳號，吸引更多粉絲加入。</p>
+            </li>
+            <li><strong>網站整合：</strong>
+                <p>他們在網站上設置了LINE官方帳號的QR Code和加入好友按鈕，方便訪客快速加入。透過LINE Beacon技術，當客戶接近實體合作店面時，會自動收到相關優惠訊息。</p>
+            </li>
+            <li><strong>豐富的互動功能：</strong>
+                <ul>
+                    <li><strong>圖文選單（Rich Menu）：</strong>
+                        <p>設計清晰的圖文選單，方便客戶快速找到所需功能，例如訂購、查詢、優惠等。</p>
+                    </li>
+                    <li><strong>樣板訊息（Template Message）：</strong>
+                        <p>使用樣板訊息發送訂單確認、配送通知、促銷活動等，提高溝通效率。</p>
+                    </li>
+                    <li><strong>集點卡（Reward Card）：</strong>
+                        <p>推出集點活動，鼓勵客戶重複消費，增加客戶黏性。</p>
+                    </li>
+                    <li><strong>優惠券（Coupons）：</strong>
+                        <p>定期發送優惠券，吸引客戶下單，促進銷售。</p>
+                    </li>
+                    <li><strong>自動回應：</strong>
+                        <p>設置常見問題的自動回應，提供即時的客戶服務。</p>
+                    </li>
+                </ul>
+            </li>
+            <li><strong>內容行銷：</strong>
+                <p>透過LINE官方帳號定期發送農產品知識、食譜分享、農場故事等內容，建立品牌形象，增加客戶信任感。</p>
+            </li>
+        </ul>
+
+        <h2>網站與LINE的協同效應</h2>
+
+        <p>「田園鮮遞」的網站不僅是產品展示平台，也是與LINE官方帳號互動的重要橋樑。網站上的訂單系統與LINE官方帳號的訊息通知功能結合，讓客戶隨時掌握訂單狀態。網站上的部落格文章也透過LINE官方帳號分享，增加網站流量。</p>
+
+        <h2>成功關鍵</h2>
+
+        <p>「田園鮮遞」透過LINE官方帳號的整合策略，成功地將其打造成為與客戶互動的核心平台。透過豐富的功能和內容行銷，他們建立了穩定的客戶群，實現了品牌的快速成長。</p>
+
+        <p>這個案例告訴我們，小品牌可以透過有效的數位工具整合，在競爭激烈的市場中找到自己的位置，實現快速成長。</p>
     
-      <ul class="menu">
-        <li class="active"><a href="index.html">HOME</a></li>
-        <li><a href="./about/index.html">ABOUT</a></li>
-        <li><a href="./service/index.html">SERVICE</a></li>
-        <li><a href="./contact/index.html">CONTACT</a></li>
-      </ul>
+</div>
 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="scrooldown">
+                            <a href="#feature"><i class="fa fa-arrow-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </section><!--End of home section -->
+
+
+            <!--feature section -->
+            <section id="feature" class="feature sections">
+                <div class="container">
+                    <div class="row">
+                        <div class="main_feature text-center">
+
+                            <div class="col-sm-3">
+                                <div class="single_feature">
+                                    <div class="single_feature_icon">
+                                        <i class="fa fa-clone"></i>
+                                    </div>
+
+                                    <h4>客製化</h4>
+                                    <div class="separator3"></div>
+                                    <p>每個品牌都是獨一無二的，我們提供 量身訂製 的解決方案，確保你的品牌故事被完美呈現！ </p>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="single_feature">
+                                    <div class="single_feature_icon">
+                                        <i class="fa fa-heart-o"></i>
+                                    </div>
+
+                                    <h4>平等共享</h4>
+                                    <div class="separator3"></div>
+                                    <p>讓大大小小的品牌都能擁有專業數位行銷工具，透過創新技術，實現公平競爭，共享市場機會！</p>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="single_feature">
+                                    <div class="single_feature_icon">
+                                        <i class="fa fa-lightbulb-o"></i>
+                                    </div>
+                                    <h4>新想法</h4>
+                                    <div class="separator3"></div>
+                                    <p>我們不只是設計，而是與你共同創造新想法，將你的品牌價值轉化為具影響力的數位體驗！</p>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="single_feature">
+                                    <div class="single_feature_icon">
+                                        <i class="fa fa-comments-o"></i>
+                                    </div>
+
+                                    <h4>社群媒體</h4>
+                                    <div class="separator3"></div>
+                                    <p>透過 LINE 官方帳號、社群行銷，放大品牌聲音，精準溝通，讓你的產品在數位時代真正被聽見！🚀</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div><!--End of container -->
+            </section><!--End of feature Section -->
+            <hr />
+
+
+            <!-- History section -->
+            <section id="history" class="history sections">
+                <div class="container">
+                    <div class="row">
+                        <div class="main_history">
+                            <div class="col-sm-6">
+                                <div class="single_history_img">
+                                    <img src="assets/images/stab1.png" alt="" />
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="single_history_content">
+                                    <div class="head_title">
+                                        <h2>關於我們</h2>
+                                    </div>
+                                    <p>THE EDGE - Empowering Digital Growth for Enterprises - 為數位成長而生
+Andy Warhol 曾預言“每個人都有成名(world-famous)的15分鐘”。 如今在互聯網和各種社交媒體時代，每個人都更有可能實現Andy所說。
+
+The EDGE 旨在幫助微小企業利用各種接近無償的互聯網和社交媒體工具以創造持久的影響力。
+
+我 們 相 信 數 位 平權 ，相信每個人都應該有機會好好利用數位工具 以助成長。 這就是我們創建 The EDGE 的原因。</p>
+
+                                    <a href="" class="btn btn-lg">BROWSE OUR WORK</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--End of row -->
+                </div><!--End of container -->
+            </section><!--End of history -->
+
+
+            <!-- service Section -->
+            <section id="service" class="service">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="main_service">
+                            <div class="col-md-6 col-sm-12 no-padding">
+
+                                <div class="single_service single_service_text text-right">
+                                    <div class="head_title">
+                                        <h2>OUR SERVICES</h2>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-10 col-xs-10 margin-bottom-60">
+                                            <div class="row">
+
+                                                <div class="col-sm-10 col-sm-offset-1 col-xs-9 col-xs-offset-1">
+                                                    <article class="single_service_right_text">
+                                                        <h4>LINE官方帳號 設計</h4>
+                                                        <p>整合 聊天機器人、Rich Menu、自動回應、會員系統，提升顧客互動，強化品牌形象，讓行銷更智慧、轉單更輕鬆！</p>
+                                                    </article>
+                                                </div>
+                                                <div class="col-sm-1 col-xs-1">
+                                                    <figure class="single_service_icon">
+                                                        <i class="fa fa-heart"></i>
+                                                    </figure><!-- End of figure -->
+                                                </div>
+                                            </div>
+                                        </div><!-- End of col-sm-12 -->
+
+                                        <div class="col-md-12 col-sm-10 col-xs-10 margin-bottom-60">
+                                            <div class="row">
+
+                                                <div class="col-sm-10 col-sm-offset-1 col-xs-9 col-xs-offset-1">
+                                                    <article class="single_service_right_text">
+                                                        <h4>網頁設計</h4>
+                                                        <p>量身打造高效 品牌網站，結合 響應式設計、SEO 優化、UI/UX，確保最佳用戶體驗，讓訪客轉換為忠實顧客，提升品牌價值！</p>
+                                                    </article>
+                                                </div>
+                                                <div class="col-sm-1 col-xs-1">
+                                                    <figure class="single_service_icon">
+                                                        <i class="fa fa-heart"></i>
+                                                    </figure><!-- End of figure -->
+                                                </div>
+                                            </div>
+                                        </div><!-- End of col-sm-12 -->
+
+                                        <div class="col-md-12 col-sm-10 col-xs-10 margin-bottom-60">
+                                            <div class="row">
+
+                                                <div class="col-sm-10 col-sm-offset-1 col-xs-9 col-xs-offset-1 margin-bottom-20">
+                                                    <article class="single_service_right_text">
+                                                        <h4>Mini POS</h4>
+                                                        <p>POS 解決方案，結合 即時訂單管理、雲端報表、行動支付，適用 小型商店、快閃店，簡單易用，提高營運效率，讓銷售更流暢！ 🚀</p>
+                                                    </article>
+                                                </div>
+                                                <div class="col-sm-1 col-xs-1">
+                                                    <figure class="single_service_icon">
+                                                        <i class="fa fa-heart"></i>
+                                                    </figure><!-- End of figure -->
+                                                </div>
+                                            </div>
+                                        </div><!-- End of col-sm-12 -->
+
+                                    </div>
+                                </div>
+                            </div><!-- End of col-sm-6 -->
+
+                            <div class="col-md-6 col-sm-12 no-padding">
+                                <figure class="single_service single_service_img">
+                                    <div class="overlay-img"></div>
+                                    <img src="assets/images/servicerightimg.jpg" alt="" />
+                                </figure><!-- End of figure -->
+                            </div><!-- End of col-sm-6 -->
+
+                        </div>
+                    </div><!-- End of row -->
+                </div><!-- End of Container-fluid -->
+            </section><!-- End of service Section -->
+
+            <!-- Pricing Section/Service -->
+            <section id="pricing" class="pricing">
+                <div class="container">
+                    <div class="row">
+                        <div class="main_pricing_area sections">
+                            <div class="head_title text-center">
+                                <h2>OUR SERVICE</h2>
+                                <div class="subtitle">
+                                    一切服務，從傾聽開始。我們也希望您了解我們的服務流程
+                                </div>
+                                <div class="separator"></div>
+                            </div><!-- End off Head_title -->
+
+                            <div class="col-md-3 col-sm-6">
+                                <div class="single_pricing">
+                                    <div class="pricing_head">
+                                        <h3>FIRST STEP  首先</h3>
+                                        <div class="pricing_price">
+                                            <div class="p_r text-center">DEFINE </div>
+                                            <div class="m_t text-center">明確目標</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="pricing_body">
+                                        <ul>
+                                            <li>第一步是最重要的一步，</li>
+                                            <li>因為它涉及定義網站</li>
+                                            <li>APP 的目的和目標。</li>
+                                            <li>定義越清晰，</li>
+                                            <li>設計和建立滿足這些目標就越容易。</li>
+                                        </ul>
+                           
+                                    </div>
+                                </div>
+                            </div> <!-- End off col-md-3 -->
+                            <div class="col-md-3 col-sm-6">
+                                <div class="single_pricing pricing_business">
+                                    <div class="pricing_head ">
+                                        <h3>SECOND STEP  接著</h3>
+                                        <div class="pricing_price">
+                                            <div class="p_r text-center">DESIGN
+</div>
+                                            <div class="m_t text-center">設計</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="pricing_body">
+                                        <ul>
+                                            <li>設計步驟是成型的階段。</li>
+                                            <li>設計師將創建線框、</li>
+                                            <li> 模型和原型來</li>
+                                            <li>視覺化網站的外觀和感覺。
+
+</li>
+                                        </ul>
+                                       
+                                    </div>
+                                </div>
+                            </div> <!-- End off col-md-3 -->
+                            <div class="col-md-3 col-sm-6">
+                                <div class="single_pricing">
+                                    <div class="pricing_head">
+                                        <h3>THIRD STEP  再來</h3>
+                                        <div class="pricing_price">
+                                            <div class="p_r text-center">BUILD  
+</div>
+                                            <div class="m_t text-center">建置</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="pricing_body">
+                                        <ul>
+                                            <li>建置步驟是實際</li>
+                                            <li>建立網站的步驟。</li>
+                                            <li>開發人員將使用所選的</li>
+                                            <li>程式語言和框架將設計變為現實。</li>
+                                        </ul>
+                                        
+                                    </div>
+                                </div>
+                            </div> <!-- End off col-md-3 -->
+                            <div class="col-md-3 col-sm-6">
+                                <div class="single_pricing pricing_business">
+                                    <div class="pricing_head ">
+                                        <h3>LAST STEP  最後</h3>
+                                        <div class="pricing_price">
+                                            <div class="p_r text-center">LAUNCH  
+</div>
+                                            <div class="m_t text-center">發表</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="pricing_body">
+                                        <ul>
+                                            <li>Launch步驟是指</li>
+                                            <li>網站/APP 對外開放。</li>
+                                            <li>這是關鍵的一步，</li>
+                                            <li> 因為這是用戶第一次與網站/APP互動。</li>
+                                        </ul>
+                                       
+                                    </div>
+                                </div>
+                            </div> <!-- End off col-md-3 -->
+                        </div>
+                    </div><!-- End off row -->
+                </div><!-- End off container -->
+            </section><!-- End off Pricing Section -->
+
+
+
+            <!-- Blog Section -->
+            <section id="blog" class="blog">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="main_blog sections">
+                            <div class="head_title text-center">
+                                <h2>OUR BLOG</h2>
+                                <div class="subtitle">
+                                    我們喜歡分享和了解更多美麗的世界
+                                </div>
+                                <div class="separator"></div>
+                            </div><!-- End off Head_title -->
+
+                            <div class="main_blog_content">
+                            <!-- AI Trend: Deepseek R1 -->
+                    <div class="col-sm-6">
+                        <div class="single_blog_area textwhite">
+                            <div class="row">
+                                <div class="col-sm-3 no-padding">
+                                    <div class="single_blog_img">
+                                        <img src="assets/images/blog3.jpg" alt="" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-9 no-padding">
+                                    <div class="single_blog_text s_b_left">
+                                        <p>AI/trend</p>
+                                        <h3>Deepseek 將改變一切</h3>
+                                        <div class="separator2"></div>
+                                        <p class="blog-summary">Deepseek R1 是首個真正有意義的開源 LLM，全球開發者將受益...</p>
+                                        
+                                        <a href="javascript:void(0);" class="read_more" data-target="blog3">Read More >></a>
+                                        <div class="expanded-content" id="blog3">
+                                            <p>
+                                                **Deepseek R1** 是當前最具突破性的開源 **大語言模型（LLM）** 之一，
+                                                它不僅具備與封閉式模型競爭的能力，還公開了 **25 頁技術論文**，為全球開發者提供了深入了解其訓練方法的機會。
+                                                <br><br>
+                                                這標誌著 **AI 開源時代的真正到來**，不僅提升了 LLM 的可訪問性，也讓更多中小型企業和個人研究者能夠參與 LLM 的創新和應用開發。
+                                                <br><br>
+                                                **為什麼 Deepseek R1 重要？**
+                                                - **開源透明度**：完整的模型架構與訓練細節公開，讓開發者能夠自由研究與應用。
+                                                - **全球共享知識**：這 25 頁的技術細節，提供了前所未有的學習機會，使全球 AI 研究人員受益。
+                                                - **突破封閉系統**：以往 LLM 主要由大型科技公司壟斷，而 Deepseek R1 讓開源社群有了真正的選擇。
+                                                <br><br>
+                                                未來，隨著開源 LLM 的發展，AI 的應用場景將更加多元化，從個人學習、企業應用，到 AI 生成內容，Deepseek R1 將改變一切！
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- AI Trend: ChatGPT in Daily Life -->
+                    <div class="col-sm-6">
+                        <div class="single_blog_area textwhite">
+                            <div class="row">
+                                <div class="col-sm-3 no-padding">
+                                    <div class="single_blog_img">
+                                        <img src="assets/images/blog4.jpg" alt="" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-9 no-padding">
+                                    <div class="single_blog_text s_b_left">
+                                        <p>AI/trend</p>
+                                        <h3>ChatGPT 在日常生活</h3>
+                                        <div class="separator2"></div>
+                                        <p class="blog-summary">如果能夠善用 ChatGPT，它將極大提升學習與工作效率...</p>
+                                        
+                                        <a href="javascript:void(0);" class="read_more" data-target="blog4">Read More >></a>
+                                        <div class="expanded-content" id="blog4">
+                                            <p>
+                                                **ChatGPT** 不僅僅是一個聊天機器人，它是一種強大的 AI 助手，能夠幫助人們提高學習效率和工作生產力。
+                                                **無論是學生、專業人士，還是企業主，都可以透過 ChatGPT 獲得極大的幫助。**
+                                                <br><br>
+                                                **如何善用 ChatGPT？**
+                                                - **學習助手**：學生可以用 ChatGPT 來解釋難題、整理筆記、總結文章，甚至幫助學習新語言。
+                                                - **生產力提升**：工作上，它可以幫助寫報告、撰寫 Email、分析數據，甚至生成程式碼，提高工作效率。
+                                                - **創意寫作**：對於作家或內容創作者，ChatGPT 可以提供靈感、修改文章，甚至幫助寫劇本。
+                                                <br><br>
+                                                **最大化 ChatGPT 的潛力**
+                                                - **精準提問**：輸入具體、清晰的問題，能獲得更好的回覆。
+                                                - **與其他工具結合**：如與 Excel、Google Docs 整合，提升處理資訊的能力。
+                                                - **訓練個人化 AI 助手**：透過 API 開發，可以讓 ChatGPT 變成你的個人 AI 助手。
+                                                <br><br>
+                                                AI 時代已經來臨，那些能夠靈活運用 ChatGPT 的人，將在未來的競爭中佔據優勢。你準備好提升你的學習和工作效率了嗎？
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                      <div class="col-sm-6">
+                        <div class="single_blog_area textwhite">
+                            <div class="row">
+                                <div class="col-sm-3 no-padding">
+                                    <div class="single_blog_img">
+                                        <img src="assets/images/blog1.jpg" alt="" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-9 no-padding">
+                                    <div class="single_blog_text s_b_left">
+                                        <p>Business/Trend</p>
+                                        <h3>The Corporation in the Twenty-First Century</h3>
+                                        <div class="separator2"></div>
+                                        <p class="blog-summary">這本書顛覆我們對企業的傳統認知，揭示現代商業的真相...</p>
+                                        
+                                        <a href="javascript:void(0);" class="read_more" data-target="blog5">Read More >></a>
+                                        <div class="expanded-content" id="blog5">
+                                            <p>
+                                                **《The Corporation in the Twenty-First Century》** 挑戰了人們對於現代企業的傳統觀念，探討了企業如何運作、誰真正從企業運行中受益，以及市場與政府之間的關係。
+                                                <br><br>
+                                                **企業的運作真的如我們所想的那樣嗎？**
+                                                這本書揭示了 **現代企業如何影響全球經濟、社會公平性、政治決策，甚至氣候變遷**。  
+                                                企業並不只是單純的利潤機器，而是與政策、法律、社會結構密不可分的強大力量。
+                                                <br><br>
+                                                **本書的核心觀點：**
+                                                - **企業並非純粹的市場競爭體**：它們影響並塑造政府政策，甚至操控市場規則。  
+                                                - **股東至上模式的缺陷**：過度關注股東利益可能會犧牲長期可持續發展和勞工權益。  
+                                                - **市場自由的迷思**：事實上，政府與市場從來都不是完全獨立的，企業透過遊說和政策影響，塑造著經濟規則。  
+                                                <br><br>
+                                                **這本書適合誰？**
+                                                - 對 **商業與經濟** 感興趣的讀者  
+                                                - 企業家、投資人、政策制定者  
+                                                - 想了解 **企業如何影響全球社會** 的任何人  
+                                                <br><br>
+                                                **這本書不只是一本關於企業的書，而是一場對全球經濟現狀的深刻反思**。如果你曾經思考過 **企業的真正角色**，那麼這本書將為你提供全新的視角。
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                               <!-- Book 2: Sapiens -->
+                    <div class="col-sm-6">
+                        <div class="single_blog_area textwhite">
+                            <div class="row">
+                                <div class="col-sm-3 no-padding">
+                                    <div class="single_blog_img">
+                                        <img src="assets/images/blog2.jpg" alt="" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-9 no-padding">
+                                    <div class="single_blog_text s_b_left">
+                                        <p>book/History</p>
+                                        <h3>人類大歷史 (Sapiens: A Brief History of Humankind)</h3>
+                                        <div class="separator2"></div>
+                                        <p class="blog-summary">這本書講述了人類從遠古時代至今的發展歷程...</p>
+                                        
+                                        <a href="javascript:void(0);" class="read_more" data-target="blog2">Read More >></a>
+                                        <div class="expanded-content" id="blog2">
+                                            <p>
+                                                **《人類大歷史》** 是由 Yuval Noah Harari 所著，探討人類如何從一種普通的動物演變成地球的主宰。
+                                                這本書從 **認知革命、農業革命、工業革命** 三大階段，詳細解釋人類歷史的變遷與影響。
+                                                <br><br>
+                                                Harari 強調**文化、經濟、宗教**如何塑造我們的社會，並且質疑傳統歷史書中的「進步」概念。
+                                                他認為，人類的發展並非單純的進步，而是伴隨著環境破壞、戰爭、社會不平等等問題。
+                                                <br><br>
+                                                **這本書不僅是歷史書，更是一場對人類未來的思考。**
+                                                它讓我們反思，隨著科技和人工智慧的崛起，人類的未來將何去何從？
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div><!-- End off container -->
+            </section><!-- End off Blog Section -->
+
+
+            <section id="contact" class="contact">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="contact_contant sections">
+                                <div class="head_title text-center">
+                                    <h2>kEEP IN TOUCH</h2>
+                                    <div class="subtitle">
+                                        如果您願意與我們討論您的專案，我們十分樂意聽取  
+                                    </div>
+                                    <div class="separator"></div>
+                                </div><!-- End off Head_title -->
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="main_contact_info">
+                                            <div class="row">
+                                                <div class="contact_info_content padding-top-90 padding-bottom-60 p_l_r">
+                                                    <div class="col-sm-12">
+                                                        <div class="single_contact_info">
+                                                            <div class="single_info_text">
+                                                                <h3>OUR ADDRESS</h3>
+                                                                <h4>House #13, Streat road, Sydney 
+                                                                    2310 Australia</h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <div class="single_contact_info">
+                                                            <div class="single_info_text">
+                                                                <h3>CALL US</h3>
+                                                                <h4>(886)0936134790
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+
+                                    <div class="col-sm-6">
+    <div class="container">
+        <h2>請先使用 LINE 登入</h2>
+        <button class="btn" onclick="loginWithLINE()">用 LINE 登入</button>
+
+        <form action="#" id="formid" style="display:block;">
+            <h2>聯絡表單</h2>
+            <input type="hidden" id="lineUserId">
+
+            <div class="form-group">
+                <input type="text" class="form-control" name="name" id="name" placeholder="姓名" required>
+            </div>
+
+            <div class="form-group">
+                <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="主題" required>
+            </div>
+
+            <div class="form-group">
+                <textarea class="form-control" name="message" id="message" rows="7" placeholder="訊息"></textarea>
+            </div>
+
+            <input type="submit" value="SEND MESSAGE" class="btn">
+        </form>
     </div>
-</section>
+                                    </div>
 
-<section class="main">
-	<div class="introduction">
-      <h4> SO, 我知道你希望產品被 </h4>
-      <h1 class="extraSize">聽見</h1>
-      <p>現實情況是: 大多數產品只能耳語，我們需要去放大她的聲音, 以告訴世界她的美好。</p>
-      <p>Andy Warhol 曾預言“每個人都有成名(world-famous)的15分鐘”。 如今在互聯網和各種社交媒體時代，每個人每項產品都更有可能實現Andy所說 ...</p>
-    </div>
-    <div class="exploreWhite">
-      <div><a href="https://the2dge.github.io/learning">EXPLORE</a></div>
-    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section><!-- End of contact section -->
 
-</section>
-<section class="footer"></section>
-<script>
-  const menuItems = document.querySelectorAll('.menu ul li');
+            <section id="trial" class="trial text-center wow fadeIn"  data-wow-duration="2s" data-wow-dealy="1.5s">
+                <div class="main_trial_area">
+                    <div class="video_overlay sections">
+                        <div class="container">
+                            <div class="row">
+                                <div class="main_trial">
+                                    <div class="col-sm-12">
+                                        <h2>現在就開始吧。 <span>And it's FREE!</span></h2>
+                                        <h4>讓LINE官方帳號成為溝通核心，開始拓展您的業務</h4>
+                                        <a href="" class="btn btn-lg">start LINE 官方帳號</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section><!-- End of Trial section -->
 
-menuItems.forEach(item => {
-  item.addEventListener('click', () => {
-    menuItems.forEach(otherItem => {
-      otherItem.classList.remove('active');
-    });
-    item.classList.add('active');
-  });
-});
 
-</script>
-</body>
+            <!--Footer section-->
+            <section class="footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="main_footer">
+                                <div class="row">
+                                    <div class="col-sm-6 col-xs-12">
+                                       
+                                    </div>
+
+                                    <div class="col-sm-6 col-xs-12">
+                                        <div class="copyright_text">
+                                            <p class=" wow fadeInRight" data-wow-duration="1s">Made with <i class="fa fa-heart"></i> by <a href="https://bootstrapthemes.co">THE EDGE</a>2025&nbsp&nbsp </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section><!-- End off footer Section-->
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+<!-- LINE Login Code   -->
+    <script>
+        const CLIENT_ID = "2006943877"; // OFFICIAL LINE Login Channel ID
+        const REDIRECT_URI = "https://theislandedge.com/"; //網站 callback URL
+        const CLOUD_FUNCTION_URL = "https://the-edge-login-545199463340.asia-east1.run.app"; // Google Cloud Function URL
+
+        function loginWithLINE() {
+            let loginUrl = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=profile%20openid%20email&state=12345`;
+            window.location.href = loginUrl;
+        }
+
+        function getQueryParam(name) {
+            let urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        $(document).ready(function () {
+            let code = getQueryParam("code");
+            if (code) {
+                $("#formid").show();
+                // Get user profile
+                $.ajax({
+                    url: CLOUD_FUNCTION_URL + "/getLineProfile",
+                    type: "POST",
+                    data: { code: code },
+                    success: function (data) {
+                        $("#lineUserId").val(data.userId);
+                    }
+                });
+            }
+
+            $("#formid").submit(function (event) {
+                event.preventDefault();
+                let name = $("#name").val();
+                let email = $("#email").val();
+                let subject = $("#subject").val();
+                let message = $("#message").val();
+                let lineUserId = $("#lineUserId").val();
+
+                $.ajax({
+                    url: CLOUD_FUNCTION_URL + "/sendMessage",
+                    type: "POST",
+                    data: {
+                        name: name,
+                        email: email,
+                        subject: subject,
+                        message: message,
+                        userId: lineUserId
+                    },
+                    success: function (response) {
+                        alert("訊息已成功發送至 LINE！");
+                    }
+                });
+            });
+        });
+    </script>
+        <!-- START SCROLL TO TOP  -->
+
+        <div class="scrollup">
+            <a href="#"><i class="fa fa-chevron-up"></i></a>
+        </div>
+
+        <script src="assets/js/vendor/jquery-1.11.2.min.js"></script>
+        <script src="assets/js/vendor/bootstrap.min.js"></script>
+
+        <script src="assets/js/jquery.magnific-popup.js"></script>
+        <script src="assets/js/jquery.mixitup.min.js"></script>
+        <script src="assets/js/jquery.easing.1.3.js"></script>
+        <script src="assets/js/jquery.masonry.min.js"></script>
+
+        <!--slick slide js -->
+        <script src="assets/css/slick/slick.js"></script>
+        <script src="assets/css/slick/slick.min.js"></script>
+
+
+        <script src="assets/js/plugins.js"></script>
+        <script src="assets/js/main.js"></script>
+
+    </body>
 </html>
