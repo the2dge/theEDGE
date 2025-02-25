@@ -1552,6 +1552,7 @@ li .single_team_text p{
 
 @media(max-width:440px){
     .main_trial_area{
+    padding-top: 40vh;
     background: url(../images/contactBg_pc.jpg) no-repeat right center;
     }
 }
