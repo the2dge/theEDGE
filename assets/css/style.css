@@ -1570,7 +1570,7 @@ li .single_team_text p{
     justify-content: center;
     overflow: hidden; /* Prevents entire page from scrolling */
 }
-.modal h1{color: green}
+.modal h1{color: green; font-size: 5rem}
 .modal h2{color: orange;}
 /* Modal content box */
 .modal-content {
@@ -1583,6 +1583,7 @@ li .single_team_text p{
     position: relative;
     animation: fadeIn 0.3s ease-in-out;
     overflow-y: auto; 
+    max-width: 90vh;
 }
 
 /* Close button */
