@@ -167,7 +167,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const slider = document.querySelector(".main_home_slider"); // The slider container
     const readMoreButtons = document.querySelectorAll(".read_more");
     const savedPosition = localStorage.getItem("scrollPosition");
+    const closeButtons = document.querySelectorAll(".close-content-btn");
 
+    closeButtons.forEach((btn) => {
+        btn.addEventListener("click", function () {
+            // Find the parent expanded-blog-content and hide it
+            this.parentElement.style.display = "none";
+        });
+    });
     if (savedPosition !== null) {
         window.scrollTo({
             top: parseInt(savedPosition),
