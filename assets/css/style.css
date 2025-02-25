@@ -267,7 +267,7 @@ section .subtitle-half h5 {
     font-size: 17px;
 }
 ul{
-    margin:0;
+    margin:0 0 20px;
     padding:0;
     list-style:none;
 }
@@ -679,7 +679,7 @@ input::-ms-input-placeholder {
 }
 /*heading title all area*/
 .head_title{
-    margin-bottom:90px;
+    margin-bottom:8vh;
 }
 .head_title h3{
     color:#413d4b;
@@ -753,9 +753,7 @@ input::-ms-input-placeholder {
     text-align: left;
     width: 44%;
 }
-@media(max-width: 768px){
-    .main_home{padding: 15vh 0;width: 100%;}
-}
+
 
 .main_home h1{
     color: #fff;
@@ -825,7 +823,10 @@ input::-ms-input-placeholder {
     color: #fff;
     background: #e74c3c;
 }
-
+@media(max-width: 768px){
+    .main_home{padding: 15vh 0;width: 100%;}
+    .main_home p{font-size: 1.6rem}
+}
 .expanded-content {
     display: none;
     z-index: 999;
@@ -837,15 +838,7 @@ input::-ms-input-placeholder {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;
 }
-.expanded-blog-content{
-    display: none;
-    margin-top: 20px;
-    padding: 15px;
-    background: rgba(055, 055, 055, 0.8);
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
-}
+
 .expanded-content h1{font-size: 4rem}
 /*==================================================================
             Feature section Style
@@ -880,7 +873,12 @@ input::-ms-input-placeholder {
 .main_feature .single_feature h4{
     transition: all 0.6s;
 }
-
+@media(max-width:768px){
+    .main_feature .single_feature h3{
+    font-size: 1.6rem;
+    color: #333;
+}
+}
 /*==================================================================
             History section Style
 ====================================================================*/
@@ -897,7 +895,7 @@ input::-ms-input-placeholder {
             service section Style
 ====================================================================*/
 .main_service .head_title{
-    padding: 100px 0px 40px 0px;
+    padding: 70px 0px 30px 0px;
     margin-bottom: 0px;
 }
 .main_service .head_title h2{
@@ -908,7 +906,8 @@ input::-ms-input-placeholder {
 }
 .main_service .single_service_img {
     position: relative;
-    height: 676px;
+    height: 80vh;
+    min-height: 660px;
 }
 .main_service .single_service_img img {
     width: 100%;
@@ -936,7 +935,7 @@ input::-ms-input-placeholder {
 .main_service .single_service.single_service_text .single_service_right_text {
     width: 96%;
 }
-.main_service .single_service.single_service_text .single_service_right_text h4{
+.main_service .single_service.single_service_text .single_service_right_text h3{
     color:#e74c3c;
 }
 .main_service .single_service.single_service_text .single_service_right_text p{
@@ -944,7 +943,7 @@ input::-ms-input-placeholder {
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 400;
 }
-.main_service p{font-size: 1.3rem}
+.main_service p{font-size: 1.2rem}
 /*======================================================================
                     portfolio section css
 ========================================================================*/
@@ -1183,12 +1182,12 @@ button.btn-md:hover {
 .pricing_head .pricing_price .p_r{
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 700;
-    font-size:2.822rem;
+    font-size:2.22rem;
 }
 .pricing_head .pricing_price .m_t{
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 400;
-    font-size:0.941rem;
+    font-size:1.91rem;
 }
 .pricing_body{
     background: #f4f5f9;
@@ -1213,7 +1212,7 @@ button.btn-md:hover {
     margin-top:30px;
 }
 
-
+.main_pricing_area p{font-size: 1.9rem}
 
 /*video section css*/
 
@@ -1408,8 +1407,9 @@ li .single_team_text p{
 .blog{
     background: #f4f5f9;
 }
-
-
+.main_blog_content h3{font-size: 1.7rem}
+.main_blog_content p{font-size: 1.2rem}
+.main_blog_content .col-sm-6{margin-bottom: 10px; background-color: #e0e0e0}
 .main_blog_content .single_blog_area .single_blog_text{
     background: #e74e3e;
     padding: 70px 30px 70px 50px;
@@ -1418,7 +1418,7 @@ li .single_team_text p{
 .main_blog_content .single_blog_area .single_blog_text.s_b_left:after{
     position: absolute;
     left:-8%;
-    top:45%;
+    top:5%;
     content:"";
     width: 0;
     height: 0;
@@ -1429,7 +1429,7 @@ li .single_team_text p{
 .main_blog_content .single_blog_area .single_blog_text.s_b_right:after{
     position: absolute;
     right: -8%;
-    top:45%;
+    top:15%;
     content:"";
     z-index: 9;
     width: 0;
@@ -1448,7 +1448,47 @@ li .single_team_text p{
 }
 .main_blog_content .single_blog_area .single_blog_img img{
     width:100%;
-    margin-top: 70%;
+    margin-top: 0%;
+}
+.expanded-blog-content{
+    display: none;
+    margin-top: 20px;
+    position: relative;
+    transform: translateX(-40%);
+    padding: 15px;
+    float: left;
+    width: 45vw;
+    background: rgba(055, 055, 055, 0.8);
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+.close-content-btn {
+    display: block;
+    margin: 10px auto; /* Centers the button */
+    padding: 5px 20px;
+    background-color: #cd4444;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.close-content-btn:hover {
+    background-color: #cc5555;
+}
+@media(max-width:767px){
+    .main_blog_content .single_blog_area .single_blog_img img{
+    width:100%;
+    margin-top: 0%;
+}
+    .main_blog_content .single_blog_area{margin-bottom: 12px}
+    .expanded-blog-content{
+        transform: translateX(0);
+        width: 100%;
+}
 }
 /*contact section css*/
 .contact{
@@ -1491,6 +1531,7 @@ li .single_team_text p{
     background: url(../images/contactBg_pc.jpg) no-repeat top center;
     overflow: hidden;
     background-size: cover;
+    min-height: 70vh;
     color:#fff;
 }
 .main_trial h2{
@@ -1576,7 +1617,7 @@ li .single_team_text p{
 .modal-content {
     background: #fff;
     width: 80%; /* Default width */
-    max-width: 800px;
+    max-width: 1000px;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
