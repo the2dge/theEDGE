@@ -158,11 +158,25 @@ $(document).on("scroll", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("customModal");
+    const modalBody = document.getElementById("modal-body");
+    const closeBtn = document.querySelector(".close");
     const learnMoreButtons = document.querySelectorAll(".learn-more-btn");
     const expandedContents = document.querySelectorAll(".expanded-content");
+    const expandedBlogContents = document.querySelectorAll(".expanded-blog-content");
     const slider = document.querySelector(".main_home_slider"); // The slider container
     const readMoreButtons = document.querySelectorAll(".read_more");
-    
+    const savedPosition = localStorage.getItem("scrollPosition");
+
+    if (savedPosition !== null) {
+        window.scrollTo({
+            top: parseInt(savedPosition),
+            behavior: "smooth"
+        });
+
+        // Remove stored scroll position after restoring
+        localStorage.removeItem("scrollPosition");
+    }
     readMoreButtons.forEach((btn) => {
             btn.addEventListener("click", function () {
                 const targetId = this.getAttribute("data-target");
@@ -177,16 +191,67 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     // Toggle expansion on button click
-    learnMoreButtons.forEach((btn, index) => {
+
+    
+    // Toggle expansion on button click
+    // Open modal and load specific content
+    learnMoreButtons.forEach((btn) => {
         btn.addEventListener("click", function () {
-            expandedContents[index].style.display = 
-                expandedContents[index].style.display === "block" ? "none" : "block";
+            const targetId = this.getAttribute("data-target");
+            const content = document.getElementById(targetId).innerHTML;
+
+            // Load the selected content into the modal
+            modalBody.innerHTML = content;
+            modal.style.display = "flex";
         });
     });
 
-    // Auto-collapse when swiping to the next slide
-    slider.addEventListener("slid.bs.carousel", function () {
+    // Close modal when clicking "X"
+    closeBtn.addEventListener("click", function () {
+        modal.style.display = "none";
+    });
+
+    // Close modal when clicking outside the modal-content
+    window.addEventListener("click", function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+
+
+    // Auto-collapse expanded content when swiping slides
+    $(".main_home_slider").on("beforeChange", function () {
         expandedContents.forEach(content => content.style.display = "none");
+        readMoreButtons.forEach(btn => btn.textContent = "Read More >>");
     });
 });
+// Function to scroll up to create space for the expanded content
+function scrollSomeUp(expandedContent) {
+    const screenHeight = window.innerHeight;
+    const expandedHeight = screenHeight / 3; // Targeting 1/3 of screen height
+    const btnPosition = expandedContent.getBoundingClientRect().top + window.pageYOffset;
+    const scrollTarget = btnPosition - expandedHeight; // Adjusting the scroll position
 
+    window.scrollTo({
+        top: scrollTarget,
+        behavior: "smooth"
+    });
+}
+/*
+function scrollSomeUp() {
+    // Get all elements with class "home_btn"
+    const homeButtons = document.querySelectorAll('.rtn_pt');
+
+    homeButtons.forEach((btn) => {
+        btn.addEventListener('click', function () {
+            // Get the position of the clicked button
+            const returnPosition = btn.getBoundingClientRect().top + window.pageYOffset;
+
+            // Scroll to the button smoothly
+            window.scrollTo({
+                top: returnPosition - 600, // Adjust this value if needed
+                behavior: 'smooth'
+            });
+        });
+    });
+}*/
