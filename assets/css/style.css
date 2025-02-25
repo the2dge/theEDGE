@@ -1583,7 +1583,7 @@ li .single_team_text p{
     position: relative;
     animation: fadeIn 0.3s ease-in-out;
     overflow-y: auto; 
-    max-width: 90vh;
+    max-height: 90vh;
 }
 
 /* Close button */
