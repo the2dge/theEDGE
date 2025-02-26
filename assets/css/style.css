@@ -607,10 +607,13 @@ input::-ms-input-placeholder {
     text-transform: uppercase;
     font-size: 1.275rem;
     color: #fff;
-    background: rgba(100, 100, 100, 0.5);
+    background: rgba(100, 100, 100, 0.66);
 }
 .navbar-brand {
     padding: 0px 10px;
+}
+@media (max-width: 768px) {
+    .main_menu_bg .navbar-nav>li>a {font-size: 1.75rem;}
 }
 @media (max-width: 390px) {
     .navbar-brand {max-width: 320px;margin-top: 5px}
@@ -1555,6 +1558,7 @@ li .single_team_text p{
     padding-top: 40vh;
     background: url(../images/contactBg_pc.jpg) no-repeat right center;
     }
+
 }
 /*=================================================================
                         footer section
