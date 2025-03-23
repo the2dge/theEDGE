@@ -990,20 +990,31 @@ THE EDGE 旨在幫助微小企業利用各種接近無償的互聯網和社交�
         const CLOUD_FUNCTION_URL = "https://the-edge-login-545199463340.asia-east1.run.app"; // Google Cloud Function URL
 
         function loginWithLINE() {
-  // Save current scroll position
+  // Save scroll position before redirecting
   localStorage.setItem("scrollPosition", window.scrollY);
-
-  // Initialize LIFF with your LIFF ID
+  
+  // Initialize LIFF
   liff.init({ liffId: LIFF_ID })
     .then(() => {
-      // If the user is not logged in, trigger LIFF login with the desired redirect URI.
       if (!liff.isLoggedIn()) {
+        // If not logged in, initiate login. The redirect URI should match what you set in your LIFF settings.
         liff.login({ redirectUri: REDIRECT_URI });
+      } else {
+        // If already logged in, attempt to get the user profile.
+        liff.getProfile()
+          .then(profile => {
+            console.log("User profile:", profile);
+            // You can then handle the profile as needed (e.g., store it or redirect accordingly)
+          })
+          .catch(err => {
+            console.error("Error getting profile:", err);
+            alert("Error getting LINE profile. Please try again.");
+          });
       }
-      // If already logged in, you can perform further actions if needed.
     })
-    .catch(error => {
-      console.error("LIFF initialization failed:", error);
+    .catch(err => {
+      console.error("LIFF initialization failed:", err);
+      alert("LIFF initialization failed. Check your LIFF ID and configuration.");
     });
 }
 
