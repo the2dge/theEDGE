@@ -985,16 +985,27 @@ THE EDGE 旨在幫助微小企業利用各種接近無償的互聯網和社交�
         <script src="assets/js/main.js"></script>
 <!-- LINE Login Code   -->
     <script>
-        const CLIENT_ID = "2006943877"; // OFFICIAL LINE Login Channel ID
+        const LIFF_ID = "2006943877-a1xZoE8M"; // LIFF ID
         const REDIRECT_URI = "https://theislandedge.com/"; //網站 callback URL
         const CLOUD_FUNCTION_URL = "https://the-edge-login-545199463340.asia-east1.run.app"; // Google Cloud Function URL
 
         function loginWithLINE() {
-            // Store scroll position before redirecting
-            localStorage.setItem("scrollPosition", window.scrollY);
-            let loginUrl = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=profile%20openid%20email&state=12345`;
-            window.location.href = loginUrl;
-        }
+  // Save current scroll position
+  localStorage.setItem("scrollPosition", window.scrollY);
+
+  // Initialize LIFF with your LIFF ID
+  liff.init({ liffId: LIFF_ID })
+    .then(() => {
+      // If the user is not logged in, trigger LIFF login with the desired redirect URI.
+      if (!liff.isLoggedIn()) {
+        liff.login({ redirectUri: REDIRECT_URI });
+      }
+      // If already logged in, you can perform further actions if needed.
+    })
+    .catch(error => {
+      console.error("LIFF initialization failed:", error);
+    });
+}
 
 
         $(document).ready(function () {
