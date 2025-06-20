@@ -73,7 +73,7 @@ function submitForm() {
   .catch(error => console.error("Error:", error));
 }
 */
-    function submitForm() {
+function submitForm() {
     const userId = document.getElementById("userId").value;
     const name = document.getElementById("name").value;
     const mobile = document.getElementById("mobile").value;
@@ -85,7 +85,8 @@ function submitForm() {
     }
 
     // Construct the Google Apps Script web app URL with query parameters
-    const scriptURL = "https://script.google.com/macros/s/AKfycbzDQHnqmUYn2HWvGQWl2z8Dul6lr5meaMRnSYpBo1PN/dev"; 
+    const scriptURL = "https://script.google.com/macros/s/AKfycbzDQHnqmUYn2HWvGQWl2z8Dul6lr5meaMRnSYpBo1PN/dev"; // Replace with your actual Apps Script web app URL
+    const params = new URLSearchParams({
         userId: userId,
         name: name,
         mobile: mobile
