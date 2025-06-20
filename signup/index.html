@@ -40,7 +40,7 @@ function submitForm() {
     });
 }
 */
-
+/*
 function submitForm() {
   const userId = document.getElementById("userId").value;
   const name = document.getElementById("name").value;
@@ -72,7 +72,47 @@ function submitForm() {
   })
   .catch(error => console.error("Error:", error));
 }
+*/
+    function submitForm() {
+    const userId = document.getElementById("userId").value;
+    const name = document.getElementById("name").value;
+    const mobile = document.getElementById("mobile").value;
+    const idToken = document.getElementById("idToken").value; // Get the ID Token
 
+    if (!name || !mobile) {
+        alert("❗All fields are required.");
+        return;
+    }
+
+    // Construct the Google Apps Script web app URL with query parameters
+    const scriptURL = "https://script.google.com/macros/s/AKfycbzDQHnqmUYn2HWvGQWl2z8Dul6lr5meaMRnSYpBo1PN/dev"; 
+        userId: userId,
+        name: name,
+        mobile: mobile
+    });
+    const url = `${scriptURL}?${params.toString()}`;
+
+    fetch(url, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        // ✅ Show a confirmation message to the user
+        alert("✅ 註冊成功！現在您可以關閉此頁面並返回 LINE。");
+
+        // ✅ Wait 0.5 seconds, then close the window and return to LINE
+        setTimeout(() => {
+            liff.closeWindow(); // Close the LIFF window and return to LINE
+        }, 500);
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("❌ Registration failed. Please try again.");
+    });
+}
   </script>
 </head>
 <body>
