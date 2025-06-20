@@ -6,6 +6,7 @@
   <title>LINE Member Registration</title>
   <script>
   // Frontend Form Submission
+    /*
 function submitForm() {
     const userId = document.getElementById("userId").value;
     const name = document.getElementById("name").value;
@@ -22,7 +23,7 @@ function submitForm() {
     fetch(cloudFunctionURL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, name, mobile, idToken}) // Include idToken
+        body: JSON.stringify({ userId, name, mobile}) // Include idToken
     })
     .then(() => {
         // ✅ Show a confirmation message to the user
@@ -38,8 +39,8 @@ function submitForm() {
         alert("❌ Registration failed. Please try again.");
     });
 }
+*/
 
-/*
 function submitForm() {
   const userId = document.getElementById("userId").value;
   const name = document.getElementById("name").value;
@@ -53,7 +54,7 @@ function submitForm() {
   const cloudFunctionURL = "https://script.google.com/macros/s/AKfycbwevFe06bnQSzQJcOTucesqIAStCblfuqf61z7IPE2YeXWc7fQu8EtZOEDoArrPJTbqbw/exec";
 
   fetch(cloudFunctionURL, {
-    method: "POST",
+    method: "GET",
  //   mode: "no-cors",
     headers: {
       "Content-Type": "application/json"
@@ -71,7 +72,7 @@ function submitForm() {
   })
   .catch(error => console.error("Error:", error));
 }
-*/
+
   </script>
 </head>
 <body>
