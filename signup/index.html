@@ -10,7 +10,7 @@ function submitForm() {
     const userId = document.getElementById("userId").value;
     const name = document.getElementById("name").value;
     const mobile = document.getElementById("mobile").value;
-  //  const idToken = document.getElementById("idToken").value; // Get the ID Token
+    const idToken = document.getElementById("idToken").value; // Get the ID Token
 
     if (!name || !mobile) {
         alert("❗All fields are required.");
@@ -22,7 +22,7 @@ function submitForm() {
     fetch(cloudFunctionURL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, name, mobile}) // Include idToken
+        body: JSON.stringify({ userId, name, mobile, idToken}) // Include idToken
     })
     .then(() => {
         // ✅ Show a confirmation message to the user
