@@ -6,40 +6,6 @@
   <title>LINE Member Registration</title>
   <script>
   // Frontend Form Submission
-    /*
-function submitForm() {
-    const userId = document.getElementById("userId").value;
-    const name = document.getElementById("name").value;
-    const mobile = document.getElementById("mobile").value;
-    const idToken = document.getElementById("idToken").value; // Get the ID Token
-
-    if (!name || !mobile) {
-        alert("❗All fields are required.");
-        return;
-    }
-
-    const cloudFunctionURL = "https://save-to-sheet-545199463340.asia-east1.run.app";
-
-    fetch(cloudFunctionURL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, name, mobile}) // Include idToken
-    })
-    .then(() => {
-        // ✅ Show a confirmation message to the user
-        alert("✅ 註冊成功！現在您可以關閉此頁面並返回 LINE。");
-
-        // ✅ Wait 0.5 seconds, then close the window and return to LINE
-        setTimeout(() => {
-            liff.closeWindow(); // Close the LIFF window and return to LINE
-        }, 500);
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        alert("❌ Registration failed. Please try again.");
-    });
-}
-*/
 
 function submitForm() {
   const userId = document.getElementById("userId").value;
@@ -57,7 +23,12 @@ function submitForm() {
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ userId, name, mobile }),
+    body: JSON.stringify({
+      mode: 'registerMember', // Add this line
+      userId,
+      name,
+      mobile
+    }),
   })
   .then(response => response.json())
   .then(data => {
@@ -84,42 +55,6 @@ function submitForm() {
     <button type="submit">Submit</button>
   </form>
   
-  <!--
-<form id="registerForm">
-    <input type="text" id="name" placeholder="Name">
-    <input type="text" id="userId" readonly>
-    <input type="text" id="mobile" placeholder="Mobile Number">
-    <button type="submit">Register</button>
-</form>
--->
-<script>/*
-    document.getElementById("registerForm").addEventListener("submit", function(event) {
-        event.preventDefault();
-        
-        const name = document.getElementById("name").value;
-        const lineUserId = document.getElementById("lineUserId").value;
-        const mobileNumber = document.getElementById("mobileNumber").value;
-
-     //   fetch("https://script.google.com/macros/s/AKfycbzDQHnqmUYn2HWvGQWl2z8Dul6lr5meaMRnSYpBo1PN/dev", {
-  fetch("https://script.google.com/macros/s/AKfycbwevFe06bnQSzQJcOTucesqIAStCblfuqf61z7IPE2YeXWc7fQu8EtZOEDoArrPJTbqbw/exec",{
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-        userId: document.getElementById("lineUserId").value,
-        name: document.getElementById("name").value,
-        mobile: document.getElementById("mobileNumber").value
-    })
-})
-.then(response => response.json())
-.then(data => {
-    console.log("Success:", data);
-    alert("Registration successful!");
-})
-.catch(error => {
-    console.error("Error:", error);
-    alert("Registration failed. Please check the network request.");
-});
-*/
 </script>
 <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
 <script>
