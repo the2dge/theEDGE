@@ -6,7 +6,7 @@
   <title>LINE Member Registration</title>
   <script>
   // Frontend Form Submission
-
+// Frontend Form Submission
 function submitForm() {
   const userId = document.getElementById("userId").value;
   const name = document.getElementById("name").value;
@@ -30,7 +30,12 @@ function submitForm() {
       mobile
     }),
   })
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) { // Check if the response status is not OK (e.g., 4xx or 5xx)
+        return response.text().then(text => { throw new Error(text) });
+    }
+    return response.json();
+  })
   .then(data => {
     if (data.status === "success") {
       alert("✅ Registration successful! Check your LINE messages.");
@@ -39,7 +44,10 @@ function submitForm() {
       alert("❌ Error: " + data.message);
     }
   })
-  .catch(error => console.error("Error:", error));
+  .catch(error => {
+    console.error("Error:", error);
+    alert("An error occurred during registration: " + error.message); // Display the error message from the server
+  });
 }
   </script>
 </head>
