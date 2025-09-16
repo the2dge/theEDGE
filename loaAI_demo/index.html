@@ -1,125 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GAS Web App Embed</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        header {
-            background: #1a73e8;
-            color: white;
-            padding: 16px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        h1 {
-            font-size: 1.8rem;
-            font-weight: 500;
-        }
-        
-        .container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-            padding: 20px;
-        }
-        
-        .iframe-container {
-            flex: 1;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            background: white;
-            margin-top: 20px;
-        }
-        
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
-        
-        .instructions {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-        }
-        
-        h2 {
-            color: #1a73e8;
-            margin-bottom: 12px;
-            font-weight: 500;
-        }
-        
-        p {
-            line-height: 1.6;
-            margin-bottom: 15px;
-            color: #202124;
-        }
-        
-        code {
-            background: #f1f3f4;
-            padding: 3px 6px;
-            border-radius: 4px;
-            font-family: monospace;
-            color: #c7254e;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: #5f6368;
-            font-size: 0.9rem;
-            margin-top: 30px;
-        }
-        
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 1.5rem;
-            }
-            
-            .container {
-                padding: 15px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>My GAS App Wrapper</title>
+  <style>
+    html, body, iframe {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      border: none;
+    }
+    iframe {
+      display: block;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Google Apps Script Web App</h1>
-    </header>
-    
-    <div class="container">
-        <div class="iframe-container">
-            <!-- Replace the URL below with your Google Apps Script web app URL -->
-            <iframe src="https://script.google.com/macros/s/AKfycbxtoWu5LIxjHt7l8fmUf5y405_7bmbaK_f_JncuPbhu/dev"></iframe>
-        </div>
-
-    </div>
-    
-    <footer>
-        <p>Embedded Google Apps Script Web App | Created with HTML</p>
-    </footer>
+  <iframe src="https://script.google.com/macros/s/AKfycbxtoWu5LIxjHt7l8fmUf5y405_7bmbaK_f_JncuPbhu/dev"></iframe>
 </body>
 </html>
