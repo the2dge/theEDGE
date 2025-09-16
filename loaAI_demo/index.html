@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embedded Google Apps Script Web App</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        h1 {
+            color: #1a73e8;
+            margin-bottom: 10px;
+        }
+        
+        .description {
+            color: #5f6368;
+            margin-bottom: 20px;
+        }
+        
+        .iframe-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .iframe-container iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            display: block;
+        }
+        
+        .loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            flex-direction: column;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #1a73e8;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .instructions {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        .instructions h2 {
+            color: #1a73e8;
+            margin-bottom: 15px;
+        }
+        
+        .instructions ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+        }
+        
+        code {
+            background-color: #f1f3f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #5f6368;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .iframe-container iframe {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Embedded Google Apps Script Web App</h1>
+            <p class="description">This page demonstrates how to embed a Google Apps Script web app using an iframe.</p>
+        </header>
+        
+        <main>
+            <div class="iframe-container">
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Loading Google Apps Script Web App...</p>
+                </div>
+                <!-- Replace the URL below with your Google Apps Script web app URL -->
+                <iframe 
+                    src="https://script.google.com/macros/s/AKfycbxtoWu5LIxjHt7l8fmUf5y405_7bmbaK_f_JncuPbhu/dev" 
+                    id="gas-iframe"
+                    onload="document.getElementById('loading').style.display='none';"
+                    allow="camera; microphone; fullscreen">
+                </iframe>
+            </div>
+            
+            <div class="instructions">
+                <h2>How to Embed Your Google Apps Script Web App</h2>
+                <ol>
+                    <li>Create and deploy your Google Apps Script project as a web app</li>
+                    <li>Copy the web app URL provided after deployment</li>
+                    <li>Replace the <code>src</code> attribute of the iframe in this code with your web app URL</li>
+                    <li>Adjust the iframe height and other attributes as needed for your application</li>
+                </ol>
+                <p><strong>Note:</strong> Make sure to set appropriate permissions when deploying your GAS web app so that users can access it.</p>
+            </div>
+        </main>
+        
+        <footer>
+            <p>This is a demonstration page for embedding Google Apps Script web apps.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple script to handle iframe loading state
+        document.getElementById('gas-iframe').addEventListener('load', function() {
+            document.getElementById('loading').style.display = 'none';
+        });
+        
+        // Show loading if iframe takes more than 500ms to load
+        setTimeout(function() {
+            if (document.getElementById('gas-iframe').contentWindow.length === 0) {
+                document.getElementById('loading').style.display = 'flex';
+            }
+        }, 500);
+    </script>
+</body>
+</html>
