@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINE官方帳號 設定指南</title>
+    <meta name="description" content="Complete guide for setting up LINE Official Account - View online or download PDF">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #00c851 0%, #007e33 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #00c851 0%, #007e33 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #00c851;
+            box-shadow: 0 4px 15px rgba(255,255,255,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,255,255,0.4);
+            color: #007e33;
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 0;
+        }
+
+        .pdf-viewer-container {
+            position: relative;
+            background: #f8f9fa;
+            padding: 20px;
+            min-height: 80vh;
+        }
+
+        .pdf-viewer {
+            width: 100%;
+            height: 80vh;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            background: white;
+        }
+
+        .pdf-fallback {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .pdf-fallback h3 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .pdf-fallback p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        .fallback-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.6;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 40px 30px;
+            background: #f8f9fa;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .feature p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .footer {
+            background: #333;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #00c851;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 200px;
+                justify-content: center;
+            }
+
+            .pdf-viewer {
+                height: 70vh;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+                padding: 30px 20px;
+            }
+
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .pdf-viewer-container {
+                padding: 15px;
+            }
+
+            .pdf-viewer {
+                height: 60vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>📄 LINE官方帳號 設定指南</h1>
+            
+            <div class="action-buttons">
+                <a href="#viewer" class="btn btn-primary" onclick="scrollToViewer()">
+                    <span>👁️</span> View Online
+                </a>
+                <a href="loa_guide.pdf" class="btn btn-secondary" download="loa_guide.pdf">
+                    <span>⬇️</span> Download PDF
+                </a>
+            </div>
+        </div>
+
+        <!-- PDF Viewer Section -->
+        <div class="content">
+            <div class="pdf-viewer-container" id="viewer">
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    Loading PDF viewer...
+                </div>
+                
+                <object data="loa_guide.pdf" 
+                        type="application/pdf" 
+                        class="pdf-viewer" 
+                        id="pdf-object"
+                        style="display: none;">
+                    <iframe src="loa_guide.pdf" 
+                            class="pdf-viewer" 
+                            id="pdf-iframe"
+                            style="display: none;">
+                        <div class="pdf-fallback" id="fallback">
+                            <div class="fallback-icon">📄</div>
+                            <h3>PDF Viewer Not Available</h3>
+                            <p>Your browser doesn't support inline PDF viewing, but you can still download the guide.</p>
+                            <a href="LOA_guide.pdf" class="btn btn-primary" download="LOA_guide.pdf">
+                                <span>⬇️</span> Download PDF Guide
+                            </a>
+                        </div>
+                    </iframe>
+                </object>
+            </div>
+        </div>
+
+        
+    </div>
+
+    <script>
+        // PDF loading and fallback detection
+        function initializePDFViewer() {
+            const loading = document.getElementById('loading');
+            const pdfObject = document.getElementById('pdf-object');
+            const pdfIframe = document.getElementById('pdf-iframe');
+            const fallback = document.getElementById('fallback');
+
+            // Hide loading after a short delay
+            setTimeout(() => {
+                loading.style.display = 'none';
+                
+                // Try to show PDF object first
+                pdfObject.style.display = 'block';
+                
+                // Check if PDF loaded successfully after a delay
+                setTimeout(() => {
+                    checkPDFLoaded();
+                }, 2000);
+            }, 1000);
+        }
+
+        function checkPDFLoaded() {
+            const pdfObject = document.getElementById('pdf-object');
+            const pdfIframe = document.getElementById('pdf-iframe');
+            const fallback = document.getElementById('fallback');
+
+            // If object didn't load properly, try iframe
+            if (pdfObject.offsetHeight === 0) {
+                pdfObject.style.display = 'none';
+                pdfIframe.style.display = 'block';
+                
+                // If iframe also fails, show fallback
+                setTimeout(() => {
+                    if (pdfIframe.offsetHeight === 0) {
+                        pdfIframe.style.display = 'none';
+                        fallback.style.display = 'block';
+                    }
+                }, 1000);
+            }
+        }
+
+        function scrollToViewer() {
+            document.getElementById('viewer').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Track download clicks
+        function trackDownload() {
+            // You can add analytics tracking here
+            console.log('PDF download initiated');
+        }
+
+        // Add download tracking to all download links
+        document.addEventListener('DOMContentLoaded', function() {
+            const downloadLinks = document.querySelectorAll('a[download]');
+            downloadLinks.forEach(link => {
+                link.addEventListener('click', trackDownload);
+            });
+
+            // Initialize PDF viewer
+            initializePDFViewer();
+        });
+
+        // Enhanced mobile detection and handling
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // Optimize for mobile devices
+        if (isMobile()) {
+            document.addEventListener('DOMContentLoaded', function() {
+                // Add mobile-specific optimizations
+                const pdfViewer = document.querySelector('.pdf-viewer');
+                if (pdfViewer) {
+                    pdfViewer.style.height = '60vh';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
