@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>咖啡館點餐</title>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #8B4513 0%, #DEB887 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: #8B4513;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .menu-item {
+            border-bottom: 1px solid #eee;
+            padding: 20px;
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .options {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .option-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .temp-size {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .temp-btn, .size-btn {
+            padding: 5px 12px;
+            border: 2px solid #8B4513;
+            background: white;
+            color: #8B4513;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+        
+        .temp-btn.active, .size-btn.active {
+            background: #8B4513;
+            color: white;
+        }
+        
+        .quantity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .qty-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #8B4513;
+            background: white;
+            color: #8B4513;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .qty-btn:hover {
+            background: #8B4513;
+            color: white;
+        }
+        
+        .qty-display {
+            width: 40px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .price {
+            font-size: 16px;
+            color: #8B4513;
+            font-weight: bold;
+        }
+        
+        .cart {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+            background: #8B4513;
+            color: white;
+            padding: 15px;
+            border-radius: 25px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+        }
+        
+        .cart:hover {
+            transform: translateY(-2px);
+        }
+        
+        .cart-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>☕ 咖啡館菜單</h1>
+            <p>選擇您喜愛的飲品</p>
+        </div>
+        
+        <div id="menu-container">
+            <!-- 動態生成菜單項目 -->
+        </div>
+    </div>
+    
+    <div id="cart" class="cart hidden">
+        <div class="cart-info">
+            <span id="cart-count">0 項商品</span>
+            <span id="cart-total">$0</span>
+        </div>
+    </div>
+
+    <script>
+        let liffId = '2008179304-vnea91Lg';
+        let products = [];
+        let cart = {};
+        let userProfile = null;
+
+        // 初始化 LIFF
+        liff.init({
+            liffId: liffId
+        }).then(() => {
+            if (!liff.isLoggedIn()) {
+                liff.login();
+            } else {
+                loadUserProfile();
+                loadMenu();
+            }
+        }).catch((err) => {
+            console.error('LIFF初始化失敗', err);
+        });
+
+        async function loadUserProfile() {
+            try {
+                userProfile = await liff.getProfile();
+            } catch (error) {
+                console.error('取得用戶資料失敗', error);
+            }
+        }
+
+        // 載入菜單
+        function loadMenu() {
+            // 產品資料
+            products = [
+                { id: 1, name: '美式咖啡', priceS: 60, priceM: 70, priceL: 80 },
+                { id: 2, name: '拿鐵咖啡', priceS: 80, priceM: 90, priceL: 100 },
+                { id: 3, name: '紅茶拿鐵', priceS: 75, priceM: 85, priceL: 95 }
+            ];
+
+            renderMenu();
+        }
+
+        function renderMenu() {
+            const container = document.getElementById('menu-container');
+            container.innerHTML = '';
+
+            products.forEach(product => {
+                const menuItem = document.createElement('div');
+                menuItem.className = 'menu-item';
+                menuItem.innerHTML = `
+                    <div class="item-name">${product.name}</div>
+                    <div class="options">
+                        <div class="option-row">
+                            <div class="temp-size">
+                                <button class="temp-btn active" data-temp="熱" data-product="${product.id}">熱</button>
+                                <button class="temp-btn" data-temp="冰" data-product="${product.id}">冰</button>
+                            </div>
+                            <div class="temp-size">
+                                <button class="size-btn active" data-size="S" data-product="${product.id}">S</button>
+                                <button class="size-btn" data-size="M" data-product="${product.id}">M</button>
+                                <button class="size-btn" data-size="L" data-product="${product.id}">L</button>
+                            </div>
+                        </div>
+                        <div class="option-row">
+                            <div class="quantity">
+                                <button class="qty-btn" onclick="changeQuantity(${product.id}, -1)">-</button>
+                                <span class="qty-display" id="qty-${product.id}">0</span>
+                                <button class="qty-btn" onclick="changeQuantity(${product.id}, 1)">+</button>
+                            </div>
+                            <div class="price" id="price-${product.id}">$${product.priceS}</div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(menuItem);
+
+                // 初始化購物車項目
+                cart[product.id] = {
+                    product: product,
+                    temperature: '熱',
+                    size: 'S',
+                    quantity: 0,
+                    price: product.priceS
+                };
+            });
+
+            // 綁定事件
+            bindEvents();
+        }
+
+        function bindEvents() {
+            // 溫度選擇
+            document.querySelectorAll('.temp-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = this.dataset.product;
+                    const temp = this.dataset.temp;
+                    
+                    // 移除同組按鈕的active狀態
+                    document.querySelectorAll(`.temp-btn[data-product="${productId}"]`).forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    cart[productId].temperature = temp;
+                });
+            });
+
+            // 尺寸選擇
+            document.querySelectorAll('.size-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = this.dataset.product;
+                    const size = this.dataset.size;
+                    
+                    // 移除同組按鈕的active狀態
+                    document.querySelectorAll(`.size-btn[data-product="${productId}"]`).forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    cart[productId].size = size;
+                    cart[productId].price = cart[productId].product['price' + size];
+                    
+                    // 更新價格顯示
+                    document.getElementById(`price-${productId}`).textContent = `$${cart[productId].price}`;
+                });
+            });
+
+            // 購物車點擊
+            document.getElementById('cart').addEventListener('click', function() {
+                if (getTotalItems() > 0) {
+                    submitOrder();
+                }
+            });
+        }
+
+        function changeQuantity(productId, change) {
+            cart[productId].quantity = Math.max(0, cart[productId].quantity + change);
+            document.getElementById(`qty-${productId}`).textContent = cart[productId].quantity;
+            updateCart();
+        }
+
+        function updateCart() {
+            const totalItems = getTotalItems();
+            const totalPrice = getTotalPrice();
+            
+            document.getElementById('cart-count').textContent = `${totalItems} 項商品`;
+            document.getElementById('cart-total').textContent = `$${totalPrice}`;
+            
+            const cartElement = document.getElementById('cart');
+            if (totalItems > 0) {
+                cartElement.classList.remove('hidden');
+            } else {
+                cartElement.classList.add('hidden');
+            }
+        }
+
+        function getTotalItems() {
+            return Object.values(cart).reduce((total, item) => total + item.quantity, 0);
+        }
+
+        function getTotalPrice() {
+            return Object.values(cart).reduce((total, item) => total + (item.price * item.quantity), 0);
+        }
+
+        async function submitOrder() {
+            const orderItems = Object.values(cart).filter(item => item.quantity > 0);
+            
+            if (orderItems.length === 0) {
+                alert('請選擇商品');
+                return;
+            }
+
+            const orderData = {
+                userId: userProfile.userId,
+                userName: userProfile.displayName,
+                items: orderItems.map(item => ({
+                    productName: item.product.name,
+                    temperature: item.temperature,
+                    size: item.size,
+                    quantity: item.quantity,
+                    totalPrice: item.price * item.quantity
+                }))
+            };
+
+            try {
+                // 發送訂單到 Google Apps Script
+                const response = await fetch('https://script.google.com/macros/s/AKfycbxHFUfAVx-yY3k6YzIJvJgLx4DH17U54PbjzdGL9ktDt3U3Xc1P8c3mn1aQ3jKahurq/exec', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'saveOrder',
+                        orderData: orderData
+                    })
+                });
+
+                if (response.ok) {
+                    // 關閉 LIFF 視窗
+                    liff.closeWindow();
+                } else {
+                    alert('訂單提交失敗，請重試');
+                }
+            } catch (error) {
+                console.error('訂單提交錯誤:', error);
+                alert('訂單提交失敗，請重試');
+            }
+        }
+    </script>
+</body>
+</html>
