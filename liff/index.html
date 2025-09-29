@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order App</title>
+  <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: #f5f5f5;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #06c755;
+      text-align: center;
+    }
+    .status {
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      background: #e8f5e9;
+      font-size: 12px;
+      word-wrap: break-word;
+    }
+    .product {
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 8px;
+    }
+    .product-name {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .product-price {
+      color: #06c755;
+      font-size: 20px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    button {
+      width: 100%;
+      padding: 15px;
+      background: #06c755;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: #05b04b;
+    }
+    .error {
+      background: #ffebee;
+      color: #c62828;
+    }
+    .success {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+    #debugLog {
+      margin-top: 20px;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: 5px;
+      font-size: 11px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🍕 Order System</h1>
+    <div id="status" class="status">Starting initialization...</div>
+    
+    <div id="content" style="display:none;">
+      <div class="product">
+        <div class="product-name">Delicious Pizza</div>
+        <p>Fresh ingredients, handmade with love</p>
+        <div class="product-price">$12.99</div>
+        <button onclick="orderProduct()">Order Now</button>
+      </div>
+      
+      <div style="margin-top: 20px; padding: 10px; background: #f5f5f5; border-radius: 5px; font-size: 12px;">
+        <strong>User Info:</strong>
+        <div id="userInfo"></div>
+      </div>
+    </div>
+    
+    <div id="debugLog"></div>
+  </div>
+
+  <script>
+    const LIFF_ID = '2008198136-62wOrN0o';
+    let debugMessages = [];
+    
+    function addDebug(message) {
+      const timestamp = new Date().toLocaleTimeString();
+      debugMessages.push(`[${timestamp}] ${message}`);
+      document.getElementById('debugLog').innerHTML = debugMessages.join('<br>');
+      console.log(message);
+    }
+    
+    function updateStatus(message, type = 'info') {
+      const statusEl = document.getElementById('status');
+      statusEl.innerHTML = message;
+      statusEl.className = 'status ' + (type === 'error' ? 'error' : type === 'success' ? 'success' : '');
+    }
+    
+    window.onload = function() {
+      addDebug('Page loaded from GitHub Pages');
+      addDebug('LIFF ID: ' + LIFF_ID);
+      addDebug('User Agent: ' + navigator.userAgent);
+      
+      if (typeof liff === 'undefined') {
+        addDebug('ERROR: LIFF SDK not loaded!');
+        updateStatus('❌ LIFF SDK failed to load', 'error');
+        return;
+      }
+      
+      addDebug('LIFF SDK loaded successfully');
+      
+      let initTimeout = setTimeout(() => {
+        addDebug('ERROR: LIFF initialization timeout (30s)');
+        updateStatus('❌ LIFF initialization timeout - taking too long', 'error');
+      }, 30000);
+      
+      initializeLiff(initTimeout);
+    };
+    
+    function initializeLiff(initTimeout) {
+      addDebug('Starting liff.init()...');
+      updateStatus('Calling liff.init()...');
+      
+      liff.init({
+        liffId: LIFF_ID
+      })
+      .then(() => {
+        clearTimeout(initTimeout);
+        addDebug('✓ liff.init() completed');
+        addDebug('Is in client: ' + liff.isInClient());
+        addDebug('Is logged in: ' + liff.isLoggedIn());
+        addDebug('LIFF version: ' + liff.getVersion());
+        addDebug('OS: ' + liff.getOS());
+        
+        updateStatus('✅ LIFF Initialized Successfully!', 'success');
+        document.getElementById('content').style.display = 'block';
+        
+        if (liff.isLoggedIn()) {
+          addDebug('Getting user profile...');
+          liff.getProfile()
+            .then(profile => {
+              addDebug('✓ Profile retrieved');
+              document.getElementById('userInfo').innerHTML = `
+                <div>Name: ${profile.displayName}</div>
+                <div>User ID: ${profile.userId}</div>
+              `;
+            })
+            .catch(err => {
+              addDebug('ERROR getting profile: ' + err.toString());
+            });
+        } else {
+          addDebug('User not logged in');
+        }
+      })
+      .catch((err) => {
+        clearTimeout(initTimeout);
+        addDebug('ERROR in liff.init(): ' + err.toString());
+        addDebug('Error code: ' + (err.code || 'none'));
+        addDebug('Error message: ' + (err.message || 'none'));
+        
+        updateStatus('❌ LIFF Initialization Failed: ' + err.message, 'error');
+        
+        if (err.code) {
+          updateStatus('❌ LIFF Error [' + err.code + ']: ' + err.message, 'error');
+        }
+      });
+    }
+    
+    function orderProduct() {
+      if (!liff.isLoggedIn()) {
+        addDebug('User not logged in, redirecting to login...');
+        liff.login();
+        return;
+      }
+      
+      addDebug('Sending order message...');
+      
+      liff.sendMessages([{
+        type: 'text',
+        text: '🎉 Order Confirmed!\n\nDelicious Pizza x1\nTotal: $12.99\n\nThank you for your order!'
+      }])
+      .then(() => {
+        addDebug('✓ Message sent successfully');
+        alert('Order placed successfully!');
+        liff.closeWindow();
+      })
+      .catch((err) => {
+        addDebug('ERROR sending message: ' + err.toString());
+        alert('Error: ' + err);
+      });
+    }
+  </script>
+</body>
+</html>
