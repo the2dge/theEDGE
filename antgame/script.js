@@ -1,441 +1,189 @@
 /*
 
-Three.js + Cannon.js video tutorial explaining the source code
+Ant1k Attack 🐜 by Frank Force
 
-Youtube: https://youtu.be/hBiGFpBle7E
-
-In the tutorial, we go through the source code of this game. We cover, how to set up a Three.js scene with box objects, how to add lights, how to set up the camera, how to add animation and event handlers, and finally, we add physics simulation with Cannon.js.
-
-Comparing to the tutorial this version has some extra features: 
-- autopilot mode before the game starts
-- introduction and result screens
-- score indicator showing the level of layers added
-- you can also control the game with touch events and by pressing the space key
-- you can reset the game
-- the game stops once a block went over the stack
-- once the game failed the last block falls down
-- the game reacts to window resizing
-
-Check out my YouTube channel for other game tutorials: https://www.youtube.com/channel/UCxhgW0Q5XLvIoXHAfQXg9oQ
+Ants are invading! Click to squish them.
+Made by Frank Force for JS1024 2025
+https://js1024.fun/demos/2025/11/readme
 
 */
 
-window.focus(); // Capture keys right away (by default focus is on editor)
+'use strict';
 
-let camera, scene, renderer; // ThreeJS globals
-let world; // CannonJs world
-let lastTime; // Last timestamp of animation
-let stack; // Parts that stay solid on top of each other
-let overhangs; // Overhanging parts that fall down
-const boxHeight = 1; // Height of each layer
-const originalBoxSize = 3; // Original width and height of a box
-let autopilot;
-let gameEnded;
-let robotPrecision; // Determines how precise the game is on autopilot
+// js1024 shim
+const a = document.body.appendChild(document.createElement('canvas'));
+const c = a.getContext("2d");
+a.width = innerWidth
+a.height = innerHeight;
+document.body.style='margin:0;cursor:grab';
 
-const scoreElement = document.getElementById("score");
-const instructionsElement = document.getElementById("instructions");
-const resultsElement = document.getElementById("results");
-
-init();
-
-// Determines how precise the game is on autopilot
-function setRobotPrecision() {
-  robotPrecision = Math.random() * 1 - 0.5;
-}
-
-function init() {
-  autopilot = true;
-  gameEnded = false;
-  lastTime = 0;
-  stack = [];
-  overhangs = [];
-  setRobotPrecision();
-
-  // Initialize CannonJS
-  world = new CANNON.World();
-  world.gravity.set(0, -10, 0); // Gravity pulls things down
-  world.broadphase = new CANNON.NaiveBroadphase();
-  world.solver.iterations = 40;
-
-  // Initialize ThreeJs
-  const aspect = window.innerWidth / window.innerHeight;
-  const width = 10;
-  const height = width / aspect;
-
-  camera = new THREE.OrthographicCamera(
-    width / -2, // left
-    width / 2, // right
-    height / 2, // top
-    height / -2, // bottom
-    0, // near plane
-    100 // far plane
-  );
-
-  /*
-  // If you want to use perspective camera instead, uncomment these lines
-  camera = new THREE.PerspectiveCamera(
-    45, // field of view
-    aspect, // aspect ratio
-    1, // near plane
-    100 // far plane
-  );
-  */
-
-  camera.position.set(4, 4, 4);
-  camera.lookAt(0, 0, 0);
-
-  scene = new THREE.Scene();
-
-  // Foundation
-  addLayer(0, 0, originalBoxSize, originalBoxSize);
-
-  // First layer
-  addLayer(-10, 0, originalBoxSize, originalBoxSize, "x");
-
-  // Set up lights
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-  scene.add(ambientLight);
-
-  const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
-  dirLight.position.set(10, 20, 0);
-  scene.add(dirLight);
-
-  // Set up renderer
-  renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setAnimationLoop(animation);
-  document.body.appendChild(renderer.domElement);
-}
-
-function startGame() {
-  autopilot = false;
-  gameEnded = false;
-  lastTime = 0;
-  stack = [];
-  overhangs = [];
-
-  if (instructionsElement) instructionsElement.style.display = "none";
-  if (resultsElement) resultsElement.style.display = "none";
-  if (scoreElement) scoreElement.innerText = 0;
-
-  if (world) {
-    // Remove every object from world
-    while (world.bodies.length > 0) {
-      world.remove(world.bodies[0]);
-    }
-  }
-
-  if (scene) {
-    // Remove every Mesh from the scene
-    while (scene.children.find((c) => c.type == "Mesh")) {
-      const mesh = scene.children.find((c) => c.type == "Mesh");
-      scene.remove(mesh);
-    }
-
-    // Foundation
-    addLayer(0, 0, originalBoxSize, originalBoxSize);
-
-    // First layer
-    addLayer(-10, 0, originalBoxSize, originalBoxSize, "x");
-  }
-
-  if (camera) {
-    // Reset camera positions
-    camera.position.set(4, 4, 4);
-    camera.lookAt(0, 0, 0);
-  }
-}
-
-function addLayer(x, z, width, depth, direction) {
-  const y = boxHeight * stack.length; // Add the new box one layer higher
-  const layer = generateBox(x, y, z, width, depth, false);
-  layer.direction = direction;
-  stack.push(layer);
-}
-
-function addOverhang(x, z, width, depth) {
-  const y = boxHeight * (stack.length - 1); // Add the new box one the same layer
-  const overhang = generateBox(x, y, z, width, depth, true);
-  overhangs.push(overhang);
-}
+///////////////////////////////////////////////////////////////////////////////
 /*
-function generateBox(x, y, z, width, depth, falls) {
-  // ThreeJS
-  const geometry = new THREE.BoxGeometry(width, boxHeight, depth);
-  const color = new THREE.Color(`hsl(${30 + stack.length * 4}, 100%, 50%)`);
-  const material = new THREE.MeshLambertMaterial({ color });
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.position.set(x, y, z);
-  scene.add(mesh);
-
-  // CannonJS
-  const shape = new CANNON.Box(
-    new CANNON.Vec3(width / 2, boxHeight / 2, depth / 2)
-  );
-  let mass = falls ? 5 : 0; // If it shouldn't fall then setting the mass to zero will keep it stationary
-  mass *= width / originalBoxSize; // Reduce mass proportionately by size
-  mass *= depth / originalBoxSize; // Reduce mass proportionately by size
-  const body = new CANNON.Body({ mass, shape });
-  body.position.set(x, y, z);
-  world.addBody(body);
-
-  return {
-    threejs: mesh,
-    cannonjs: body,
-    width,
-    depth
-  };
-}
+// Ant1k Attack 🐜 by Frank Force - 1020B!
+for(_='a.~~r__*(^_/4,^ZMath.Y*YcosX),W-g/6WV-I/6,U(n=p=L100KYrandom()J*JHH,Gt.FWFEFgD(FBonA~a@^J+1)/--;)g=;gfor(3u(m.map(~y50Ysintyle)}(~x-h.x,99J<.5?-:&&9u(,-0,9))(@)*(g-1.4=>{  ~heightfill2H-1Ba+=.03*()E~width~gYhypot-h.y)<15Ba=FbeginPathBBellipse(~xu=(a=h=r=1)=>FS=c.S=`hsl(${a}%,${h}%,`+r,v=(a,t) .2W~g,+Z.5V^1.3V@,Wu(W,,_/.6,_/15,@+(2*g+~d/13W);59W-_*W+_X)-Zg-1?.4:.2W^g?.8:.4W@,,w=()    m.push({x:++n%2?H:+5y:n%2?+:Gr:25<n?5+6H:7+3Gg:J+1,a:d:0};~before(r=~clAeNode(~s.positiA="absolute")Wt=r.getCAtext`2d`,h=;hl=-15GI=9;IuLM=l-3*IERect(*gU*hU91+I,91+I);m=[],w(WAmousedown=h a  if(2*_){~++M,K==++pL0Wp?==p?K:2:1n<|==p&n<Kw();220G.3W+^W+^W2,7,9G);v(a,t1(~3H+2,@=Yatan2h.y-)+,setInterval(()   +=t DBx+=D*y-=DXd+=D-=2<D.002,Fx<-+33Ex>+-33Ey<-+22Ey>+Wv(t,c)Wc.fAt="6em cursive",9*gWpc.Text(M,29+g,+g,16)';G=/[^ -?CIM-T[\]`-}]/.exec(_);)with(_.split(G))_=join(shift());eval(_)
 */
-function generateBox(x, y, z, width, depth, falls, text = "") {
-  // ThreeJS Box
-  const geometry = new THREE.BoxGeometry(width, boxHeight, depth);
-  const color = new THREE.Color(`hsl(${30 + stack.length * 4}, 100%, 50%)`);
-  const material = new THREE.MeshLambertMaterial({ color });
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.position.set(x, y, z);
-  scene.add(mesh);
-  
-  // Add 3D text on top of the box
-  if (text) {
-    const textGeometry = new THREE.TextGeometry(text, {
-      font: textFont, // You'll need to load a font
-      size: Math.min(width, depth) * 0.2, // Scale based on box size
-      height: 0.1, // Thickness of the text
-      curveSegments: 12,
-      bevelEnabled: false
+///////////////////////////////////////////////////////////////////////////////
+
+// constants (will be auto replace in minified)
+const MAX_ANT_COUNT = 100;
+const HALF_ANT_COUNT = MAX_ANT_COUNT/2|0;
+const QUART_ANT_COUNT = MAX_ANT_COUNT/4|0;
+
+// locals (remove declaration from minified)
+let i, j, k, l,
+
+// globals defined below (remove declaration from minified)
+objects, objectCount, score, totalScore, canvasBack, contextBack,
+
+// game stuff
+hsl = (s=0, l=0, a=1)=> contextBack.fillStyle = c.fillStyle = `hsl(0,${s}%,${l}%,${a}`,
+
+drawAnt = (p, context)=>
+{
+    for(i=3; i--;)
+    {
+        // shadow
+        hsl(0, 0, .2);
+        p.v && context.beginPath(context.fill(context.ellipse(
+            p.x, p.y+p.r/4, 
+            p.r*(.5-i/6), p.r*(1.3-i/6), 
+            p.a, 0, 9)));
+
+        // legs
+        hsl();
+        context.beginPath(context.fill(context.ellipse(
+            p.x, p.y, 
+            p.r/.6, p.r/15, 
+            p.a+Math.sin(i*2+p.d/13), 0, 9)));
+    }
+    // body/head
+    for(i=3; i--;)
+    {
+        hsl(50, 9);
+        context.beginPath(context.fill(context.ellipse(
+            p.x-p.r*Math.sin(p.a)*(i-1.4), p.y+p.r*(Math.cos(p.a)*(i-1.4))-p.r/4, 
+            p.r*(i-1?.4:.2), p.r*(i?.8:.4), 
+            p.a, 0, 9)));
+    }
+},
+
+// spawn object
+spawnObject = ()=>
+{
+    objects.push(
+    {
+        x: ++objectCount%2 ? a.width*Math.random() : Math.random() < .5 ? -50 : a.width + 50,
+        y: objectCount%2 ? Math.random() < .5 ? -50 : a.height + 50 : a.height*Math.random(),
+        r:  objectCount > QUART_ANT_COUNT ? 
+            5+Math.random()*6 : // more size variance
+            7+Math.random()*3, // normal enemy
+        v: Math.random()+1,
+        a: 0,
+        d: 0
     });
-    
-    // Center the text geometry
-    textGeometry.computeBoundingBox();
-    const textWidth = textGeometry.boundingBox.max.x - textGeometry.boundingBox.min.x;
-    const textDepth = textGeometry.boundingBox.max.z - textGeometry.boundingBox.min.z;
-    
-    const textMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 }); // Black text
-    const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-    
-    // Position the text on top of the box
-    textMesh.position.set(
-      x - textWidth / 2, 
-      y + boxHeight / 2 + 0.1, // Slightly above the box
-      z - textDepth / 2
-    );
-    
-    scene.add(textMesh);
-    
-    // Group the box and text together
-    const group = new THREE.Group();
-    group.add(mesh);
-    group.add(textMesh);
-    mesh.userData.textMesh = textMesh; // Reference to the text for later use
-  }
-  
-  // CannonJS physics
-  const shape = new CANNON.Box(
-    new CANNON.Vec3(width / 2, boxHeight / 2, depth / 2)
-  );
-  let mass = falls ? 5 : 0; // If it shouldn't fall then setting the mass to zero will keep it stationary
-  mass *= width / originalBoxSize; // Reduce mass proportionately by size
-  mass *= depth / originalBoxSize; // Reduce mass proportionately by size
-  const body = new CANNON.Body({ mass, shape });
-  body.position.set(x, y, z);
-  world.addBody(body);
-  
-  return {
-    threejs: mesh,
-    cannonjs: body,
-    width,
-    depth,
-    textMesh: mesh.userData.textMesh // Include reference to text mesh
-  };
-}
+},
 
-// You'll need to load a font first, add this to your initialization code:
-function initializeText() {
-  const loader = new THREE.FontLoader();
-  
-  loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function(font) {
-    textFont = font;
-    // You might want to regenerate any existing boxes with text after the font loads
-  });
-}
-function cutBox(topLayer, overlap, size, delta) {
-  const direction = topLayer.direction;
-  const newWidth = direction == "x" ? overlap : topLayer.width;
-  const newDepth = direction == "z" ? overlap : topLayer.depth;
+// main game loop
+update = ()=>
+{
+    // clear canvas
+    a.width += 0;
 
-  // Update metadata
-  topLayer.width = newWidth;
-  topLayer.depth = newDepth;
+    // update objects
+    objects.map(p=>
+    {
+        if (p.v)
+        {
+            // move object
+            p.x += p.v * Math.sin(p.a += (Math.random()*2-1)*.03); // move and wobble
+            p.y -= p.v * Math.cos(p.a += (Math.random()*2-1)*.03); // move and wobble
+            p.d += p.v -= p.v > 2 && .002; // slow down
 
-  // Update ThreeJS model
-  topLayer.threejs.scale[direction] = overlap / size;
-  topLayer.threejs.position[direction] -= delta / 2;
+            // bounce off walls
+            if (p.x < -15)
+                p.a = Math.random()*2-1 + 33;
+            if (p.x > a.width+15)
+                p.a = Math.random()*2-1 - 33;
+            if (p.y < -15)
+                p.a = Math.random()*2-1 + 22;
+            if (p.y > a.height+15)
+                p.a = Math.random()*2-1;
 
-  // Update CannonJS model
-  topLayer.cannonjs.position[direction] -= delta / 2;
+            // draw object
+            drawAnt(p, c);
+        }
+    });
 
-  // Replace shape to a smaller one (in CannonJS you can't simply just scale a shape)
-  const shape = new CANNON.Box(
-    new CANNON.Vec3(newWidth / 2, boxHeight / 2, newDepth / 2)
-  );
-  topLayer.cannonjs.shapes = [];
-  topLayer.cannonjs.addShape(shape);
-}
-
-window.addEventListener("mousedown", eventHandler);
-window.addEventListener("touchstart", eventHandler);
-window.addEventListener("keydown", function (event) {
-  if (event.key == " ") {
-    event.preventDefault();
-    eventHandler();
-    return;
-  }
-  if (event.key == "R" || event.key == "r") {
-    event.preventDefault();
-    startGame();
-    return;
-  }
-});
-
-function eventHandler() {
-  if (autopilot) startGame();
-  else splitBlockAndAddNextOneIfOverlaps();
-}
-
-function splitBlockAndAddNextOneIfOverlaps() {
-  if (gameEnded) return;
-
-  const topLayer = stack[stack.length - 1];
-  const previousLayer = stack[stack.length - 2];
-
-  const direction = topLayer.direction;
-
-  const size = direction == "x" ? topLayer.width : topLayer.depth;
-  const delta =
-    topLayer.threejs.position[direction] -
-    previousLayer.threejs.position[direction];
-  const overhangSize = Math.abs(delta);
-  const overlap = size - overhangSize;
-
-  if (overlap > 0) {
-    cutBox(topLayer, overlap, size, delta);
-
-    // Overhang
-    const overhangShift = (overlap / 2 + overhangSize / 2) * Math.sign(delta);
-    const overhangX =
-      direction == "x"
-        ? topLayer.threejs.position.x + overhangShift
-        : topLayer.threejs.position.x;
-    const overhangZ =
-      direction == "z"
-        ? topLayer.threejs.position.z + overhangShift
-        : topLayer.threejs.position.z;
-    const overhangWidth = direction == "x" ? overhangSize : topLayer.width;
-    const overhangDepth = direction == "z" ? overhangSize : topLayer.depth;
-
-    addOverhang(overhangX, overhangZ, overhangWidth, overhangDepth);
-
-    // Next layer
-    const nextX = direction == "x" ? topLayer.threejs.position.x : -10;
-    const nextZ = direction == "z" ? topLayer.threejs.position.z : -10;
-    const newWidth = topLayer.width; // New layer has the same size as the cut top layer
-    const newDepth = topLayer.depth; // New layer has the same size as the cut top layer
-    const nextDirection = direction == "x" ? "z" : "x";
-
-    if (scoreElement) scoreElement.innerText = stack.length - 1;
-    addLayer(nextX, nextZ, newWidth, newDepth, nextDirection);
-  } else {
-    missedTheSpot();
-  }
-}
-
-function missedTheSpot() {
-  const topLayer = stack[stack.length - 1];
-
-  // Turn to top layer into an overhang and let it fall down
-  addOverhang(
-    topLayer.threejs.position.x,
-    topLayer.threejs.position.z,
-    topLayer.width,
-    topLayer.depth
-  );
-  world.remove(topLayer.cannonjs);
-  scene.remove(topLayer.threejs);
-
-  gameEnded = true;
-  if (resultsElement && !autopilot) resultsElement.style.display = "flex";
-}
-
-function animation(time) {
-  if (lastTime) {
-    const timePassed = time - lastTime;
-    const speed = 0.008;
-
-    const topLayer = stack[stack.length - 1];
-    const previousLayer = stack[stack.length - 2];
-
-    // The top level box should move if the game has not ended AND
-    // it's either NOT in autopilot or it is in autopilot and the box did not yet reach the robot position
-    const boxShouldMove =
-      !gameEnded &&
-      (!autopilot ||
-        (autopilot &&
-          topLayer.threejs.position[topLayer.direction] <
-            previousLayer.threejs.position[topLayer.direction] +
-              robotPrecision));
-
-    if (boxShouldMove) {
-      // Keep the position visible on UI and the position in the model in sync
-      topLayer.threejs.position[topLayer.direction] += speed * timePassed;
-      topLayer.cannonjs.position[topLayer.direction] += speed * timePassed;
-
-      // If the box went beyond the stack then show up the fail screen
-      if (topLayer.threejs.position[topLayer.direction] > 10) {
-        missedTheSpot();
-      }
-    } else {
-      // If it shouldn't move then is it because the autopilot reached the correct position?
-      // Because if so then next level is coming
-      if (autopilot) {
-        splitBlockAndAddNextOneIfOverlaps();
-        setRobotPrecision();
-      }
+    // draw score
+    c.font = '6em cursive';
+    for(i=9; i--;)
+    {
+        hsl(99, 50-i*9);
+        score && c.fillText(totalScore, 29+i, 99+i);
     }
-
-    // 4 is the initial camera height
-    if (camera.position.y < boxHeight * (stack.length - 2) + 4) {
-      camera.position.y += speed * timePassed;
-    }
-
-    updatePhysics(timePassed);
-    renderer.render(scene, camera);
-  }
-  lastTime = time;
 }
 
-function updatePhysics(timePassed) {
-  world.step(timePassed / 1000); // Step the physics world
+///////////////////////////////////////////////////////////////////////////////
 
-  // Copy coordinates from Cannon.js to Three.js
-  overhangs.forEach((element) => {
-    element.threejs.position.copy(element.cannonjs.position);
-    element.threejs.quaternion.copy(element.cannonjs.quaternion);
-  });
+// setup background canvas
+a.before(canvasBack = a.cloneNode(a.style.position = 'absolute'));
+contextBack = canvasBack.getContext("2d");
+
+// draw background
+for(i=99; i--;)
+for(j=99; j--;)
+for(l=99-Math.random()*15, k=9; k--;)
+{
+    // set color and init score
+    hsl(objectCount = score = totalScore = 0, l - k*3);
+    // draw background tiles
+    contextBack.fillRect(i*99-k/6, j*99-k/6, 91+k, 91+k);
 }
 
-window.addEventListener("resize", () => {
-  // Adjust camera
-  console.log("resize", window.innerWidth, window.innerHeight);
-  const aspect = window.innerWidth / window.innerHeight;
-  const width = 10;
-  const height = width / aspect;
+// int global variables
+objects = [];
 
-  camera.top = height / 2;
-  camera.bottom = height / -2;
+// spawn ants
+//for(i=50;i--;)//test spawn
+spawnObject();
 
-  // Reset renderer
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.render(scene, camera);
-});
+onmousedown = e=>
+{
+    // check for ant click
+    objects.map(p=>
+    {
+        // check if near ant
+        if (p.v && Math.hypot(p.x - e.x, p.y - e.y) < p.r*2)
+        {
+            // smash ant
+            p.v = 0;
+            ++totalScore; // increase score
+            if (++score == MAX_ANT_COUNT) 
+                objectCount = score = 0; // restart game
+
+            // spawn more ants
+            for(i = score ? score == HALF_ANT_COUNT ? MAX_ANT_COUNT : 2 : 1; i--;)
+                if (objectCount < HALF_ANT_COUNT | score == HALF_ANT_COUNT & objectCount < MAX_ANT_COUNT)
+                    spawnObject();
+
+            // draw blood
+            for(i=29; i--;)
+            {
+                hsl(99, 50-Math.random()*20, .3);
+                contextBack.beginPath(contextBack.fill(contextBack.ellipse(
+                    p.x+p.r*(Math.random()*2-1), p.y+p.r*(Math.random()*2-1), 
+                    p.r*(Math.random()+1)/2, p.r*(Math.random()+1)/7, 
+                    Math.random()*9, 0, 9)));
+            }
+            drawAnt(p, contextBack);
+        }
+        if (p.v && Math.hypot(p.x - e.x, p.y - e.y) < 199)
+        {
+            // scare ant
+            p.v = Math.random()*3 + 2; // change speed
+            p.a = Math.atan2(p.x - e.x, e.y - p.y) + Math.random()*2-1; // run away
+        }
+    });
+}
+
+setInterval(update, 16); // 60 fps update
