@@ -3,216 +3,444 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Order App</title>
+  <title>Coffee Shop</title>
   <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      max-width: 500px;
-      margin: 0 auto;
-      background-color: #f5f5f5;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    .container {
-      background: white;
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+      padding-bottom: 80px;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+      color: white;
       padding: 20px;
-      border-radius: 10px;
+      text-align: center;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    h1 {
-      color: #06c755;
+    
+    .header h1 {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+    
+    .header p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+    
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .loading {
       text-align: center;
+      padding: 40px 20px;
+      color: #666;
     }
-    .status {
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      background: #e8f5e9;
-      font-size: 12px;
-      word-wrap: break-word;
+    
+    .product-grid {
+      display: grid;
+      gap: 15px;
+      margin-bottom: 20px;
     }
-    .product {
-      border: 1px solid #ddd;
+    
+    .product-card {
+      background: white;
+      border-radius: 12px;
       padding: 15px;
-      margin: 15px 0;
-      border-radius: 8px;
+      display: flex;
+      gap: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
     }
+    
+    .product-card:active {
+      transform: scale(0.98);
+    }
+    
+    .product-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #f0f0f0;
+    }
+    
+    .product-info {
+      flex: 1;
+    }
+    
     .product-name {
       font-size: 18px;
       font-weight: bold;
+      color: #333;
       margin-bottom: 5px;
     }
-    .product-price {
-      color: #06c755;
-      font-size: 20px;
-      font-weight: bold;
-      margin: 10px 0;
+    
+    .product-desc {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 8px;
     }
-    button {
-      width: 100%;
-      padding: 15px;
-      background: #06c755;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
+    
+    .product-price {
+      font-size: 20px;
+      color: #8B4513;
+      font-weight: bold;
+    }
+    
+    .product-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       margin-top: 10px;
     }
-    button:hover {
-      background: #05b04b;
+    
+    .qty-btn {
+      width: 32px;
+      height: 32px;
+      border: none;
+      border-radius: 50%;
+      background: #8B4513;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .error {
-      background: #ffebee;
-      color: #c62828;
+    
+    .qty-btn:active {
+      background: #A0522D;
     }
-    .success {
+    
+    .qty-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    
+    .qty-display {
+      font-size: 18px;
+      font-weight: bold;
+      min-width: 30px;
+      text-align: center;
+    }
+    
+    .cart-summary {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      padding: 15px 20px;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      display: none;
+    }
+    
+    .cart-summary.active {
+      display: block;
+    }
+    
+    .cart-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .cart-total {
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+    }
+    
+    .cart-items {
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .checkout-btn {
+      width: 100%;
+      padding: 15px;
+      background: #8B4513;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    
+    .checkout-btn:active {
+      background: #A0522D;
+    }
+    
+    .empty-cart {
+      text-align: center;
+      padding: 40px 20px;
+      color: #999;
+    }
+    
+    .success-message {
       background: #e8f5e9;
       color: #2e7d32;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px;
+      text-align: center;
     }
-    #debugLog {
-      margin-top: 20px;
-      padding: 10px;
-      background: #f5f5f5;
-      border-radius: 5px;
-      font-size: 11px;
-      max-height: 200px;
-      overflow-y: auto;
-      font-family: monospace;
+    
+    .error-message {
+      background: #ffebee;
+      color: #c62828;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🍕 Order System</h1>
-    <div id="status" class="status">Starting initialization...</div>
+  <div class="header">
+    <h1>☕ Coffee Shop</h1>
+    <p id="userGreeting">Welcome!</p>
+  </div>
+
+  <div id="loading" class="loading">
+    <p>Loading menu...</p>
+  </div>
+
+  <div id="content" class="container" style="display:none;">
+    <div id="productGrid" class="product-grid"></div>
     
-    <div id="content" style="display:none;">
-      <div class="product">
-        <div class="product-name">Delicious Pizza</div>
-        <p>Fresh ingredients, handmade with love</p>
-        <div class="product-price">$12.99</div>
-        <button onclick="orderProduct()">Order Now</button>
-      </div>
-      
-      <div style="margin-top: 20px; padding: 10px; background: #f5f5f5; border-radius: 5px; font-size: 12px;">
-        <strong>User Info:</strong>
-        <div id="userInfo"></div>
+    <div id="emptyMessage" class="empty-cart">
+      <p>☕ Select your favorite coffee to get started!</p>
+    </div>
+  </div>
+
+  <div id="cartSummary" class="cart-summary">
+    <div class="cart-info">
+      <div>
+        <div class="cart-total" id="cartTotal">$0.00</div>
+        <div class="cart-items" id="cartItems">0 items</div>
       </div>
     </div>
-    
-    <div id="debugLog"></div>
+    <button class="checkout-btn" onclick="checkout()">Place Order</button>
   </div>
 
   <script>
     const LIFF_ID = '2008198136-62wOrN0o';
-    let debugMessages = [];
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyUI2kIpjS3yIAiPeR8JiVufxIgTXfI_sr_uyj5SgUopIjQGypJXuzkErPAHd_l3j1C/exec';
     
-    function addDebug(message) {
-      const timestamp = new Date().toLocaleTimeString();
-      debugMessages.push(`[${timestamp}] ${message}`);
-      document.getElementById('debugLog').innerHTML = debugMessages.join('<br>');
-      console.log(message);
-    }
+    let userProfile = null;
+    let products = [];
+    let cart = {};
     
-    function updateStatus(message, type = 'info') {
-      const statusEl = document.getElementById('status');
-      statusEl.innerHTML = message;
-      statusEl.className = 'status ' + (type === 'error' ? 'error' : type === 'success' ? 'success' : '');
-    }
-    
+    // Initialize LIFF
     window.onload = function() {
-      addDebug('Page loaded from GitHub Pages');
-      addDebug('LIFF ID: ' + LIFF_ID);
-      addDebug('User Agent: ' + navigator.userAgent);
-      
-      if (typeof liff === 'undefined') {
-        addDebug('ERROR: LIFF SDK not loaded!');
-        updateStatus('❌ LIFF SDK failed to load', 'error');
-        return;
-      }
-      
-      addDebug('LIFF SDK loaded successfully');
-      
-      let initTimeout = setTimeout(() => {
-        addDebug('ERROR: LIFF initialization timeout (30s)');
-        updateStatus('❌ LIFF initialization timeout - taking too long', 'error');
-      }, 30000);
-      
-      initializeLiff(initTimeout);
+      liff.init({ liffId: LIFF_ID })
+        .then(() => {
+          if (!liff.isLoggedIn()) {
+            liff.login();
+            return;
+          }
+          
+          return liff.getProfile();
+        })
+        .then((profile) => {
+          if (profile) {
+            userProfile = profile;
+            document.getElementById('userGreeting').textContent = 
+              'Hi, ' + profile.displayName + '! 👋';
+            loadProducts();
+          }
+        })
+        .catch((err) => {
+          console.error('LIFF Error:', err);
+          document.getElementById('loading').innerHTML = 
+            '<p style="color: #c62828;">Failed to initialize. Please try again.</p>';
+        });
     };
     
-    function initializeLiff(initTimeout) {
-      addDebug('Starting liff.init()...');
-      updateStatus('Calling liff.init()...');
+    // Load products from backend
+    function loadProducts() {
+      fetch(API_URL + '?action=getProducts')
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            products = data.products;
+            displayProducts();
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+          } else {
+            throw new Error(data.error);
+          }
+        })
+        .catch(error => {
+          console.error('Error loading products:', error);
+          document.getElementById('loading').innerHTML = 
+            '<p style="color: #c62828;">Failed to load menu. Please try again.</p>';
+        });
+    }
+    
+    // Display products
+    function displayProducts() {
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = '';
       
-      liff.init({
-        liffId: LIFF_ID
-      })
-      .then(() => {
-        clearTimeout(initTimeout);
-        addDebug('✓ liff.init() completed');
-        addDebug('Is in client: ' + liff.isInClient());
-        addDebug('Is logged in: ' + liff.isLoggedIn());
-        addDebug('LIFF version: ' + liff.getVersion());
-        addDebug('OS: ' + liff.getOS());
-        
-        updateStatus('✅ LIFF Initialized Successfully!', 'success');
-        document.getElementById('content').style.display = 'block';
-        
-        if (liff.isLoggedIn()) {
-          addDebug('Getting user profile...');
-          liff.getProfile()
-            .then(profile => {
-              addDebug('✓ Profile retrieved');
-              document.getElementById('userInfo').innerHTML = `
-                <div>Name: ${profile.displayName}</div>
-                <div>User ID: ${profile.userId}</div>
-              `;
-            })
-            .catch(err => {
-              addDebug('ERROR getting profile: ' + err.toString());
-            });
-        } else {
-          addDebug('User not logged in');
-        }
-      })
-      .catch((err) => {
-        clearTimeout(initTimeout);
-        addDebug('ERROR in liff.init(): ' + err.toString());
-        addDebug('Error code: ' + (err.code || 'none'));
-        addDebug('Error message: ' + (err.message || 'none'));
-        
-        updateStatus('❌ LIFF Initialization Failed: ' + err.message, 'error');
-        
-        if (err.code) {
-          updateStatus('❌ LIFF Error [' + err.code + ']: ' + err.message, 'error');
-        }
+      products.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" class="product-image">
+          <div class="product-info">
+            <div class="product-name">${product.name}</div>
+            <div class="product-desc">${product.description}</div>
+            <div class="product-price">$${product.price.toFixed(2)}</div>
+            <div class="product-actions">
+              <button class="qty-btn" onclick="updateQuantity(${product.id}, -1)">−</button>
+              <div class="qty-display" id="qty-${product.id}">0</div>
+              <button class="qty-btn" onclick="updateQuantity(${product.id}, 1)">+</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
       });
     }
     
-    function orderProduct() {
-      if (!liff.isLoggedIn()) {
-        addDebug('User not logged in, redirecting to login...');
-        liff.login();
+    // Update quantity
+    function updateQuantity(productId, change) {
+      if (!cart[productId]) {
+        cart[productId] = 0;
+      }
+      
+      cart[productId] += change;
+      
+      if (cart[productId] < 0) {
+        cart[productId] = 0;
+      }
+      
+      if (cart[productId] === 0) {
+        delete cart[productId];
+      }
+      
+      document.getElementById('qty-' + productId).textContent = cart[productId] || 0;
+      updateCartSummary();
+    }
+    
+    // Update cart summary
+    function updateCartSummary() {
+      let totalItems = 0;
+      let totalPrice = 0;
+      
+      Object.keys(cart).forEach(productId => {
+        const quantity = cart[productId];
+        const product = products.find(p => p.id == productId);
+        if (product) {
+          totalItems += quantity;
+          totalPrice += product.price * quantity;
+        }
+      });
+      
+      document.getElementById('cartTotal').textContent = '$' + totalPrice.toFixed(2);
+      document.getElementById('cartItems').textContent = totalItems + ' item' + (totalItems !== 1 ? 's' : '');
+      
+      const cartSummary = document.getElementById('cartSummary');
+      const emptyMessage = document.getElementById('emptyMessage');
+      
+      if (totalItems > 0) {
+        cartSummary.classList.add('active');
+        emptyMessage.style.display = 'none';
+      } else {
+        cartSummary.classList.remove('active');
+        emptyMessage.style.display = 'block';
+      }
+    }
+    
+    // Checkout
+    function checkout() {
+      if (Object.keys(cart).length === 0) {
+        alert('Your cart is empty!');
         return;
       }
       
-      addDebug('Sending order message...');
+      const items = [];
+      let total = 0;
       
-      liff.sendMessages([{
-        type: 'text',
-        text: '🎉 Order Confirmed!\n\nDelicious Pizza x1\nTotal: $12.99\n\nThank you for your order!'
-      }])
-      .then(() => {
-        addDebug('✓ Message sent successfully');
-        alert('Order placed successfully!');
-        liff.closeWindow();
-      })
-      .catch((err) => {
-        addDebug('ERROR sending message: ' + err.toString());
-        alert('Error: ' + err);
+      Object.keys(cart).forEach(productId => {
+        const quantity = cart[productId];
+        const product = products.find(p => p.id == productId);
+        if (product) {
+          items.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            quantity: quantity
+          });
+          total += product.price * quantity;
+        }
       });
+      
+      const orderData = {
+        items: items,
+        total: total
+      };
+      
+      // Show loading
+      const btn = event.target;
+      btn.textContent = 'Processing...';
+      btn.disabled = true;
+      
+      // Submit order
+      const url = API_URL + 
+        '?action=submitOrder' +
+        '&userId=' + encodeURIComponent(userProfile.userId) +
+        '&userName=' + encodeURIComponent(userProfile.displayName) +
+        '&orderData=' + encodeURIComponent(JSON.stringify(orderData));
+      
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Show success
+            const container = document.getElementById('content');
+            container.innerHTML = `
+              <div class="success-message">
+                <h2>✅ Order Placed!</h2>
+                <p>Order ID: ${data.orderId}</p>
+                <p style="margin-top: 10px;">Check your LINE chat for confirmation!</p>
+                <button class="checkout-btn" style="margin-top: 20px;" onclick="liff.closeWindow()">
+                  Close
+                </button>
+              </div>
+            `;
+            document.getElementById('cartSummary').style.display = 'none';
+            
+            // Send message
+            liff.sendMessages([{
+              type: 'text',
+              text: 'Thank you for your order! ☕'
+            }]);
+          } else {
+            throw new Error(data.error);
+          }
+        })
+        .catch(error => {
+          console.error('Checkout error:', error);
+          alert('Failed to place order. Please try again.');
+          btn.textContent = 'Place Order';
+          btn.disabled = false;
+        });
     }
   </script>
 </body>
