@@ -368,80 +368,87 @@
     }
     
     // Checkout
-    function checkout() {
-      if (Object.keys(cart).length === 0) {
-        alert('Your cart is empty!');
-        return;
-      }
-      
-      const items = [];
-      let total = 0;
-      
-      Object.keys(cart).forEach(productId => {
-        const quantity = cart[productId];
-        const product = products.find(p => p.id == productId);
-        if (product) {
-          items.push({
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            quantity: quantity
-          });
-          total += product.price * quantity;
-        }
+function checkout() {
+  if (Object.keys(cart).length === 0) {
+    alert('Your cart is empty!');
+    return;
+  }
+  
+  const items = [];
+  let total = 0;
+  
+  Object.keys(cart).forEach(productId => {
+    const quantity = cart[productId];
+    const product = products.find(p => p.id == productId);
+    if (product) {
+      items.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: quantity
       });
-      
-      const orderData = {
-        items: items,
-        total: total
-      };
-      
-      // Show loading
-      const btn = event.target;
-      btn.textContent = 'Processing...';
-      btn.disabled = true;
-      
-      // Submit order
-      const url = API_URL + 
-        '?action=submitOrder' +
-        '&userId=' + encodeURIComponent(userProfile.userId) +
-        '&userName=' + encodeURIComponent(userProfile.displayName) +
-        '&orderData=' + encodeURIComponent(JSON.stringify(orderData));
-      
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            // Show success
-            const container = document.getElementById('content');
-            container.innerHTML = `
-              <div class="success-message">
-                <h2>✅ Order Placed!</h2>
-                <p>Order ID: ${data.orderId}</p>
-                <p style="margin-top: 10px;">Check your LINE chat for confirmation!</p>
-                <button class="checkout-btn" style="margin-top: 20px;" onclick="liff.closeWindow()">
-                  Close
-                </button>
-              </div>
-            `;
-            document.getElementById('cartSummary').style.display = 'none';
-            
-            // Send message
-            liff.sendMessages([{
-              type: 'text',
-              text: 'Thank you for your order! ☕'
-            }]);
-          } else {
-            throw new Error(data.error);
-          }
-        })
-        .catch(error => {
-          console.error('Checkout error:', error);
-          alert('Failed to place order. Please try again.');
-          btn.textContent = 'Place Order';
-          btn.disabled = false;
-        });
+      total += product.price * quantity;
     }
+  });
+  
+  const orderData = {
+    items: items,
+    total: total
+  };
+  
+  // Show loading
+  const btn = event.target;
+  btn.textContent = 'Processing...';
+  btn.disabled = true;
+  
+  // Create callback function name
+  window.handleOrderSubmit = function(data) {
+    if (data.success) {
+      // Show success
+      const container = document.getElementById('content');
+      container.innerHTML = `
+        <div class="success-message">
+          <h2>✅ Order Placed!</h2>
+          <p>Order ID: ${data.orderId}</p>
+          <p style="margin-top: 10px;">Check your LINE chat for confirmation!</p>
+          <button class="checkout-btn" style="margin-top: 20px;" onclick="liff.closeWindow()">
+            Close
+          </button>
+        </div>
+      `;
+      document.getElementById('cartSummary').style.display = 'none';
+      
+      // Send message
+      liff.sendMessages([{
+        type: 'text',
+        text: 'Thank you for your order! ☕'
+      }]);
+    } else {
+      console.error('Order error:', data.error);
+      alert('Failed to place order: ' + data.error);
+      btn.textContent = 'Place Order';
+      btn.disabled = false;
+    }
+  };
+  
+  // Submit order using JSONP
+  const script = document.createElement('script');
+  const url = API_URL + 
+    '?action=submitOrder' +
+    '&userId=' + encodeURIComponent(userProfile.userId) +
+    '&userName=' + encodeURIComponent(userProfile.displayName) +
+    '&orderData=' + encodeURIComponent(JSON.stringify(orderData)) +
+    '&callback=handleOrderSubmit';
+  
+  script.src = url;
+  script.onerror = function() {
+    alert('Failed to place order. Please try again.');
+    btn.textContent = 'Place Order';
+    btn.disabled = false;
+  };
+  
+  document.body.appendChild(script);
+}
   </script>
 </body>
 </html>
