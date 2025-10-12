@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>Paper Scissors and Rock</title>
+</head>
+<body>
+
+<div id="scoreDisplay">你目前的連勝紀錄: <span id="score">0</span></div>
+
+<div id="displayArea">
+	<div id="user">
+		<h2>你</h2>
+		<div class="rpsanim">
+		<div class="curr">✊</div>
+		</div>
+		<div id="choiceBtns">
+			<button onclick="anim(this.innerText)">剪刀</button>
+			<button onclick="anim(this.innerText)">石頭</button>
+			<button onclick="anim(this.innerText)">布</button>	
+		</div>
+	</div>
+	<div id="cpu">		
+		<h2>THE EDGE</h2>
+		<div class="rpsanim">
+		<div class="curr">✊</div>
+			</div>
+	</div>
+</div>
+<div id="feedback">你出什麼?</div>
+<script src="script.js"></script>
+</body>
+</html>
