@@ -1,4 +1,5 @@
 let score = 0;
+let userId = "";
 const opts = {
     "剪刀": { // Scissors
         icon: "✌️",
@@ -28,9 +29,36 @@ const inplay = ["哦，懸念…", "讓我們等待判決...", "耐心等待獲�
 const choiceBtns = document.querySelectorAll("button");
 const user = document.querySelector("#user");
 const cpu = document.querySelector("#cpu");
+const userDisplay = document.querySelector("#userDisplay");
+const LIFF_ID = '2008198136-62wOrN0o';
 user.addEventListener("animationend", animationListen, false);
 cpu.addEventListener("animationend", animationListen, false);
 
+// Initialize LIFF
+async function initializeLiff() {
+    try {
+        await liff.init({ liffId: LIFF_ID }); // Replace with your LIFF ID
+        
+        if (!liff.isLoggedIn()) {
+            liff.login();
+            return;
+        }
+        
+        // Get user profile
+        const profile = await liff.getProfile();
+        userId = profile.userId;
+        
+        // Display userId instead of "你"
+        userDisplay.innerText = userId.substring(0, 8) + "..."; // Show first 8 characters for better display
+        
+    } catch (error) {
+        console.error('LIFF initialization failed', error);
+        userDisplay.innerText = "LINE User";
+    }
+}
+
+// Call LIFF initialization when page loads
+document.addEventListener('DOMContentLoaded', initializeLiff);
 function anim(choice) {
     for (let i of choiceBtns) {
         i.disabled = true;
