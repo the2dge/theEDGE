@@ -30,7 +30,7 @@ const choiceBtns = document.querySelectorAll("button");
 const user = document.querySelector("#user");
 const cpu = document.querySelector("#cpu");
 const userDisplay = document.querySelector("#userDisplay");
-const LIFF_ID = '2008198136-62wOrN0o';
+const LIFF_ID = '2006943877-JRNE3RZy';
 user.addEventListener("animationend", animationListen, false);
 cpu.addEventListener("animationend", animationListen, false);
 
