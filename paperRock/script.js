@@ -91,7 +91,7 @@ function animationListen(ev) {
             if (ev.currentTarget.id === "user") {
                 document.querySelector("#feedback").innerText = result();
                 document.querySelector("#score").innerText = score;
-                
+                console.log("score is: ", score);
                 // Show save button if score > 5
                 if (score > 2) {
                     saveButton.style.display = "block";
