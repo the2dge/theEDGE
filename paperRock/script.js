@@ -122,7 +122,7 @@ function result() {
 }
 
 // Global callback function for JSONP
-window.handleSaveScoreResponse = function(response) {
+window.handleSaveScore = function(response) {
     // Re-enable the button
     saveButton.disabled = false;
     saveButton.textContent = "儲存分數到紀錄";
@@ -142,7 +142,7 @@ window.handleSaveScoreResponse = function(response) {
     }
 }
 
-// Function to save score to Google Sheets using JSONP
+// Function to save score to Google Sheets using JSONP (following your successful example)
 function saveScore() {
     if (!userName) {
         alert("無法獲取用戶信息，請重新載入頁面");
@@ -153,80 +153,27 @@ function saveScore() {
     saveButton.disabled = true;
     saveButton.textContent = "儲存中...";
     
-    // Create JSONP request
-    const callbackName = 'handleSaveScoreResponse';
-    const data = {
-        action: 'playScore', // Add action parameter for GAS backend
-        userName: userName,
-        score: score,
-        timestamp: new Date().toISOString()
-    };
-    
-    // Convert data to URL parameters
-    const params = new URLSearchParams();
-    params.append('callback', callbackName);
-    Object.keys(data).forEach(key => {
-        params.append(key, data[key]);
-    });
-    
-    // Create script tag for JSONP
+    // Create JSONP request following your successful example format
     const script = document.createElement('script');
+    const url = API_URL + 
+        '?action=playScore' +
+        '&userName=' + encodeURIComponent(userName) +
+        '&score=' + encodeURIComponent(score) +
+        '&timestamp=' + encodeURIComponent(new Date().toISOString()) +
+        '&callback=handleSaveScore';
+    
     script.id = 'jsonp-script';
-    script.src = `${API_URL}?${params.toString()}`;
-    
-    // Add error handling
+    script.src = url;
     script.onerror = function() {
+        alert('儲存失敗，請稍後再試。');
+        saveButton.textContent = '儲存分數到紀錄';
         saveButton.disabled = false;
-        saveButton.textContent = "儲存分數到紀錄";
-        alert("儲存失敗，請檢查網路連線");
-        script.remove();
+        
+        // Remove the script tag
+        if (script.parentNode) {
+            script.parentNode.removeChild(script);
+        }
     };
     
-    // Add to document to execute the request
     document.body.appendChild(script);
-}
-
-// Alternative method using form submission (if JSONP doesn't work)
-function saveScoreAlternative() {
-    if (!userName) {
-        alert("無法獲取用戶信息，請重新載入頁面");
-        return;
-    }
-    
-    // Disable the save button to prevent multiple clicks
-    saveButton.disabled = true;
-    saveButton.textContent = "儲存中...";
-    
-    // Create a form and submit it
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = API_URL;
-    form.style.display = 'none';
-    
-    // Add data as hidden inputs including action parameter
-    const data = {
-        action: 'playScore', // Add action parameter for GAS backend
-        userName: userName,
-        score: score,
-        timestamp: new Date().toISOString()
-    };
-    
-    Object.keys(data).forEach(key => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = data[key];
-        form.appendChild(input);
-    });
-    
-    // Add form to document and submit
-    document.body.appendChild(form);
-    form.submit();
-    
-    // Re-enable button after a delay (since we can't get response with form submission)
-    setTimeout(() => {
-        saveButton.disabled = false;
-        saveButton.textContent = "儲存分數到紀錄";
-        alert("分數儲存請求已送出！");
-    }, 2000);
 }
