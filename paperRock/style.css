@@ -1,0 +1,149 @@
+
+
+@keyframes rps {
+	0%,
+	100% {
+		bottom: 0;
+	}
+
+	50% {
+		bottom: 0.5em;
+	}
+}
+@keyframes revealuser {
+	0% {
+		transform:rotate(0deg) scaleX(-1) translateX(-50%);
+	}
+	20%,
+	80% {
+		transform: rotate(60deg) scaleX(-1) translateX(-50%);
+	}
+	100% {
+		transform: rotate(0deg) scaleX(-1) translateX(-50%);
+	}
+}
+@keyframes revealcpu {
+	0% {
+		
+		 transform:rotate(0deg) translateX(-50%);
+	}
+	20%,
+	80% {
+		transform: rotate(-60deg) translateX(-50%);
+	}
+	
+	100% {
+		transform: rotate(0deg) translateX(-50%);
+	}
+}
+
+body {
+	font-size:14px;
+	margin: 0;
+font-family: monospace;
+	background: conic-gradient( 
+     #cbff4e 26deg, #b95fff 26.5deg 150deg, 
+     #ff8fd1 150.5deg 269.85deg, #87e977 270deg 299.5deg, #9bdbff 300deg);
+	height:100vh;
+}
+
+#displayArea {
+	display: flex;
+	width: 50%;
+	margin: auto;
+	height:18em;
+	background:#e9f7ff;
+	box-shadow: .4em .4em rgba(0,0,0,0.25);
+	padding-bottom:1em;
+	h2 {
+		font-size:2.5em;
+		margin-bottom:0.5em;
+	}
+	#user {
+		.curr {
+			transform: rotate(0deg) scaleX(-1) rotate(-90deg) translateX(-50%);
+		}
+	}
+	#cpu {
+		.curr {
+			transform: rotate(-90deg) translateX(-50%);
+		}
+	}
+	#user,
+	#cpu {
+		flex: 1;
+		text-align: center;
+		position: relative;
+		#choiceBtns {
+			position:absolute;
+			bottom:0;
+			width:100%;
+			button {
+					font-size:1.2em;
+				margin:0.2em;
+				padding:0.2em;
+				border-radius:0.25em;
+				border:none;
+				background:#6bacd1;
+				font-weight:bold;
+				&:not([disabled]):hover {
+				background:#3691c4;
+					cursor:pointer;
+				}
+			}
+		}
+		.rpsanim {
+			display:block;
+			width:5em;
+			margin:auto;
+			height:5em;
+			position:relative;
+			.curr {
+			font-size: 5em;
+			position:absolute;
+				bottom:0;
+		}
+		}
+		
+
+		
+	}
+	#user.animate {
+			.curr {
+				animation-name: rps, revealuser;
+				animation-duration: 0.6s, 0.82s;
+				animation-iteration-count: 3, 2;
+			}
+		}
+		#cpu.animate {
+			.curr {
+				animation-name: rps, revealcpu;
+				animation-duration: 0.6s, 0.82s;
+				animation-iteration-count: 3, 2;
+			}
+		}
+}
+#scoreDisplay {
+	top:0;
+	background:#3c483a;
+	width:50%;
+	text-align:center;
+	padding:1em;
+	box-sizing:border-box;
+	font-size:1.25em;
+	box-shadow: .25em .25em rgba(0,0,0,0.25);
+	margin:1em auto;
+	color:white;
+}
+#feedback {
+	font-size:1.25em;
+	width:50%;
+	margin:auto;
+	background:#1c3018;
+	color:white;
+	text-align:center;
+	padding:1em;
+	box-sizing:border-box;
+	margin-top:1em;
+	box-shadow: .25em .25em rgba(0,0,0,0.25);
+}
