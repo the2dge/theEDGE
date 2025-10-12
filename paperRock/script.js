@@ -94,7 +94,7 @@ function animationListen(ev) {
                 document.querySelector("#score").innerText = score;
                 
                 // Show save button if score > 5
-                if (score > 5) {
+                if (score > 2) {
                     saveButton.style.display = "block";
                 } else {
                     saveButton.style.display = "none";
