@@ -1,3 +1,4 @@
+
 let score = 0;
 let userName = "";
 const opts = {
@@ -91,9 +92,9 @@ function animationListen(ev) {
             if (ev.currentTarget.id === "user") {
                 document.querySelector("#feedback").innerText = result();
                 document.querySelector("#score").innerText = score;
-                console.log("score is: ", score);
+                
                 // Show save button if score > 5
-                if (score > 2) {
+                if (score > 5) {
                     saveButton.style.display = "block";
                 } else {
                     saveButton.style.display = "none";
@@ -121,8 +122,29 @@ function result() {
     }
 }
 
-// Function to save score to Google Sheets
-async function saveScore() {
+// Global callback function for JSONP
+window.handleSaveScoreResponse = function(response) {
+    // Re-enable the button
+    saveButton.disabled = false;
+    saveButton.textContent = "儲存分數到紀錄";
+    
+    // Remove the script tag
+    const script = document.getElementById('jsonp-script');
+    if (script) {
+        script.remove();
+    }
+    
+    if (response && response.success) {
+        alert("分數已成功儲存！");
+        console.log("Score saved successfully:", response);
+    } else {
+        alert("儲存失敗，請稍後再試");
+        console.error('Error saving score:', response);
+    }
+}
+
+// Function to save score to Google Sheets using JSONP
+function saveScore() {
     if (!userName) {
         alert("無法獲取用戶信息，請重新載入頁面");
         return;
@@ -132,32 +154,78 @@ async function saveScore() {
     saveButton.disabled = true;
     saveButton.textContent = "儲存中...";
     
-    try {
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                userName: userName,
-                score: score,
-                timestamp: new Date().toISOString()
-            })
-        });
-        
-        if (response.ok) {
-            const result = await response.json();
-            alert("分數已成功儲存！");
-            console.log("Score saved successfully:", result);
-        } else {
-            throw new Error('Network response was not ok');
-        }
-    } catch (error) {
-        console.error('Error saving score:', error);
-        alert("儲存失敗，請稍後再試");
-    } finally {
-        // Re-enable the button
+    // Create JSONP request
+    const callbackName = 'handleSaveScoreResponse';
+    const data = {
+        userName: userName,
+        score: score,
+        timestamp: new Date().toISOString()
+    };
+    
+    // Convert data to URL parameters
+    const params = new URLSearchParams();
+    params.append('callback', callbackName);
+    Object.keys(data).forEach(key => {
+        params.append(key, data[key]);
+    });
+    
+    // Create script tag for JSONP
+    const script = document.createElement('script');
+    script.id = 'jsonp-script';
+    script.src = `${API_URL}?${params.toString()}`;
+    
+    // Add error handling
+    script.onerror = function() {
         saveButton.disabled = false;
         saveButton.textContent = "儲存分數到紀錄";
+        alert("儲存失敗，請檢查網路連線");
+        script.remove();
+    };
+    
+    // Add to document to execute the request
+    document.body.appendChild(script);
+}
+
+// Alternative method using form submission (if JSONP doesn't work)
+function saveScoreAlternative() {
+    if (!userName) {
+        alert("無法獲取用戶信息，請重新載入頁面");
+        return;
     }
+    
+    // Disable the save button to prevent multiple clicks
+    saveButton.disabled = true;
+    saveButton.textContent = "儲存中...";
+    
+    // Create a form and submit it
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = API_URL;
+    form.style.display = 'none';
+    
+    // Add data as hidden inputs
+    const data = {
+        userName: userName,
+        score: score,
+        timestamp: new Date().toISOString()
+    };
+    
+    Object.keys(data).forEach(key => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = data[key];
+        form.appendChild(input);
+    });
+    
+    // Add form to document and submit
+    document.body.appendChild(form);
+    form.submit();
+    
+    // Re-enable button after a delay (since we can't get response with form submission)
+    setTimeout(() => {
+        saveButton.disabled = false;
+        saveButton.textContent = "儲存分數到紀錄";
+        alert("分數儲存請求已送出！");
+    }, 2000);
 }
