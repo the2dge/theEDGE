@@ -1,4 +1,3 @@
-
 let score = 0;
 let userName = "";
 const opts = {
@@ -94,7 +93,7 @@ function animationListen(ev) {
                 document.querySelector("#score").innerText = score;
                 
                 // Show save button if score > 5
-                if (score > 2) {
+                if (score > 5) {
                     saveButton.style.display = "block";
                 } else {
                     saveButton.style.display = "none";
@@ -157,6 +156,7 @@ function saveScore() {
     // Create JSONP request
     const callbackName = 'handleSaveScoreResponse';
     const data = {
+        action: 'playScore', // Add action parameter for GAS backend
         userName: userName,
         score: score,
         timestamp: new Date().toISOString()
@@ -203,8 +203,9 @@ function saveScoreAlternative() {
     form.action = API_URL;
     form.style.display = 'none';
     
-    // Add data as hidden inputs
+    // Add data as hidden inputs including action parameter
     const data = {
+        action: 'playScore', // Add action parameter for GAS backend
         userName: userName,
         score: score,
         timestamp: new Date().toISOString()
