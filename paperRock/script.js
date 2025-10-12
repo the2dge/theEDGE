@@ -26,18 +26,22 @@ const choices = {
 
 const inplay = ["哦，懸念…", "讓我們等待判決...", "耐心等待獲勝者", "也許，也許，也許，也許", "誰會贏？"];
 
+const API_URL = 'https://script.google.com/macros/s/AKfycbwevFe06bnQSzQJcOTucesqIAStCblfuqf61z7IPE2YeXWc7fQu8EtZOEDoArrPJTbqbw/exec';
+
 const choiceBtns = document.querySelectorAll("button");
 const user = document.querySelector("#user");
 const cpu = document.querySelector("#cpu");
 const userDisplay = document.querySelector("#userDisplay");
+const saveButton = document.querySelector("#saveButton");
 const LIFF_ID = '2006943877-JRNE3RZy';
+
 user.addEventListener("animationend", animationListen, false);
 cpu.addEventListener("animationend", animationListen, false);
 
 // Initialize LIFF
 async function initializeLiff() {
     try {
-        await liff.init({ liffId: LIFF_ID }); // Replace with your LIFF ID
+        await liff.init({ liffId: LIFF_ID });
         
         if (!liff.isLoggedIn()) {
             liff.login();
@@ -48,8 +52,8 @@ async function initializeLiff() {
         const profile = await liff.getProfile();
         userName = profile.displayName;
         
-        // Display userId instead of "你"
-        userDisplay.innerText = userName.substring(0, 8) ; // Show first 8 characters for better display
+        // Display userName instead of "你"
+        userDisplay.innerText = userName.substring(0, 8);
         
     } catch (error) {
         console.error('LIFF initialization failed', error);
@@ -59,6 +63,7 @@ async function initializeLiff() {
 
 // Call LIFF initialization when page loads
 document.addEventListener('DOMContentLoaded', initializeLiff);
+
 function anim(choice) {
     for (let i of choiceBtns) {
         i.disabled = true;
@@ -86,6 +91,13 @@ function animationListen(ev) {
             if (ev.currentTarget.id === "user") {
                 document.querySelector("#feedback").innerText = result();
                 document.querySelector("#score").innerText = score;
+                
+                // Show save button if score > 5
+                if (score > 5) {
+                    saveButton.style.display = "block";
+                } else {
+                    saveButton.style.display = "none";
+                }
             }
         } else {
             // Use the Chinese key directly from choices object
@@ -104,6 +116,49 @@ function result() {
         return "你贏了 🎉";
     } else {
         score = 0;
+        saveButton.style.display = "none"; // Hide save button when score resets
         return "你輸了 😭";
     }
 }
+
+// Function to save score to Google Sheets
+async function saveScore() {
+    if (!userName) {
+        alert("無法獲取用戶信息，請重新載入頁面");
+        return;
+    }
+    
+    // Disable the save button to prevent multiple clicks
+    saveButton.disabled = true;
+    saveButton.textContent = "儲存中...";
+    
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                userName: userName,
+                score: score,
+                timestamp: new Date().toISOString()
+            })
+        });
+        
+        if (response.ok) {
+            const result = await response.json();
+            alert("分數已成功儲存！");
+            console.log("Score saved successfully:", result);
+        } else {
+            throw new Error('Network response was not ok');
+        }
+    } catch (error) {
+        console.error('Error saving score:', error);
+        alert("儲存失敗，請稍後再試");
+    } finally {
+        // Re-enable the button
+        saveButton.disabled = false;
+        saveButton.textContent = "儲存分數到紀錄";
+    }
+}
+[file content end]
