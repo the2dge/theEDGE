@@ -1,5 +1,5 @@
 let score = 0;
-let userId = "";
+let userName = "";
 const opts = {
     "剪刀": { // Scissors
         icon: "✌️",
