@@ -161,4 +161,3 @@ async function saveScore() {
         saveButton.textContent = "儲存分數到紀錄";
     }
 }
-[file content end]
