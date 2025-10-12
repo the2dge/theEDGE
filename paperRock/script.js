@@ -46,10 +46,10 @@ async function initializeLiff() {
         
         // Get user profile
         const profile = await liff.getProfile();
-        userId = profile.userId;
+        userName = profile.displayName;
         
         // Display userId instead of "你"
-        userDisplay.innerText = userId.substring(0, 8) + "..."; // Show first 8 characters for better display
+        userDisplay.innerText = userName.substring(0, 8) + "..."; // Show first 8 characters for better display
         
     } catch (error) {
         console.error('LIFF initialization failed', error);
