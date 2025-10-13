@@ -1,3 +1,4 @@
+
 let score = 0;
 let userName = "";
 const opts = {
@@ -93,7 +94,7 @@ function animationListen(ev) {
                 document.querySelector("#score").innerText = score;
                 
                 // Show save button if score > 5
-                if (score > 1) {
+                if (score > 5) {
                     saveButton.style.display = "block";
                 } else {
                     saveButton.style.display = "none";
@@ -123,6 +124,8 @@ function result() {
 
 // Global callback function for JSONP
 window.handleSaveScore = function(response) {
+    console.log("Save score response:", response);
+    
     // Re-enable the button
     saveButton.disabled = false;
     saveButton.textContent = "儲存分數到紀錄";
@@ -137,12 +140,12 @@ window.handleSaveScore = function(response) {
         alert("分數已成功儲存！");
         console.log("Score saved successfully:", response);
     } else {
-        alert("儲存失敗，請稍後再試");
+        alert("儲存失敗: " + (response ? response.error : "Unknown error"));
         console.error('Error saving score:', response);
     }
 }
 
-// Function to save score to Google Sheets using JSONP (following your successful example)
+// Function to save score to Google Sheets using JSONP
 function saveScore() {
     if (!userName) {
         alert("無法獲取用戶信息，請重新載入頁面");
@@ -162,9 +165,12 @@ function saveScore() {
         '&timestamp=' + encodeURIComponent(new Date().toISOString()) +
         '&callback=handleSaveScore';
     
+    console.log("Saving score with URL:", url);
+    
     script.id = 'jsonp-script';
     script.src = url;
     script.onerror = function() {
+        console.error('JSONP script failed to load');
         alert('儲存失敗，請稍後再試。');
         saveButton.textContent = '儲存分數到紀錄';
         saveButton.disabled = false;
@@ -176,4 +182,47 @@ function saveScore() {
     };
     
     document.body.appendChild(script);
+}
+
+// Alternative method using fetch with CORS workaround
+async function saveScoreWithFetch() {
+    if (!userName) {
+        alert("無法獲取用戶信息，請重新載入頁面");
+        return;
+    }
+    
+    // Disable the save button to prevent multiple clicks
+    saveButton.disabled = true;
+    saveButton.textContent = "儲存中...";
+    
+    try {
+        const data = {
+            action: 'playScore',
+            userName: userName,
+            score: score,
+            timestamp: new Date().toISOString()
+        };
+        
+        // Convert to URL parameters for GET request
+        const params = new URLSearchParams();
+        Object.keys(data).forEach(key => {
+            params.append(key, data[key]);
+        });
+        
+        const response = await fetch(API_URL + '?' + params.toString(), {
+            method: 'GET',
+            mode: 'no-cors' // This won't allow reading response but might work
+        });
+        
+        // With no-cors we can't read the response, so assume success
+        alert("分數儲存請求已送出！");
+        console.log("Score save request sent (no-cors mode)");
+        
+    } catch (error) {
+        console.error('Error saving score with fetch:', error);
+        alert("儲存失敗，請稍後再試");
+    } finally {
+        saveButton.disabled = false;
+        saveButton.textContent = "儲存分數到紀錄";
+    }
 }
