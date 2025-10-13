@@ -21,7 +21,6 @@
             userProfile = profile;
             document.getElementById('userGreeting').textContent = 
               'Hi, ' + profile.displayName + '! 👋';
-            loadProducts();
           }
         })
         .catch((err) => {
