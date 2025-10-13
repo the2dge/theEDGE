@@ -126,7 +126,7 @@ font-family: monospace;
 #scoreDisplay {
 	top:0;
 	background:#3c483a;
-	width:50%;
+	width:80%;
 	text-align:center;
 	padding:1em;
 	box-sizing:border-box;
@@ -137,7 +137,7 @@ font-family: monospace;
 }
 #feedback {
 	font-size:1.25em;
-	width:50%;
+	width:80%;
 	margin:auto;
 	background:#1c3018;
 	color:white;
