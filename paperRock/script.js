@@ -52,7 +52,7 @@ async function initializeLiff() {
         // Get user profile
         const profile = await liff.getProfile();
         userName = profile.displayName;
-        
+        userId = profile.userId;
         // Display userName instead of "你"
         userDisplay.innerText = userName.substring(0, 8);
         
@@ -160,7 +160,7 @@ function saveScore() {
     const script = document.createElement('script');
     const url = API_URL + 
         '?action=playScore' +
-        '&userId=' + encodeURIComponent(userProfile.userId) +
+        '&userId=' + encodeURIComponent(userId) +
         '&userName=' + encodeURIComponent(userName) +
         '&score=' + encodeURIComponent(score) +
         '&timestamp=' + encodeURIComponent(new Date().toISOString()) +
