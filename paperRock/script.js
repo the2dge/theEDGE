@@ -160,6 +160,7 @@ function saveScore() {
     const script = document.createElement('script');
     const url = API_URL + 
         '?action=playScore' +
+        '&userId=' + encodeURIComponent(userProfile.userId) +
         '&userName=' + encodeURIComponent(userName) +
         '&score=' + encodeURIComponent(score) +
         '&timestamp=' + encodeURIComponent(new Date().toISOString()) +
