@@ -20,7 +20,7 @@
           if (profile) {
             userProfile = profile;
             document.getElementById('userGreeting').textContent = 
-              'Hi, ' + profile.displayName + '! 👋';
+              'Hi, ' + profile.displayName + '! 👋 拉弓，瞄準，發射！';
           }
         })
         .catch((err) => {
