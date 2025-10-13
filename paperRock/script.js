@@ -137,7 +137,7 @@ window.handleSaveScore = function(response) {
     }
     
     if (response && response.success) {
-        alert("分數已成功儲存！");
+        alert("分數已成功儲存！🎉\n\n恭喜！我們已發送一張優惠券到您的LINE帳號！");
         console.log("Score saved successfully:", response);
     } else {
         alert("儲存失敗: " + (response ? response.error : "Unknown error"));
