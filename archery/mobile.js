@@ -1,3 +1,4 @@
+const API_URL = 'https://script.google.com/macros/s/AKfycbwevFe06bnQSzQJcOTucesqIAStCblfuqf61z7IPE2YeXWc7fQu8EtZOEDoArrPJTbqbw/exec';
 var svg = document.querySelector("svg");
 var cursor = svg.createSVGPoint();
 var arrows = document.querySelector(".arrows");
@@ -681,7 +682,7 @@ function saveScore(e) {
   };
 
   // Build URL with parameters
-  const url = window.API_URL + 
+  const url = API_URL + 
     '?action=playScore' +
     '&userId=' + encodeURIComponent(window.userProfile.userId) +
     '&userName=' + encodeURIComponent(window.userProfile.displayName) +
