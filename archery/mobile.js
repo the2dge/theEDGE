@@ -78,6 +78,7 @@ function createScoreboard() {
 function updateScoreboard() {
   document.getElementById("score-text").textContent = "Score: " + score;
   document.getElementById("arrows-text").textContent = "Arrows: " + arrowsLeft;
+  updateSaveButton(); // Add this line
 }
 
 // Create reset button
@@ -207,6 +208,9 @@ function resetGame(e) {
   TweenMax.set(".hit", { autoAlpha: 0 });
   TweenMax.set(".bullseye", { autoAlpha: 0 });
   
+  // Hide save button
+  updateSaveButton();
+  
   // Remove game over message if present
   var gameOver = document.getElementById("game-over");
   if (gameOver && gameOver.parentNode) {
@@ -227,6 +231,7 @@ function initGame() {
   createScoreboard();
   createResetButton();
   createInstructions();
+  createSaveButton(); 
   
   // Initial aim position
   aim({
@@ -577,4 +582,96 @@ function getIntersection(segment1, segment2) {
     segment1: ua >= 0 && ua <= 1,
     segment2: ub >= 0 && ub <= 1
   };
+}
+// Add this function to create the save button
+function createSaveButton() {
+  var saveGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  saveGroup.setAttribute("id", "save-button");
+  saveGroup.style.cursor = "pointer";
+  saveGroup.style.opacity = "0"; // Initially hidden
+  
+  var saveBg = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+  saveBg.setAttribute("x", "20");
+  saveBg.setAttribute("y", "150");
+  saveBg.setAttribute("width", "150");
+  saveBg.setAttribute("height", "40");
+  saveBg.setAttribute("rx", "5");
+  saveBg.setAttribute("fill", "#4CAF50");
+  
+  var saveText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  saveText.setAttribute("x", "40");
+  saveText.setAttribute("y", "175");
+  saveText.setAttribute("fill", "#fff");
+  saveText.setAttribute("font-size", "18");
+  saveText.textContent = "Save Score";
+  
+  saveGroup.appendChild(saveBg);
+  saveGroup.appendChild(saveText);
+  
+  // Add event listeners for the save button
+  if (isMobile) {
+    saveGroup.addEventListener("touchstart", saveScore);
+  } else {
+    saveGroup.addEventListener("click", saveScore);
+  }
+  
+  svg.appendChild(saveGroup);
+}
+
+// Add this function to show/hide the save button based on score
+function updateSaveButton() {
+  var saveButton = document.getElementById("save-button");
+  if (saveButton) {
+    if (score > 50) {
+      TweenMax.to(saveButton, 0.5, { opacity: 1 });
+    } else {
+      TweenMax.to(saveButton, 0.5, { opacity: 0 });
+    }
+  }
+}
+
+// Add this function to save the score
+function saveScore(e) {
+  // Prevent default for touch events
+  if (e && e.preventDefault) {
+    e.preventDefault();
+  }
+  
+  // Check if user profile is available
+  if (!window.userProfile) {
+    alert("Please wait while we load your profile...");
+    return;
+  }
+  
+  // Prepare data for Google Sheets
+  const data = {
+    UserId: window.userProfile.userId,
+    userName: window.userProfile.displayName,
+    score: score,
+    game: "Archery",
+    Timestamp: new Date().toISOString()
+  };
+  
+  // Send data to Google Sheets
+  fetch(window.API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+    // Show success message
+    alert('Score saved successfully!');
+    
+    // Hide save button after saving
+    var saveButton = document.getElementById("save-button");
+    TweenMax.to(saveButton, 0.5, { opacity: 0 });
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+    alert('Error saving score. Please try again.');
+  });
 }
