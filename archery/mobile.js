@@ -728,7 +728,7 @@ function saveScoreJsonp(data, successCallback, errorCallback) {
   };
   
   // Build URL with parameters
-  var url = window.API_URL + '?callback=' + callbackName;
+  var url = API_URL + '?callback=' + callbackName;
   for (var key in data) {
     if (data.hasOwnProperty(key)) {
       url += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
