@@ -208,8 +208,16 @@ function resetGame(e) {
   TweenMax.set(".hit", { autoAlpha: 0 });
   TweenMax.set(".bullseye", { autoAlpha: 0 });
   
-  // Hide save button
-  updateSaveButton();
+  // Hide save button and re-enable it
+  var saveButton = document.getElementById("save-button");
+  if (saveButton) {
+    TweenMax.to(saveButton, 0.5, { opacity: 0 });
+    saveButton.style.pointerEvents = "auto";
+    var saveText = saveButton.querySelector("text");
+    if (saveText) {
+      saveText.textContent = "Save Score";
+    }
+  }
   
   // Remove game over message if present
   var gameOver = document.getElementById("game-over");
@@ -630,7 +638,6 @@ function updateSaveButton() {
   }
 }
 
-// Add this function to save the score
 function saveScore(e) {
   // Prevent default for touch events
   if (e && e.preventDefault) {
@@ -642,36 +649,101 @@ function saveScore(e) {
     alert("Please wait while we load your profile...");
     return;
   }
+
+  // Disable the save button to prevent multiple clicks
+  var saveButton = document.getElementById("save-button");
+  saveButton.style.pointerEvents = "none";
+  
+  // Show loading state
+  var saveText = saveButton.querySelector("text");
+  var originalText = saveText.textContent;
+  saveText.textContent = "Saving...";
   
   // Prepare data for Google Sheets
   const data = {
-    UserId: window.userProfile.userId,
+    action: 'playScore',
+    userId: window.userProfile.userId,
     userName: window.userProfile.displayName,
     score: score,
     game: "Archery",
-    Timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString()
   };
   
-  // Send data to Google Sheets
-  fetch(window.API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data)
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Success:', data);
-    // Show success message
-    alert('Score saved successfully!');
+  // Use JSONP to save the score
+  saveScoreJsonp(data, function(response) {
+    // Re-enable button and restore text
+    saveButton.style.pointerEvents = "auto";
+    saveText.textContent = originalText;
     
-    // Hide save button after saving
-    var saveButton = document.getElementById("save-button");
-    TweenMax.to(saveButton, 0.5, { opacity: 0 });
-  })
-  .catch((error) => {
-    console.error('Error:', error);
+    if (response.success) {
+      // Show success message
+      alert(response.message);
+      
+      // Hide save button after saving
+      TweenMax.to(saveButton, 0.5, { opacity: 0 });
+    } else {
+      alert('Error saving score: ' + (response.message || 'Unknown error'));
+    }
+  }, function(error) {
+    // Re-enable button and restore text on error
+    saveButton.style.pointerEvents = "auto";
+    saveText.textContent = originalText;
     alert('Error saving score. Please try again.');
+    console.error('JSONP Error:', error);
   });
+}
+
+// Add JSONP function for saving scores
+function saveScoreJsonp(data, successCallback, errorCallback) {
+  // Create a unique callback name
+  var callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
+  
+  // Add the callback to window object
+  window[callbackName] = function(response) {
+    // Clean up
+    delete window[callbackName];
+    document.body.removeChild(script);
+    
+    // Call success callback
+    if (successCallback) {
+      successCallback(response);
+    }
+  };
+  
+  // Build URL with parameters
+  var url = window.API_URL + '?callback=' + callbackName;
+  for (var key in data) {
+    if (data.hasOwnProperty(key)) {
+      url += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+    }
+  }
+  
+  // Create and append script tag
+  var script = document.createElement('script');
+  script.src = url;
+  
+  // Set error handler
+  script.onerror = function() {
+    // Clean up
+    delete window[callbackName];
+    document.body.removeChild(script);
+    
+    // Call error callback
+    if (errorCallback) {
+      errorCallback('Network error');
+    }
+  };
+  
+  // Add timeout
+  setTimeout(function() {
+    if (window[callbackName]) {
+      delete window[callbackName];
+      document.body.removeChild(script);
+      if (errorCallback) {
+        errorCallback('Timeout');
+      }
+    }
+  }, 10000); // 10 second timeout
+  
+  document.body.appendChild(script);
 }
