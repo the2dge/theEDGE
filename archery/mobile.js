@@ -644,7 +644,7 @@ function saveScore(e) {
   if (e && e.preventDefault) {
     e.preventDefault();
   }
-  alert("SaveScore is called!");
+
   // Check if user profile is available
   if (!window.userProfile) {
     alert("Please wait while we load your profile...");
@@ -658,7 +658,7 @@ function saveScore(e) {
   // Show loading state
   var saveText = saveButton.querySelector("text");
   var originalText = saveText.textContent;
-  saveText.textContent = "Saving...";
+  saveText.textContent = "儲存...";
 
   // Create the global callback function
   window.handleSaveScore = function(response) {
