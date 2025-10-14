@@ -163,6 +163,7 @@ function saveScore() {
         '&userId=' + encodeURIComponent(userId) +
         '&userName=' + encodeURIComponent(userName) +
         '&score=' + encodeURIComponent(score) +
+        '&game=' + "paperRock" +
         '&timestamp=' + encodeURIComponent(new Date().toISOString()) +
         '&callback=handleSaveScore';
     
