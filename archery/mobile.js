@@ -638,6 +638,7 @@ function updateSaveButton() {
   }
 }
 
+// Modify the saveScore function to use the working JSONP pattern
 function saveScore(e) {
   // Prevent default for touch events
   if (e && e.preventDefault) {
@@ -658,19 +659,12 @@ function saveScore(e) {
   var saveText = saveButton.querySelector("text");
   var originalText = saveText.textContent;
   saveText.textContent = "Saving...";
-  
-  // Prepare data for Google Sheets
-  const data = {
-    action: 'playScore',
-    userId: window.userProfile.userId,
-    userName: window.userProfile.displayName,
-    score: score,
-    game: "Archery",
-    timestamp: new Date().toISOString()
-  };
-  
-  // Use JSONP to save the score
-  saveScoreJsonp(data, function(response) {
+
+  // Create the global callback function
+  window.handleSaveScore = function(response) {
+    // Clean up
+    delete window.handleSaveScore;
+    
     // Re-enable button and restore text
     saveButton.style.pointerEvents = "auto";
     saveText.textContent = originalText;
@@ -684,13 +678,35 @@ function saveScore(e) {
     } else {
       alert('Error saving score: ' + (response.message || 'Unknown error'));
     }
-  }, function(error) {
-    // Re-enable button and restore text on error
+  };
+
+  // Build URL with parameters
+  const url = window.API_URL + 
+    '?action=playScore' +
+    '&userId=' + encodeURIComponent(window.userProfile.userId) +
+    '&userName=' + encodeURIComponent(window.userProfile.displayName) +
+    '&score=' + encodeURIComponent(score) +
+    '&game=Archery' +
+    '&timestamp=' + encodeURIComponent(new Date().toISOString()) +
+    '&callback=handleSaveScore';
+  
+  // Create and append script tag
+  const script = document.createElement('script');
+  script.src = url;
+  
+  // Set error handler
+  script.onerror = function() {
+    // Clean up
+    delete window.handleSaveScore;
+    
+    // Re-enable button and restore text
     saveButton.style.pointerEvents = "auto";
     saveText.textContent = originalText;
-    alert('Error saving score. Please try again.');
-    console.error('JSONP Error:', error);
-  });
+    
+    alert('Failed to save score. Please try again.');
+  };
+  
+  document.body.appendChild(script);
 }
 
 // Add JSONP function for saving scores
