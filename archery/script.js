@@ -1,4 +1,4 @@
-const LIFF_ID = '2006943877-mBJrO7a4';
+const LIFF_ID = '2006943877-6JqPzkM5';
 const API_URL = 'https://script.google.com/macros/s/AKfycbyUI2kIpjS3yIAiPeR8JiVufxIgTXfI_sr_uyj5SgUopIjQGypJXuzkErPAHd_l3j1C/exec';
 
 // Make these available globally for mobile.js to access
