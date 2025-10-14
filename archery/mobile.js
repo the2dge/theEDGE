@@ -644,7 +644,7 @@ function saveScore(e) {
   if (e && e.preventDefault) {
     e.preventDefault();
   }
-  
+  alert("SaveScore is called!");
   // Check if user profile is available
   if (!window.userProfile) {
     alert("Please wait while we load your profile...");
