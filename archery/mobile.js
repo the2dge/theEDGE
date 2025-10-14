@@ -686,7 +686,7 @@ function saveScore(e) {
     '&userId=' + encodeURIComponent(window.userProfile.userId) +
     '&userName=' + encodeURIComponent(window.userProfile.displayName) +
     '&score=' + encodeURIComponent(score) +
-    '&game=Archery' +
+    '&game=' + "archery" +
     '&timestamp=' + encodeURIComponent(new Date().toISOString()) +
     '&callback=handleSaveScore';
   
