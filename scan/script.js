@@ -1,6 +1,6 @@
 // Configuration
 const LIFF_ID = '2006943877-8jDd3Lao'; // Replace with your LIFF ID for scanner app
-const API_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec'; // Replace with your GAS web app URL
+const API_URL = 'https://script.google.com/macros/s/AKfycbwevFe06bnQSzQJcOTucesqIAStCblfuqf61z7IPE2YeXWc7fQu8EtZOEDoArrPJTbqbw/exec'; // Replace with your GAS web app URL
 
 // Global variables
 let liffInitialized = false;
