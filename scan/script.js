@@ -81,9 +81,7 @@ async function scanBarcode() {
     try {
         showLoading(true);
         
-        const scanResult = await liff.scanCodeV2({
-            only: ['qrCode', 'barCode']  // Try 'barCode' singular
-        });
+        const scanResult = await liff.scanCodeV2({});  // Empty object = all types
         const scannedCode = scanResult.value;
         
         console.log('Scanned code:', scannedCode);
