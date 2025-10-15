@@ -7,6 +7,7 @@ let liffInitialized = false;
 let userProfile = null;
 
 // Initialize LIFF
+// Update the initializeLiff function in script.js
 async function initializeLiff() {
     try {
         await liff.init({ liffId: LIFF_ID });
@@ -22,18 +23,52 @@ async function initializeLiff() {
         
         liffInitialized = true;
         
-        // Check if LIFF supports scanCodeV2
-        if (!liff.isApiAvailable('scanCodeV2')) {
-            document.getElementById('scanBtn').disabled = true;
-            document.getElementById('scanBtn').innerHTML = '❌ 此裝置不支援掃描功能';
-            showError('您的裝置不支援條碼掃描功能，請使用手動輸入。');
-        }
+        // Enhanced scan capability detection
+        await checkScanCapabilities();
         
     } catch (error) {
         console.error('LIFF initialization failed:', error);
         document.getElementById('userName').textContent = '取得失敗';
         showError('LIFF 初始化失敗: ' + error.message);
     }
+}
+
+// Add this new function to detect scan capabilities
+async function checkScanCapabilities() {
+    const scanBtn = document.getElementById('scanBtn');
+    
+    // Check if scanCodeV2 is available
+    if (!liff.isApiAvailable('scanCodeV2')) {
+        scanBtn.disabled = true;
+        scanBtn.innerHTML = '❌ 掃描功能不可用';
+        
+        // Get more context information
+        const context = liff.getContext();
+        let errorDetails = '您的裝置不支援條碼掃描功能。\n\n';
+        errorDetails += `裝置類型: ${context.type || '未知'}\n`;
+        errorDetails += `LIFF 視窗模式: ${context.viewType || '未知'}\n`;
+        
+        if (context.viewType !== 'full') {
+            errorDetails += '\n💡 可能原因: LIFF 應用程式必須設定為「Full」大小才能使用相機功能。';
+        }
+        
+        showError(errorDetails);
+        return;
+    }
+    
+    // Check if we're in a supported environment
+    const context = liff.getContext();
+    if (context.type !== 'utou' && context.type !== 'room' && context.type !== 'group') {
+        scanBtn.disabled = true;
+        scanBtn.innerHTML = '❌ 環境不支援';
+        showError('掃描功能僅在聊天室、群組或 1:1 聊天中可用。');
+        return;
+    }
+    
+    // All checks passed - enable scan button
+    scanBtn.disabled = false;
+    scanBtn.innerHTML = '📷 掃描集點卡條碼';
+    console.log('Scan functionality is available');
 }
 
 // Switch between tabs
