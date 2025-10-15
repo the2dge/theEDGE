@@ -10,7 +10,9 @@ let userProfile = null;
 async function initializeLiff() {
     try {
         await liff.init({ liffId: LIFF_ID });
-        
+          console.log('inClient:', liff.isInClient());
+          console.log('scanCodeV2:', liff.isApiAvailable('scanCodeV2'));
+          console.log('OS:', liff.getOS());
         if (!liff.isLoggedIn()) {
             liff.login();
             return;
