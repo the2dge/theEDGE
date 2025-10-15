@@ -13,6 +13,21 @@ async function initializeLiff() {
           console.log('inClient:', liff.isInClient());
           console.log('scanCodeV2:', liff.isApiAvailable('scanCodeV2'));
           console.log('OS:', liff.getOS());
+        if (!liff.isInClient()) {
+          const result = document.getElementById('resultSection');
+          result.className = 'result-section error';
+          result.innerHTML = `
+            <h3>🔒 需於 LINE 內開啟</h3>
+            <p>請於 LINE App 中開啟此頁面以使用掃描。</p>
+            <button onclick="location.href='https://liff.line.me/${LIFF_ID}'"
+              style="margin-top:12px;padding:10px 16px;border:0;border-radius:8px;cursor:pointer;">
+              於 LINE 中開啟
+            </button>`;
+          result.style.display = 'block';
+        
+          // Also disable the scan button to avoid confusion (your code already does similar when API unavailable)
+          document.getElementById('scanBtn').disabled = true;
+        }
         if (!liff.isLoggedIn()) {
             liff.login();
             return;
