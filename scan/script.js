@@ -1,5 +1,5 @@
 // Configuration
-const LIFF_ID = '2006943877-jnL7pvge'; // Replace with your LIFF ID for scanner app
+const LIFF_ID = '2006943877-8jDd3Lao'; // Replace with your LIFF ID for scanner app
 const API_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec'; // Replace with your GAS web app URL
 
 // Global variables
