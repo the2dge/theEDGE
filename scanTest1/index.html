@@ -1,71 +1,13 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <title>Barcode Scanner</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scan Testing</title>
 </head>
 <body>
-<header>
-  <span class="material-icons" aria-hidden="true">qr_code_scanner</span>&nbsp;Barcode Reader & Generator<span id="userName"></span>
-</header>
-<main>
-  <!-- Generator Section -->
-  <section id="generator" aria-label="Barcode Generator">
-    <h2><span class="material-icons" aria-hidden="true">qr_code</span> Generate Barcode</h2>
-    <form id="barcode-form" onsubmit="return false">
-      <label for="barcode-text">Text to encode</label>
-      <input id="barcode-text" type="text" autocomplete="off" placeholder="Enter text or numbers" required aria-required="true" />
-      <label for="barcode-type">Barcode Type</label>
-      <select id="barcode-type" aria-label="Barcode type selector">
-        <option value="CODE128" selected>Code 128</option>
-        <option value="EAN13">EAN-13</option>
-        <option value="EAN8">EAN-8</option>
-        <option value="UPC">UPC</option>
-        <option value="CODE39">Code 39</option>
-        <option value="ITF14">ITF-14</option>
-        <option value="MSI">MSI</option>
-        <option value="Pharmacode">Pharmacode</option>
-      </select>
-      <button id="generate-btn" type="submit" aria-label="Generate Barcode Button">
-        <span class="material-icons" aria-hidden="true">play_arrow</span> Generate
-      </button>
-      <button id="clear-btn" type="button" aria-label="Clear Barcode Button" style="margin-left: 12px; background-color: #bb1f1f;">
-        <span class="material-icons" aria-hidden="true">clear</span> Clear
-      </button>
-    </form>
-    <div id="barcode-output" aria-live="polite" aria-atomic="true" style="margin-top: 24px;"></div>
-  </section>
-
-  <!-- Reader Section -->
-  <section id="reader" aria-label="Barcode Reader">
-    <h2><span class="material-icons" aria-hidden="true">camera_alt</span> Scan Barcode</h2>
-    <div id="reader-container">
-      <div id="video-container" aria-live="polite" aria-atomic="true">
-        <div id="video-placeholder" style="color: #888; display: flex; justify-content: center; align-items: center; height: 100%;">
-          Camera video will appear here
-        </div>
-        <video id="scanner-video" autoplay muted playsinline></video>
-      </div>
-      <button id="start-scan-btn" aria-label="Start scanning barcode" type="button" style="margin-top: 8px;">
-        <span class="material-icons" aria-hidden="true">videocam</span> Start Scanner
-      </button>
-      <button id="stop-scan-btn" aria-label="Stop scanning barcode" type="button" style="margin-top: 8px; display:none; background-color: #bb1f1f;">
-        <span class="material-icons" aria-hidden="true">stop</span> Stop Scanner
-      </button>
-
-      <label for="barcode-file-input" id="upload-label" tabindex="0" role="button" aria-label="Upload barcode image to scan">
-        <span class="material-icons" aria-hidden="true">upload_file</span> Upload Image to Scan
-      </label>
-      <input type="file" id="barcode-file-input" accept="image/*" aria-describedby="upload-label" />
-      <div id="scan-result" aria-live="polite" aria-atomic="true" role="region" aria-label="Barcode scan result"></div>
-    </div>
-  </section>
-</main>
-<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js"></script>
+<div id="qr-reader" style="width: 600px"></div>
+<script src="https://unpkg.com/html5-qrcode@2.0.9/dist/html5-qrcode.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
