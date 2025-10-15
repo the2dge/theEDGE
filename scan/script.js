@@ -81,7 +81,9 @@ async function scanBarcode() {
     try {
         showLoading(true);
         
-        const scanResult = await liff.scanCodeV2();
+        const scanResult = await liff.scanCodeV2({
+            only: ['qrCode', 'code39', 'code128']
+        });
         const scannedCode = scanResult.value;
         
         console.log('Scanned code:', scannedCode);
