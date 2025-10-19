@@ -19,6 +19,7 @@ async function initializeApp() {
 
         // Get user profile
         userProfile = await liff.getProfile();
+        console.log("userProfile is: ", userProfile);
         displayUserInfo();
         
         // Load member data
