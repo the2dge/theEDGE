@@ -245,11 +245,27 @@ function showError(message) {
 function clearResult() {
     document.getElementById('resultSection').style.display = 'none';
 }
-
+async function checkCameraPermission() {
+    try {
+        if (navigator.permissions) {
+            const result = await navigator.permissions.query({ name: 'camera' });
+            
+            console.log('Camera permission status:', result.state);
+            // result.state can be: 'granted', 'denied', or 'prompt'
+            
+            if (result.state === 'denied') {
+                showError('相機權限已被拒絕。\n\n請到手機設定中允許 LINE 使用相機。');
+            }
+        }
+    } catch (error) {
+        console.log('Permission API not available');
+    }
+}
 // Event listeners when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize LIFF
     initializeLiff();
+    checkCameraPermission();
     
     // Scan button event
     document.getElementById('scanBtn').addEventListener('click', scanBarcode);
