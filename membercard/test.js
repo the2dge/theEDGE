@@ -3,7 +3,7 @@ const LIFF_ID = '2006943877-dOYKXNr1';
 
 // Make these available globally for mobile.js to access
 //window.API_URL = API_URL;
-window.userProfile = null;
+let userProfile = null;
 
 // Initialize LIFF
 window.onload = function() {
