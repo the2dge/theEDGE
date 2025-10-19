@@ -3,7 +3,8 @@ const LIFF_ID = '2006943877-dOYKXNr1'; // Replace with your LIFF ID
 const API_URL = 'https://script.google.com/macros/s/AKfycbwevFe06bnQSzQJcOTucesqIAStCblfuqf61z7IPE2YeXWc7fQu8EtZOEDoArrPJTbqbw/exec';
 
 // Global variables
-let userProfile = ["displayName" "Ming, "userId" "A0001"];
+let userProfile = null;
+let userProfile.displayName ="Ming";
 let memberData = null;
 
 // Initialize the app
